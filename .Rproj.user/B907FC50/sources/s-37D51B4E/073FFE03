@@ -1,26 +1,26 @@
 {
-    "id": "B123C03A",
-    "path": "~/Downloads/bookdown/RT-qPCR/index.Rmd",
-    "project_path": "index.Rmd",
+    "id": "073FFE03",
+    "path": "~/Downloads/bookdown/RT-qPCR/_main.Rmd",
+    "project_path": "_main.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "1531600332",
     "contents": "",
     "dirty": false,
-    "created": 1659649662350.0,
+    "created": 1659652744515.0,
     "source_on_save": false,
-    "relative_order": 1,
+    "relative_order": 6,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "28,192",
-        "scrollLine": "31"
+        "cursorPosition": "9,255",
+        "scrollLine": "9"
     },
     "folds": "",
-    "lastKnownWriteTime": 1659652333,
+    "lastKnownWriteTime": 1659652793,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1659652333643,
+    "last_content_update": 1659652793706,
     "read_only": false,
     "read_only_alternatives": []
 }
