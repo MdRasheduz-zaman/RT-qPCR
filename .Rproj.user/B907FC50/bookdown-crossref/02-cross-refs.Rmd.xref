@@ -1,0 +1,9 @@
+h1:chapter1 Making/Simulating the simple data set 
+h2:samples-of-different-age Samples of different age
+h3:for-age-15-days For age 15 days
+h3:for-age-1-month For age 1 month
+h3:for-age-3-months For age 3 months
+h3:making-the-whole-data-set-combining-all-three-datasets-by-rbind-function Making the whole data set combining all three datasets: by  function
+h2:data-preparation Data preparation
+h2:statistical-analysis Statistical analysis
+

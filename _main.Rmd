@@ -1,0 +1,501 @@
+--- 
+title: "RT-qPCR Data Simulation and Analysis"
+author: "Md Rasheduzzaman"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+description: "This is an example of how to analyze RT-qPCR data. To have a real feelings
+  of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data
+  first and then we will do the modeling and see what happens. \nThe HTML output format
+  for this example is bookdown::gitbook,\nset in the _output.yml file.\n"
+link-citations: yes
+github-repo: rstudio/RT-qPCR
+---
+
+# About
+
+This is an example of how to analyze RT-qPCR data. To have a real feelings of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data first and then we will do the modeling and see what happens (we know what to expect from the modeling/analysis since we simulated the data set and we know the characteristics of the data set).
+
+
+## How to use the book
+
+If you are comfortable with RT-qPCR data, you can skip the first chapter and directly dive down into the second chapter. Otherwise, I would suggest starting with the first chapter. You will know how to make the dataset in R by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling functions. 
+
+## About the experiment design
+
+To analyze any data set, we have to know the experiment design and then do the analysis accordingly. It may required data cleaning/wrangling before the analysis as well. So, let's learn about the experiment.
+
+This study was to know the mechanism of disease X in cattle. The causative reason is a missense mutation in gene A which causes a premature stop codon. Since rearing cattle for experimental studies is not a feasible option, a knock-out (KO) mouse line was created by inserting premature stop codon and validated. So, we could compare this KO mouse line with the wild-type (WT) ones to know the underlying biological phenomena. But, there is a problem. We don't have suitable commercial antibody available in the market against mouse A protein which we need to have to decipher the underlying biological mechanism by immunoprecipitation. So, a 14-amino acid long V5-tag was inserted just after the start codon of the gene A and a Tagged mouse line (TAG) is created to solve the problem of unavailabilty of antibodies. We have suitable commercial antibody against this V5-tag and studies show that V5-tag is well expressed, doesn't get cleaved in the apoptotic cells and doesn't hinder the activity of protein A. 
+
+Also, microarray expression analysis shows that gene B is downregulated in the KO mice which is a vital protein related to the disease. This gene B has many known transcript variants in mice (let's say 20) and we can catagorize them in two broad catagories depending on presence/absence of certain exon in the transcripts. Let's say one group lack exon15 and the other group lack exon8. The fascinating fact is exon15-containing transcripts get translated preferentially at the early developmental stage and the exon8-containing transcripts get translated in the later developmental stage. So, age has its say in the expression pattern of the gene B.
+
+In accordance with the information above, we have designed primers against these exon1, exon8 and exon15. Exon1 is taken to know the approximate total expression of the gene B because it is common in both of the catagories of the transcripts. We are going to compare the expression of exon15, exon8, and exon1 from the RT-qPCR study in this three mouse lines (at first for one gene of interest and one housekeeping gene, and then multiple (all 3) gene of interest and two housekeeping genes). Well, basically we are going to simulate the RT-qPCR result and do the analysis.
+
+<!--chapter:end:index.Rmd-->
+
+# Primer efficiency (1 target gene & 1 housekeeping gene)
+
+## Data simulation
+
+We are going to dilute our sample three times by the factor of 1/10. So, for example, if we add 1$\mu L$ sample in 9$\mu L$ water, it will be a 1/10 dilution. We have to follow the same procedure serially to make 1/100 and 1/1000 dilutions.
+Also, we shouldn't forget to replicate the same dilution multiple times.  Here, in the example, we are simulating 3 runs per dilution for 3 primer pairs against the same gene `B1` to find out the best primer pairs. We are having one housekeeping gene (Hk) here. Add negative control (NTC) in the plate as an internal control as well.  
+
+```{r}
+set.seed(10)
+nDil <- 3 #No. of dilution
+geneB1_1 <- rbind(rnorm(nDil, 15.2, .03),
+                rnorm(nDil, 18.4, .03),
+                rnorm(nDil, 21.5, .03))
+geneB1_2 <- rbind(rnorm(nDil, 15.3, .03),
+                rnorm(nDil, 18.5, .03),
+                rnorm(nDil, 21.8, .03))
+geneB1_3 <- rbind(rnorm(nDil, 15.9, .03),
+                rnorm(nDil, 19.1, .03),
+                rnorm(nDil, 22.3, .03))
+geneHk <- rbind(rnorm(nDil, 16.7, .03),
+                rnorm(nDil, 19.9, .03),
+                rnorm(nDil, 23.2, .03))
+geneB1 <- data.frame(rbind(geneB1_1, geneB1_2, geneB1_3, geneHk))
+
+colnames(geneB1) <- c(paste0("run", seq(1:3)))
+geneB1$mean_Ct <- apply(geneB1, 1, mean)
+geneB1$dilution <- rep(c("1/10", "1/100", "1/1000"), times= 4)
+geneB1$primer <- c(rep("B1_1", times = 3), rep("B1_2", times = 3), rep("B1_3", times = 3), rep("Hk", times = 3))
+```
+
+Data simulation is done (you will get this kind of data from RT-qPCR machine automaatically). Let's make sense from the data: the line plot for each primer pairs:
+
+## Data analysis
+
+```{r}
+library(tidyverse)
+library(dplyr)
+geneB1 %>% ggplot(aes(x=dilution, y = mean_Ct, group=primer, color=primer)) + 
+  geom_line()
+```
+
+Now, we need to know the slope for each primer. `%>%` function from `dplyr` package and `lm()` function will help us to find the slopes for every primer. `coefficients[2]` part of the code will give us the slopes which we will add to our dataset as a column.
+
+```{r}
+geneB1 <- geneB1 %>% group_by(primer) %>% 
+  mutate(slope = round(lm(mean_Ct ~ dilution)$coefficients[2], 3))
+```
+
+Now, let's calculate the primer efficiency for each primer pairs.
+
+```{r}
+geneB1$efficiency <- round((10^(1/geneB1$slope) - 1)*100, 2)
+efficiencies <- unique(geneB1$efficiency)
+```
+We have primer efficiency in percentage now. it should be in the range of 90-110%. Here, in this case all the three primers against geneB1 have good efficiency and all are very close to the efficiency of the primer for housekeeping gene (Hk). So, we can choose any. For your study, if you are going to design multiple primers for the same gene/transcript, you can check their efficiency and choose the best one in combination with the primer for housekeeping gene.
+
+*We are going to choose `geneB1_2` primer pair for our analysis which is closest to the primer efficiency for the housekeeping gene. 
+
+:::{.info}
+* Sometimes, your primer efficiency could be outside of the range of 90-110%. In that case you have to change concentration of forward and/or reverse primer keeping all other parameters constant.
+
+* If your Ct values are too high, use less diluted sample. e.g. 1/2, 1/4, 1/8, ....., etc.
+
+* You can put your sample directly without any dilution as well. If the Ct value for undiluted sample is bigger than the diluted one (it should be smaller because there is more starting/initial DNA sample), it will mean that there is something in the undiluted sample that is inhibiting the PCR amplification.
+
+* What if your primer efficiencies for target and housekeeping gene are different and you can not change it? In this case, use **pfaffl method** for expression ratio calculation which can correct for the primer efficiency difference.
+
+* To reduce primer dimer formation, you may have to--
+- Adjust the annealing temperature, $T_m$ (usually increasing $T_m$ prevents primer-dimer formation)
+- Reduce primer concentrations
+- Adjust the forward and reverse primer ratios
+- Redesign the primers if nothing works
+:::
+
+<!--chapter:end:01-intro.Rmd-->
+
+# Making/Simulating the simple data set *(only for exon1 (`B1`) and one housekeeping gene)* {#chapter1}
+
+So, we are using primer pair `geneB1_2` for the RT-qPCR of geneB1 transcripts. 
+
+Let's call the libraries required and make a simplistic data set to understand how the simulated Ct values are created.
+
+> *What is Ct value?* 
+Ans: the PCR cycle in which the amplification signal (because of fluorophore) of a gene/transcript reach a detectable amount. It depends on initial (or starting) amount (or concentration) of a particular gene/transcript. So, the more the starting concentration, earlier it get detected. So, highly abundant gene/transcript will have smaller Ct value compared to other transcripts. For example, let's take two known transcripts: transcript A, and transcript B and their starting concentrations were 100µL and 80µL, respectively. Transcript A will have smaller Ct value compared to transcript B.
+
+```{r}
+library(purrr)
+library(tibble)
+
+set.seed(10)
+df <- data.frame(replicate(n = 3, rnorm(5, 12, .1), simplify = TRUE)) 
+```
+The code above is an example code making the data set with Ct values for 3 replicates (runs) of the same samples for an exon. We are having total 5 samples here. `data.frame()` function makes the array of values into a data frame. I hope you understand how the code is working. Now, let's do a real simulation. 
+
+## Samples of different age
+
+We will have samples of three age groups, namely 15 days, 1 month and 3 months. In each age group, there will be three genotypes/lines, namely knock-out (KO), tagged (TAG), and wild-type (WT). So, let's add 5 samples per age group. 
+
+### For age 15 days
+```{r}
+nKO <- 5 #No. of KO sample
+nTAG <- 5 # No. of TAG sample
+nWT <- 5 # No. of WT sample
+
+set.seed(11)
+geneB1 <- rbind(replicate(n = 3, rnorm(nKO, 25, .1), simplify = TRUE),
+               replicate(n = 3, rnorm(nTAG, 22, .08), simplify = TRUE),
+               replicate(n = 3, rnorm(nWT, 22, .08), simplify = TRUE)) 
+```
+
+Have a look at `geneB1` data set. The data set has 3 Ct values in 3 columns for the same sample.
+
+Now, let's make another data set for the housekeeping gene. 
+
+```{r}
+Hk <- rbind(replicate(n = 3, rnorm(nKO, 25, .1), simplify = TRUE),
+       replicate(n = 3, rnorm(nTAG, 25, .1), simplify = TRUE),
+       replicate(n = 3, rnorm(nWT, 25, .1), simplify = TRUE)) #making the dataset with Ct values
+day15 <- data.frame(geneB1, Hk)
+
+colnames(day15) <- c(paste0("geneB1_run", seq(1:3)), paste0("Hk_run", seq(1:3))) #naming the columns. 3 runs
+day15$sampleID <- c(paste0("KO", seq(1, nKO)),
+                      paste0("TAG", seq(1, nTAG)),
+                      paste0("WT", seq(1, nWT))) #naming sample/ID
+day15 <- day15[, c(7, 1:6)] #reordering
+
+day15$age <- rep("15days", times = nrow(day15)) #adding age to all. nrow means how many sample
+day15$line <- c(rep("KO", times = nKO), rep("TAG", times = nTAG), rep("WT", times = nWT))
+```
+
+### For age 1 month
+```{r}
+geneB1_1 <- rbind(replicate(n = 3, rnorm(nKO, 20, .1), simplify = TRUE),
+                          replicate(n = 3, rnorm(nTAG, 17, .07), simplify = TRUE),
+                          replicate(n = 3, rnorm(nWT, 17, .07), simplify = TRUE)) 
+Hk1 <- rbind(replicate(n = 3, rnorm(nKO, 25, .1), simplify = TRUE),
+               replicate(n = 3, rnorm(nTAG, 25, .1), simplify = TRUE),
+               replicate(n = 3, rnorm(nWT, 25, .1), simplify = TRUE)) 
+month1 <- data.frame(geneB1_1, Hk1)
+#data.frame function makes the array of values into a data frame
+
+colnames(month1) <- c(paste0("geneB1_run", seq(1:3)), paste0("Hk_run", seq(1:3))) 
+month1$sampleID <- c(paste0("KO", seq(nKO+1, 2*nKO)),
+                       paste0("TAG", seq(nTAG+1, 2*nTAG)),
+                       paste0("WT", seq(nWT+1, 2*nWT)))
+month1 <- month1[, c(7, 1:6)]
+
+month1$age <- rep("1month", times = nrow(month1))
+month1$line <- c(rep("KO", times = nKO), rep("TAG", times = nTAG), rep("WT", times = nWT))
+```
+
+### For age 3 months
+```{r}
+geneB1_2 <- rbind(replicate(n = 3, rnorm(5, 14, .1), simplify = TRUE),
+                           replicate(n = 3, rnorm(5, 10, .07), simplify = TRUE),
+                           replicate(n = 3, rnorm(5, 10, .07), simplify = TRUE)) 
+
+Hk2 <- rbind(replicate(n = 3, rnorm(5, 25, .1), simplify = TRUE),
+                replicate(n = 3, rnorm(5, 25, .1), simplify = TRUE),
+                replicate(n = 3, rnorm(5, 25, .1), simplify = TRUE))
+month3 <- data.frame(geneB1_2, Hk2)
+
+colnames(month3) <- c(paste0("geneB1_run", seq(1:3)), paste0("Hk_run", seq(1:3))) 
+month3$sampleID <- c(paste0("KO", seq(2*nKO+1, 3*nKO)),
+                       paste0("TAG", seq(2*nTAG+1, 3*nTAG)),
+                       paste0("WT", seq(2*nWT+1, 3*nWT)))
+month3 <- month3[, c(7, 1:6)]
+
+month3$age <- rep("3months", times = nrow(month3)) #adding age to all. nrow means how many sample
+month3$line <- c(rep("KO", times = nKO), rep("TAG", times = nTAG), rep("WT", times = nWT))
+```
+
+### Making the whole data set combining all three datasets: by `rbind()` function
+
+```{r}
+pcr <- rbind(day15, month1, month3)
+```
+Our data simulation is done. 
+
+## Data preparation
+
+Now, let's select the numeric columns with Ct values only and find out the mean value for `geneB1` and `HK` from the three runs/replicates per sample.
+
+```{r}
+a <- pcr %>% select_if(is.numeric) %>% colnames()
+
+pcr$Ct_geneB1 <- apply(pcr[, c(grep("geneB1_", a, ignore.case = TRUE, value = T))], 1, mean)
+pcr$Ct_Hk <- apply(pcr[, c(grep("Hk_", a, ignore.case = TRUE, value = T))], 1, mean)
+```
+
+Let's organize the data set. Also, we don't need the raw Ct values from the three runs any more.
+
+```{r}
+data <- pcr[, c("sampleID", "age", "line", "Ct_geneB1", "Ct_Hk")]
+```
+
+Let's apply the formula of ΔCt: **delta_Ct = Ct (gene of interest) – Ct (housekeeping gene)**
+
+```{r}
+data$delta_Ct <- data$Ct_geneB1 - data$Ct_Hk 
+```
+
+Let's calculate the calibrator's mean ΔCt value. Geometric mean is better if calibrators' ΔCt values are variable. Geometric mean is resistant to outlier. Our Ct values are not so variable. So, we can do arithmetic mean.
+
+> calibrator will be the samples relative to which we want to know the expression level. We want to know the fold-change (fold gene expression level) compared to 15-days-old wild-type samples (calibraators) here. We have to keep in mind this thing for our downstream analysis.
+
+```{r}
+calibrator <- data[data$line == "WT" & data$age == "15days",]
+calibrator_deltaCt <- mean(calibrator$delta_Ct)
+```
+
+Now, we have to subtract the calibrator ΔCt value from each sample to find out ΔΔCt value
+
+```{r}
+data$delta_deltaCt <- data$delta_Ct - calibrator_deltaCt
+```
+
+Let's find out fold change. The formula for this is: $2^{-ΔΔCt}$
+
+```{r}
+data$fold_gene_expression <- 2^-(data$delta_deltaCt)
+```
+> So here, we can see that 15-days-old WT samples have fold change of ~1. Because their Ct values were our calibrator/reference Ct values. Compared to them, 15-days-old TAG samples also have fold change of ~1, which is very reasonable, because we had similar values for the TAG as well. 15-days-old KO samples have less expression (~0.13 fold only). 
+But in 1-month-old group, KO samples have fold change of ~4 and TAG/WT samples have fold-change of ~32. So, much higher than the reference group. 
+Also, in 3-month-old group, KO samples have fold change of ~250 and WT/TAG samples have fold change of >4020.
+So, same pattern (i.e. less in KO and high in WT/TAG) is observed for every `line`. And `age` has an effect in the expression of the gene.
+
+:::{.info}
+**Interpreting the fold change**
+Have a close look at your fold change column for each line and age group.
+:::
+
+To do any statistical analysis, we have to check how the fold change values are distributed. If they are not normally distributed, it is better to log transform them. 
+
+```{r}
+par(mfrow = c(1,1))
+hist(data$fold_gene_expression, xlab="fold change", main="Histogram of fold change")
+
+data$log_fold_change <- log2(data$fold_gene_expression)
+par(mfrow = c(1,1))
+hist(data$log_fold_change, xlab="log fold change", main="Histogram of log fold change")
+```
+We can put the same plots together and compare the fold change before and after log transformation.
+
+```{r}
+par(mfrow = c(1,2))
+hist(data$fold_gene_expression, xlab="fold change", main="Histogram of fold change")
+hist(data$log_fold_change, xlab="log fold change", main="Histogram of log fold change")
+```
+Our data preparation for one gene of interest and one housekeeping gene is done.   
+Hurray......!
+
+Let's save the data set. The code below will save the data set in your working directory. You can change the name as you wish by replacing `pcr1.csv` to the name you want.
+
+```{r}
+write.csv(data, "pcr1.csv", sep = ",")
+```
+
+## Statistical analysis
+
+Let's have a look at the experiment design.
+```{r}
+table(data$age, data$line)
+```
+So, it was a balanced design. 
+
+Let's have a look at the log fold change for each age and line combination.
+```{r}
+boxplot(log_fold_change ~ line*age, data=data, xlab = "Age-Line combinations", ylab = "Log fold change")
+```
+The plot shows that WT and TAG in a particular age group have similar expression of transcript B1.
+
+Let's make a column combining age and line together.
+
+```{r}
+data$age_line <- paste(data$age, data$line, sep = "_")
+```
+
+Let's apply linear model for fold change against `age_line` column.
+
+```{r}
+lm1 <- lm(log_fold_change ~ age_line, data=data)
+summary(lm1)
+```
+:::{.info}
+**Interpreting the output**
+R takes the first group as reference by default. So, the comparison is against `15days_KO`, that's why it is not shown in the comparison. It is actually shown in terms of intercept. The value of intercept is an estimate of `15days_KO` (You can have a look at the average of `15days_KO`), which is significant here in this analysis. Here, every group is significantly different than the `15days_KO` group. Have a closer look at your fold change or log fold change columns. Also notice the adjusted R-squared value and overall p-value in the output. Almost 100% variability in the data is captured by our model. It is because we simulated the data this way, there wasn't that much variability. 
+
+**Tip:** 
+*t value = Estimate/std. Error*. The `t value` measures the size of the difference relative to the variation in the sample data (look at the equation). The greater the magnitude of `t value`, the greater the evidence against the null hypothesis meaning there is greater evidence that there is a significant difference. `t value` closer to 0 means more likely there isn't a significant difference.
+
+**N.B.** you can check the estimate, standard error and t value manually for the reference (`15days_KO`) group.
+:::
+
+```{r estimate-se, echo=FALSE}
+estimate <-  mean(data$log_fold_change[data$age_line == "15days_KO"])
+se <- function(x) sqrt(var(x) / length(x))
+SE <- se(data$log_fold_change[data$age_line == "15days_KO"]) #`SE` might be a bit different than the value shown in the output table
+t_value <- estimate/SE
+```
+
+```{r estimate, webex.hide="See the R code to calculate estimate, se and t value", ref.label="estimate-se", eval=FALSE}
+```
+
+But we set `15days_WT` as our calibrator/reference group while calculating the ΔCt value. So, let's set `15days_WT` group as our reference. We should relevel the `age_line` column as `factor` as well for modeling. 
+
+```{r}
+data$age_line <- relevel(factor(data$age_line), ref = "15days_WT")
+lm2 <- lm(log_fold_change ~ age_line, data=data)
+summary(lm2)
+```
+:::{.info}
+**Interpreting the output**
+This time, the comparison is relative to `15days_WT`, (and not shown in the comparison). Here every group is significantly different than the `15days_WT` group except `15days_TAG`. And you might have recall why this is the case--we simulated this way, all the WT and TAG samples have basically similar Ct values (or fold change or log fold change). See the boxplot as well. Have a closer look at the values for WT and TAG in the output columns to verify the claim. Also notice the adjusted R-squared value and overall p-value again.
+:::
+
+We can check pair-wise comparisons. It will show all possible combination of pair-wise comparisons. 
+
+```{r}
+library(emmeans)
+em=emmeans(lm2,~age_line)
+emp=emmeans(lm2,pairwise~age_line) 
+em
+emp
+plot(em, comparisons = TRUE)
+```
+Have a look at every combination of WT and TAG with age? How are they? Aren't they same as we expected?
+
+What if we model for `age` and `line` separately?
+
+```{r}
+lm3 <- lm(log_fold_change ~ age + line, data=data)
+summary(lm3)
+```
+It shows everything very well. But we didn't wanted the comparison/interpretation in this way. 
+
+What if we model for interaction of `age` and `line`?
+
+```{r}
+lm4 <- lm(log_fold_change ~ age*line, data=data)
+summary(lm4)
+```
+14days old and KO are not shown again. Because R took them as reference, by default. Our `lm2` is better to compare everything.
+
+The above code is equivalent to `lm(log_fold_change ~ age + line + age*line, data=data)`. We used the short convention here. 
+:::(.info)
+The intercept here is the mean of 15-days-old KO mice samples. Check it by `mean(data$log_fold_change[data$age == "15days" & data$line == "KO"])`. All other results are relative to this group (not shown in the output). You can try `lm(log_fold_change ~ -1 + age*line, data=data)` command as well to see what happens.
+:::
+
+```{r}
+anova(lm2)
+```
+
+We could use `lme4` or `limma` packages for the modeling as well. But `lm()` function of base R is good enough to do this simple modeling. We will see their use later.
+
+<!--chapter:end:02-cross-refs.Rmd-->
+
+# Parts
+
+You can add parts to organize one or more book chapters together. Parts can be inserted at the top of an .Rmd file, before the first-level chapter heading in that same file. 
+
+Add a numbered part: `# (PART) Act one {-}` (followed by `# A chapter`)
+
+Add an unnumbered part: `# (PART\*) Act one {-}` (followed by `# A chapter`)
+
+Add an appendix as a special kind of un-numbered part: `# (APPENDIX) Other stuff {-}` (followed by `# A chapter`). Chapters in an appendix are prepended with letters instead of numbers.
+
+
+
+
+<!--chapter:end:03-parts.Rmd-->
+
+# Footnotes and citations 
+
+## Footnotes
+
+Footnotes are put inside the square brackets after a caret `^[]`. Like this one ^[This is a footnote.]. 
+
+## Citations
+
+Reference items in your bibliography file(s) using `@key`.
+
+For example, we are using the **bookdown** package [@R-bookdown] (check out the last code chunk in index.Rmd to see how this citation key was added) in this sample book, which was built on top of R Markdown and **knitr** [@xie2015] (this citation was added manually in an external file book.bib). 
+Note that the `.bib` files need to be listed in the index.Rmd with the YAML `bibliography` key.
+
+
+The RStudio Visual Markdown Editor can also make it easier to insert citations: <https://rstudio.github.io/visual-markdown-editing/#/citations>
+
+<!--chapter:end:04-citations.Rmd-->
+
+# Blocks
+
+## Equations
+
+Here is an equation.
+
+\begin{equation} 
+  f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+  (\#eq:binom)
+\end{equation} 
+
+You may refer to using `\@ref(eq:binom)`, like see Equation \@ref(eq:binom).
+
+
+## Theorems and proofs
+
+Labeled theorems can be referenced in text using `\@ref(thm:tri)`, for example, check out this smart theorem \@ref(thm:tri).
+
+::: {.theorem #tri}
+For a right triangle, if $c$ denotes the *length* of the hypotenuse
+and $a$ and $b$ denote the lengths of the **other** two sides, we have
+$$a^2 + b^2 = c^2$$
+:::
+
+Read more here <https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html>.
+
+## Callout blocks
+
+
+The R Markdown Cookbook provides more help on how to use custom blocks to design your own callouts: https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html
+
+<!--chapter:end:05-blocks.Rmd-->
+
+# Sharing your book
+
+## Publishing
+
+HTML books can be published online, see: https://bookdown.org/yihui/bookdown/publishing.html
+
+## 404 pages
+
+By default, users will be directed to a 404 page if they try to access a webpage that cannot be found. If you'd like to customize your 404 page instead of using the default, you may add either a `_404.Rmd` or `_404.md` file to your project root and use code and/or Markdown syntax.
+
+## Metadata for sharing
+
+Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the `index.Rmd` YAML. To setup, set the `url` for your book and the path to your `cover-image` file. Your book's `title` and `description` are also used.
+
+
+
+This `gitbook` uses the same social sharing data across all chapters in your book- all links shared will look the same.
+
+Specify your book's source repository on GitHub using the `edit` key under the configuration options in the `_output.yml` file, which allows users to suggest an edit by linking to a chapter's source file. 
+
+Read more about the features of this output format here:
+
+https://pkgs.rstudio.com/bookdown/reference/gitbook.html
+
+Or use:
+
+```{r eval=FALSE}
+?bookdown::gitbook
+```
+
+
+
+<!--chapter:end:06-share.Rmd-->
+
+`r if (knitr::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:07-references.Rmd-->
+
