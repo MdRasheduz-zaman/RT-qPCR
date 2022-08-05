@@ -1,0 +1,17 @@
+about
+how-to-use-the-book
+about-the-experiment-design
+render-book
+preview-book
+primer-efficiency-1-target-gene-1-housekeeping-gene
+data-simulation
+data-analysis
+chapter1
+samples-of-different-age
+for-age-15-days
+for-age-1-month
+for-age-3-months
+making-the-whole-data-set-combining-all-three-datasets-by-rbind-function
+data-preparation
+statistical-analysis
+url-your-book-url-like-httpsbookdown.orgyihuibookdown

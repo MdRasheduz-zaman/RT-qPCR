@@ -4,15 +4,15 @@ author: "Md Rasheduzzaman"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography:
-- book.bib
-- packages.bib
-description: "This is an example of how to analyze RT-qPCR data. To have a real feelings
-  of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data
-  first and then we will do the modeling and see what happens. \nThe HTML output format
-  for this example is bookdown::gitbook,\nset in the _output.yml file.\n"
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
 link-citations: yes
-github-repo: rstudio/RT-qPCR
+github-repo: rstudio/bookdown-demo
 ---
 
 # About
@@ -22,7 +22,7 @@ This is an example of how to analyze RT-qPCR data. To have a real feelings of wh
 
 ## How to use the book
 
-If you are comfortable with RT-qPCR data, you can skip the first chapter and directly dive down into the second chapter. Otherwise, I would suggest starting with the first chapter. You will know how to make the dataset in R by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling functions. 
+If you are comfortable with RT-qPCR data, you can skip chapter 2 and directly dive down into chapter 3. Otherwise, I would suggest starting from the beginning. You will know how to make the data set in R by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling functions. 
 
 ## About the experiment design
 
@@ -33,3 +33,35 @@ This study was to know the mechanism of disease X in cattle. The causative reaso
 Also, microarray expression analysis shows that gene B is downregulated in the KO mice which is a vital protein related to the disease. This gene B has many known transcript variants in mice (let's say 20) and we can catagorize them in two broad catagories depending on presence/absence of certain exon in the transcripts. Let's say one group lack exon15 and the other group lack exon8. The fascinating fact is exon15-containing transcripts get translated preferentially at the early developmental stage and the exon8-containing transcripts get translated in the later developmental stage. So, age has its say in the expression pattern of the gene B.
 
 In accordance with the information above, we have designed primers against these exon1, exon8 and exon15. Exon1 is taken to know the approximate total expression of the gene B because it is common in both of the catagories of the transcripts. We are going to compare the expression of exon15, exon8, and exon1 from the RT-qPCR study in this three mouse lines (at first for one gene of interest and one housekeeping gene, and then multiple (all 3) gene of interest and two housekeeping genes). Well, basically we are going to simulate the RT-qPCR result and do the analysis.
+
+## Render book
+
+You can render the HTML version of this example book without changing anything:
+
+1. Find the **Build** pane in the RStudio IDE, and
+
+1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
+
+Or build the book from the R console:
+
+```{r, eval=FALSE}
+bookdown::render_book()
+```
+
+To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+
+## Preview book
+
+As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+
+```{r eval=FALSE}
+bookdown::serve_book()
+```
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

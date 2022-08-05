@@ -207,14 +207,15 @@ lm1 <- lm(log_fold_change ~ age_line, data=data)
 summary(lm1)
 ```
 :::{.info}
-**Interpreting the output**
+**Interpreting the output:**
 R takes the first group as reference by default. So, the comparison is against `15days_KO`, that's why it is not shown in the comparison. It is actually shown in terms of intercept. The value of intercept is an estimate of `15days_KO` (You can have a look at the average of `15days_KO`), which is significant here in this analysis. Here, every group is significantly different than the `15days_KO` group. Have a closer look at your fold change or log fold change columns. Also notice the adjusted R-squared value and overall p-value in the output. Almost 100% variability in the data is captured by our model. It is because we simulated the data this way, there wasn't that much variability. 
+:::
 
-**Tip:** 
+**Tips:** 
 *t value = Estimate/std. Error*. The `t value` measures the size of the difference relative to the variation in the sample data (look at the equation). The greater the magnitude of `t value`, the greater the evidence against the null hypothesis meaning there is greater evidence that there is a significant difference. `t value` closer to 0 means more likely there isn't a significant difference.
 
 **N.B.** you can check the estimate, standard error and t value manually for the reference (`15days_KO`) group.
-:::
+
 
 ```{r estimate-se, echo=FALSE}
 estimate <-  mean(data$log_fold_change[data$age_line == "15days_KO"])
@@ -267,12 +268,14 @@ summary(lm4)
 14days old and KO are not shown again. Because R took them as reference, by default. Our `lm2` is better to compare everything.
 
 The above code is equivalent to `lm(log_fold_change ~ age + line + age*line, data=data)`. We used the short convention here. 
-:::(.info)
+
+:::{.info}
 The intercept here is the mean of 15-days-old KO mice samples. Check it by `mean(data$log_fold_change[data$age == "15days" & data$line == "KO"])`. All other results are relative to this group (not shown in the output). You can try `lm(log_fold_change ~ -1 + age*line, data=data)` command as well to see what happens.
 :::
 
+How is our model? Let's check.
 ```{r}
 anova(lm2)
 ```
 
-We could use `lme4` or `limma` packages for the modeling as well. But `lm()` function of base R is good enough to do this simple modeling. We will see their use later.
+We could use `lme4` or `limma` packages for the modeling as well. But `lm()` function of base R is good enough to do this simple modeling. We will see their use later. Next part of this endeavour will be simulation and analysis of RT-qPCR data with multiple gene of interest/transcripts and multiple reference/housekeeping gene. Stay tuned!

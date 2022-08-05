@@ -66,8 +66,8 @@ We have primer efficiency in percentage now. it should be in the range of 90-110
 * What if your primer efficiencies for target and housekeeping gene are different and you can not change it? In this case, use **pfaffl method** for expression ratio calculation which can correct for the primer efficiency difference.
 
 * To reduce primer dimer formation, you may have to--
-- Adjust the annealing temperature, $T_m$ (usually increasing $T_m$ prevents primer-dimer formation)
-- Reduce primer concentrations
-- Adjust the forward and reverse primer ratios
-- Redesign the primers if nothing works
+a. Adjust the annealing temperature, $T_m$ (usually increasing $T_m$ prevents primer-dimer formation)
+b. Reduce primer concentrations
+c. Adjust the forward and reverse primer ratios
+d. Redesign the primers if nothing works
 :::
