@@ -1,4 +1,9 @@
-about
+fig:primer-line-plot
+fig:fold-change
+fig:log-fold-change
+fig:boxplot
+fig:comparison-plot
+overview
 how-to-use-the-book
 about-the-experiment-design
 render-book
@@ -14,4 +19,3 @@ for-age-3-months
 making-the-whole-data-set-combining-all-three-datasets-by-rbind-function
 data-preparation
 statistical-analysis
-url-your-book-url-like-httpsbookdown.orgyihuibookdown

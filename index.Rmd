@@ -8,31 +8,31 @@ bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
-  This is a minimal example of using the bookdown package to write a book.
+  This is an example of how to analyze RT-qPCR data.
   The HTML output format for this example is bookdown::gitbook,
   set in the _output.yml file.
 link-citations: yes
 github-repo: rstudio/bookdown-demo
 ---
 
-# About
+# Overview
 
-This is an example of how to analyze RT-qPCR data. To have a real feelings of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data first and then we will do the modeling and see what happens (we know what to expect from the modeling/analysis since we simulated the data set and we know the characteristics of the data set).
+This is an example of how to analyze RT-qPCR data. To have a real feelings of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data first and then we will do the modeling and see what happens (we know what to expect from the modeling/analysis since we simulated the data and we know the characteristics of the data set).
 
 
 ## How to use the book
 
-If you are comfortable with RT-qPCR data, you can skip chapter 2 and directly dive down into chapter 3. Otherwise, I would suggest starting from the beginning. You will know how to make the data set in R by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling functions. 
+I would suggest starting from the beginning. You will know how to make the data set in R by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling to interpret the properties of the samples/genes of interest. 
 
 ## About the experiment design
 
-To analyze any data set, we have to know the experiment design and then do the analysis accordingly. It may required data cleaning/wrangling before the analysis as well. So, let's learn about the experiment.
+To analyze any data set, we have to know the experiment design and then do the analysis accordingly. It may requires data cleaning/wrangling before the analysis as well. So, let's learn about the experiment.
 
-This study was to know the mechanism of disease X in cattle. The causative reason is a missense mutation in gene A which causes a premature stop codon. Since rearing cattle for experimental studies is not a feasible option, a knock-out (KO) mouse line was created by inserting premature stop codon and validated. So, we could compare this KO mouse line with the wild-type (WT) ones to know the underlying biological phenomena. But, there is a problem. We don't have suitable commercial antibody available in the market against mouse A protein which we need to have to decipher the underlying biological mechanism by immunoprecipitation. So, a 14-amino acid long V5-tag was inserted just after the start codon of the gene A and a Tagged mouse line (TAG) is created to solve the problem of unavailabilty of antibodies. We have suitable commercial antibody against this V5-tag and studies show that V5-tag is well expressed, doesn't get cleaved in the apoptotic cells and doesn't hinder the activity of protein A. 
+This study was to know the mechanism of disease X in cattle. The causative reason is a missense mutation in gene A which causes a premature stop codon. Since rearing cattle for experimental studies is not a feasible option, a knock-out (KO) mouse line was created by inserting premature stop codon and the mouse line was validated by experimentation. So, we could compare this KO mouse line with the wild-type (WT) ones to know the underlying biological phenomena. But, there is a problem. We don't have suitable commercial antibody available in the market against mouse A protein. But we need to have antibody to immunoprecipitate protein A to decipher the underlying biological mechanism. So, a 14-amino acid long **V5-tag (GKPIPNPLLGLDST)** was inserted just after the start codon of the gene A and a Tagged mouse line (TAG) is created to solve the problem of unavailabilty of antibodies. We have suitable commercial antibody against this V5-tag and studies show that V5-tag is well expressed, doesn't get cleaved in the apoptotic cells and doesn't hinder the activity of protein A. 
 
-Also, microarray expression analysis shows that gene B is downregulated in the KO mice which is a vital protein related to the disease. This gene B has many known transcript variants in mice (let's say 20) and we can catagorize them in two broad catagories depending on presence/absence of certain exon in the transcripts. Let's say one group lack exon15 and the other group lack exon8. The fascinating fact is exon15-containing transcripts get translated preferentially at the early developmental stage and the exon8-containing transcripts get translated in the later developmental stage. So, age has its say in the expression pattern of the gene B.
+Also, microarray expression analysis shows that gene B is downregulated in the KO mice which is a vital protein related to the disease. This gene B has many known transcript variants in mice (let's say 20) and we can categorize them in two broad categories depending on presence/absence of certain exons in the transcripts. Let's say one group lack exon15 and the other group lack exon8. The fascinating fact is, as some studies claim, exon15-containing transcripts get translated preferentially at the early developmental stage and the exon8-containing transcripts get translated in the later developmental stage. So, age has its say in the expression pattern of the gene B.
 
-In accordance with the information above, we have designed primers against these exon1, exon8 and exon15. Exon1 is taken to know the approximate total expression of the gene B because it is common in both of the catagories of the transcripts. We are going to compare the expression of exon15, exon8, and exon1 from the RT-qPCR study in this three mouse lines (at first for one gene of interest and one housekeeping gene, and then multiple (all 3) gene of interest and two housekeeping genes). Well, basically we are going to simulate the RT-qPCR result and do the analysis.
+In accordance with the information above, we have designed primers against these exon15, exon8 and exon1. Exon1 is taken to know the approximate total expression of the gene B because it is common in both of the categories of the transcripts. We are going to compare the expression of exon15, exon8, and exon1 from the RT-qPCR study in this three mouse lines (at first for one gene of interest and one housekeeping gene, and then multiple (all 3) gene of interest and two housekeeping genes). Well, basically we are going to simulate the RT-qPCR data and then do the analysis to prove the claim from the previous studies. 
 
 ## Render book
 
