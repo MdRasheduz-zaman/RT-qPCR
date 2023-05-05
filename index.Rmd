@@ -1,7 +1,7 @@
 --- 
 title: "RT-qPCR Data Simulation and Analysis"
 author: "Md Rasheduzzaman"
-date: "`r Sys.Date()`"
+date: "2022-08-05"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -34,29 +34,10 @@ Also, microarray expression analysis shows that gene B is downregulated in the K
 
 In accordance with the information above, we have designed primers against these exon15, exon8 and exon1. Exon1 is taken to know the approximate total expression of the gene B because it is common in both of the categories of the transcripts. We are going to compare the expression of exon15, exon8, and exon1 from the RT-qPCR study in this three mouse lines (at first for one gene of interest and one housekeeping gene, and then multiple (all 3) gene of interest and two housekeeping genes). Well, basically we are going to simulate the RT-qPCR data and then do the analysis to prove the claim from the previous studies. 
 
-## Render book
 
-You can render the HTML version of this example book without changing anything:
+## Acknowledgement
 
-1. Find the **Build** pane in the RStudio IDE, and
-
-1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
-
-Or build the book from the R console:
-
-```{r, eval=FALSE}
-bookdown::render_book()
-```
-
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
-
-## Preview book
-
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
-
-```{r eval=FALSE}
-bookdown::serve_book()
-```
+I would like to thank Dr. Amandine Duchesne (INRAE Jouy-en-Josas) for her continuous support while doing my MS thesis, Dr. Adnan Mannan (GEB, CU) for his  mentoring, Anne Vaiman (INRAE Jouy-en-Josas) for her tremendous help while experimentation, Dr. Clemens Falker-Gieske (UGOE) for his nice co-supervision; Johannes Giebel (UGOE), Dr. Christian Reimer (UGOE), Dr. Mehmet Gültas (UGOE), Martin Wutke (UGOE) for their teaching and helping to learn R. Writing this document would not be possible without these people. Also, a huge THANK to ONLINE.
 
 
 ```{r include=FALSE}

@@ -19,3 +19,10 @@ for-age-3-months
 making-the-whole-data-set-combining-all-three-datasets-by-rbind-function
 data-preparation
 statistical-analysis
+acknowledgement
+for-multiple-gene-of-interest-and-multiple-housekeeping-genes.-before-this-part-see-chapter-1-refchapter1-for-better-understanding.
+for-age-15-days-1
+for-age-1-month-1
+for-age-3-months-1
+making-the-whole-dataset-using-all-three-datasets
+statistical-analysis-1
