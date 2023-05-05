@@ -1,3 +1,58 @@
+--- 
+title: "RT-qPCR Data Simulation and Analysis"
+author: "Md Rasheduzzaman"
+date: "2022-08-05"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is an example of how to analyze RT-qPCR data.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# url: your book url like https://bookdown.org/yihui/bookdown
+
+Placeholder
+
+
+## How to use the book
+## About the experiment design
+## Acknowledgement
+
+<!--chapter:end:index.Rmd-->
+
+
+# Primer efficiency (1 target gene & 1 housekeeping gene)
+
+Placeholder
+
+
+## Data simulation
+## Data analysis
+
+<!--chapter:end:01-intro.Rmd-->
+
+
+# Making/Simulating the simple data set {#chapter1}
+
+Placeholder
+
+
+## Samples of different age
+### For age 15 days
+### For age 1 month
+### For age 3 months
+### Making the whole data set combining all three datasets: by `rbind()` function
+## Data preparation
+## Statistical analysis
+
+<!--chapter:end:02-cross-refs.Rmd-->
+
 # Chapter 4
 * For multiple gene of interest and multiple housekeeping genes. Before this part, see chapter 1 `\@ref(chapter1)` for better understanding.*
 
@@ -252,7 +307,7 @@ lm2 <- lm(RelExp_B1 ~ age_line, data=stat)
 summary(lm1)
 summary(lm2)
 
-lm2 <- lm(RelExp_B1~ 0 + line * age, data = final)
+lm2 <- lm(RelExp_B1~ 0 + line * age, data = final1)
 summary(lm2)
 age <- stat$age
 line <- stat$line
@@ -277,7 +332,7 @@ library(limma)
 design <- model.matrix(~0+age+line)
 fit <- lmFit(df3,design)
 #contrast.matrix <- makeContrasts("age3months-age1month",levels=design)
-contrast.matrix <- makeContrasts("lineKO-lineTAG",levels=design)
+contrast.matrix <- makeContrasts("lineTAG-lineWT",levels=design)
 fit <- contrasts.fit(fit,contrast.matrix)
 fit=eBayes(fit)
 names(fit)
@@ -294,7 +349,7 @@ DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH", sort.by = "p")
 
 ####################### KO vs WT ##################################
-fit <- lmFit(df3,design)
+fit <- lmFit(pcr3,design)
 contrast.matrix <- makeContrasts("genotypeKO-genotypeWT",levels=design)
 fit <- contrasts.fit(fit,contrast.matrix)
 fit=eBayes(fit)
@@ -302,20 +357,20 @@ names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH", sort.by = "p")
 
-################## 15days vs 1month #############################
+################## 14days vs 1month #############################
 #are the genes diff expressed in each age?
 design2 <- model.matrix(~0+age)
-contrast.matrix <- makeContrasts("age15days-age1month",levels=design2)
-fit <- lmFit(df3,design2)
+contrast.matrix <- makeContrasts("age14days-age1month",levels=design2)
+fit <- lmFit(pcr3,design2)
 fit <- contrasts.fit(fit,contrast.matrix)
 fit=eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH",sort.by="p")
 
-################## 15days vs 3month ############################
-contrast.matrix <- makeContrasts("age15days-age3months",levels=design2)
-fit <- lmFit(df3,design2)
+################## 14days vs 3month ############################
+contrast.matrix <- makeContrasts("age14days-age3months",levels=design2)
+fit <- lmFit(pcr3,design2)
 fit <- contrasts.fit(fit,contrast.matrix)
 fit=eBayes(fit)
 names(fit)
@@ -324,10 +379,13 @@ results = topTable(fit,adjust.method="BH", sort.by = "p")
 
 ################## 1month vs 3month ############################
 contrast.matrix <- makeContrasts("age1month-age3months",levels=design2)
-fit <- lmFit(df3,design2)
+fit <- lmFit(pcr3,design2)
 fit <- contrasts.fit(fit,contrast.matrix)
 fit=eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH", sort.by = "p")
 ```
+
+<!--chapter:end:03-multGOI-2Hk.Rmd-->
+
