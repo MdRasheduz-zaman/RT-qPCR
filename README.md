@@ -1,13 +1,4 @@
 Welcome! 
 
-This is an example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
+This is an example of how to analyze (model) RT-qPCR data. To have a real feelings of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data first and then we will do the modeling and see what happens.
 
-This template provides a skeleton file structure that you can edit to create your book. 
-
-The contents inside the .Rmd files provide some pointers to help you get started, but feel free to also delete the content in each file and start fresh.
-
-Additional resources:
-
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
-
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
