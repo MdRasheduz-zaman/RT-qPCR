@@ -48,6 +48,7 @@ Data simulation is done (you will get this kind of data from RT-qPCR machine aut
 
 The line plot for each primer pairs:
 ```{r primer-line-plot, fig.width=6, fig.height=6, fig.cap = "Line plot for all the primers."}
+knitr::opts_chunk$set(fig.path = 'docs/figure/')
 library(tidyverse)
 library(dplyr)
 geneB1 %>% ggplot(aes(x=dilution, y = mean_Ct, group=primer, color=primer)) + 
