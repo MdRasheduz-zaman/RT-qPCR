@@ -1,9 +1,10 @@
-# Primer efficiency (1 target gene & 1 housekeeping gene)
+# Primer Efficiency Measurement {#chapter2}
 
-## Data simulation
+## Data Simulation 
+With 1 target gene & 1 housekeeping gene for simplicity  
 
 We are going to dilute our sample three times by the factor of 1/10. So, for example, if we add 1$\mu L$ sample in 9$\mu L$ water, it will be a 1/10 dilution. We have to follow the same procedure serially (serial dilution) to make 1/100 and 1/1000 dilutions.
-Also, we shouldn't forget to replicate the same dilution multiple times.  Here, in this example, we are simulating 3 runs per dilution for 3 primer pairs against the same gene `B1` to find out the best primer pairs. We are having one housekeeping gene (Hk) here. Add negative control (NTC) in the plate as an internal control as well.  
+Also, we shouldn't forget to replicate the same dilution multiple times.  Here, in this example, we are simulating 3 runs per dilution for 3 primer pairs against the same gene `B1` to find out the best primer pairs. We are having one housekeeping gene (Hk) here. Add negative control (NTC) in the PCR plate as an internal control as well.  
 
 ```{r primer-efficiencies}
 set.seed(10) #just for reproducibility
@@ -43,7 +44,7 @@ geneB1
 Data simulation is done (you will get this kind of data from RT-qPCR machine automatically). Let's make sense from the data. 
 
 
-## Data analysis
+## Data Analysis
 
 The line plot for each primer pairs:
 ```{r primer-line-plot, fig.width=6, fig.height=6, fig.cap = "Line plot for all the primers."}

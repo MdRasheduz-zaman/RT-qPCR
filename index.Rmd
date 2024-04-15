@@ -4,31 +4,29 @@ author: "Md Rasheduzzaman"
 date: "2022-08-05"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
-# cover-image: path to the social sharing image like images/cover.jpg
-description: |
-  This is an example of how to analyze RT-qPCR data.
-  The HTML output format for this example is bookdown::gitbook,
-  set in the _output.yml file.
-link-citations: yes
-github-repo: rstudio/bookdown-demo
+bibliography:
+- book.bib
+- packages.bib
+description: "This is an example of how to analyze RT-qPCR data.\nThe HTML output
+  format for this example is bookdown::gitbook,\nset in the _output.yml file.\n"
+link-citations: true
+github-repo: "rstudio/bookdown-demo"
 ---
 
 # Overview
 
-This is an example of how to analyze RT-qPCR data. To have a real feelings of what the modelings do to RT-qPCR data, we are going to simulate RT-qPCR data first and then we will do the modeling and see what happens (we know what to expect from the modeling/analysis since we simulated the data and we know the characteristics of the data set).
+This is an example of how to analyze RT-qPCR data. To have a real feelings of what the modeling do to the RT-qPCR data, we are going to simulate RT-qPCR data first and then we will do the modeling and see what happens (we know what to expect from the modeling/analysis since we simulated the data and we know the characteristics of the dataset and help to interpret a result from a real dataset). You can start from the generated dataset itself if you are not interested in how to simulate the data (also, you will have it from your RT-qPCR experiment anyway)
 
 
 ## How to use the book
 
-I would suggest starting from the beginning. You will know how to make the data set in R by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling to interpret the properties of the samples/genes of interest. 
+I would suggest starting from the beginning. You will know how to make the dataset in `R` by simulating, how to apply the formula to know the fold-change or relative expression ratio, and how to apply plotting and modeling to interpret the properties of the samples/genes of interest. 
 
 ## About the experiment design
 
-To analyze any data set, we have to know the experiment design and then do the analysis accordingly. It may requires data cleaning/wrangling before the analysis as well. So, let's learn about the experiment.
+Data shows no causality--to analyze any dataset, we have to know the experimental design and then do the analyses accordingly. It may requires data cleaning/wrangling before the analyses as well. So, let's learn about the experimental design.
 
-This study was to know the mechanism of disease X in cattle. The causative reason is a missense mutation in gene A which causes a premature stop codon. Since rearing cattle for experimental studies is not a feasible option, a knock-out (KO) mouse line was created by inserting premature stop codon and the mouse line was validated by experimentation. So, we could compare this KO mouse line with the wild-type (WT) ones to know the underlying biological phenomena. But, there is a problem. We don't have suitable commercial antibody available in the market against mouse A protein. But we need to have antibody to immunoprecipitate protein A to decipher the underlying biological mechanism. So, a 14-amino acid long **V5-tag (GKPIPNPLLGLDST)** was inserted just after the start codon of the gene A and a Tagged mouse line (TAG) is created to solve the problem of unavailabilty of antibodies. We have suitable commercial antibody against this V5-tag and studies show that V5-tag is well expressed, doesn't get cleaved in the apoptotic cells and doesn't hinder the activity of protein A. 
+This study was to know the mechanism of disease X in cattle. The causative reason is a mis-sense mutation in gene A which causes a premature stop codon. Since rearing cattle for experimental studies is not a feasible option, a knock-out (KO) mouse line was created by inserting premature stop codon and the mouse line was validated by experimentation. So, we could compare this KO mouse line with the wild-type (WT) ones to know the underlying biological phenomena. But, there is a problem. We don't have suitable commercial antibody available in the market against mouse A protein. But we need to have antibody to immunoprecipitate protein A to decipher the underlying biological mechanism. So, a 14-amino acid long **V5-tag (GKPIPNPLLGLDST)** was inserted just after the start codon of the gene A and a Tagged mouse line (TAG) is created to solve the problem of unavailability of antibodies. We have suitable commercial antibody against this V5-tag and studies show that V5-tag is well expressed, doesn't get cleaved by the apoptotic cells and doesn't hinder the activity of protein A. 
 
 Also, microarray expression analysis shows that gene B is downregulated in the KO mice which is a vital protein related to the disease. This gene B has many known transcript variants in mice (let's say 20) and we can categorize them in two broad categories depending on presence/absence of certain exons in the transcripts. Let's say one group lack exon15 and the other group lack exon8. The fascinating fact is, as some studies claim, exon15-containing transcripts get translated preferentially at the early developmental stage and the exon8-containing transcripts get translated in the later developmental stage. So, age has its say in the expression pattern of the gene B.
 
@@ -37,7 +35,7 @@ In accordance with the information above, we have designed primers against these
 
 ## Acknowledgement
 
-I would like to thank Dr. Amandine Duchesne (INRAE Jouy-en-Josas) for her continuous support while doing my MS thesis, Dr. Adnan Mannan (GEB, CU) for his  mentoring, Anne Vaiman (INRAE Jouy-en-Josas) for her tremendous help while experimentation, Dr. Clemens Falker-Gieske (UGOE) for his nice co-supervision; Johannes Giebel (UGOE), Dr. Christian Reimer (UGOE), Dr. Mehmet Gültas (UGOE), Martin Wutke (UGOE) for their teaching and helping to learn R. Writing this document would not be possible without these people. Also, a huge THANK to ONLINE.
+I would like to thank Dr. Amandine Duchesne (INRAE Jouy-en-Josas) for her continuous support while doing my MS thesis, Dr. Adnan Mannan (GEB, CU) for his  mentoring, Anne Vaiman (INRAE Jouy-en-Josas) for her tremendous help while experimentation, Dr. Clemens Falker-Gieske (UGOE) for his nice co-supervision; Johannes Giebel (UGOE), Dr. Christian Reimer (UGOE), Dr. Mehmet Gültas (UGOE), Martin Wutke (UGOE) for their teaching and helping to learn R. They provided the knowledge and background I needed writing this document. Also, a huge shout out to Internet (it will be a sin if I don't do that!)!
 
 
 ```{r include=FALSE}

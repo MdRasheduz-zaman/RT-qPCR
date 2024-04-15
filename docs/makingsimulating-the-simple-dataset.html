@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Making/Simulating the Simple Dataset | RT-qPCR Data Simulation and Analysis</title>
+  <meta name="description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Making/Simulating the Simple Dataset | RT-qPCR Data Simulation and Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Making/Simulating the Simple Dataset | RT-qPCR Data Simulation and Analysis" />
+  
+  <meta name="twitter:description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Md Rasheduzzaman" />
+
+
+<meta name="date" content="2022-08-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="primer-efficiency-measurement.html"/>
+<link rel="next" href="chapter-4.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-use-the-book"><i class="fa fa-check"></i><b>1.1</b> How to use the book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-the-experiment-design"><i class="fa fa-check"></i><b>1.2</b> About the experiment design</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgement"><i class="fa fa-check"></i><b>1.3</b> Acknowledgement</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="primer-efficiency-measurement.html"><a href="primer-efficiency-measurement.html"><i class="fa fa-check"></i><b>2</b> Primer Efficiency Measurement</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="primer-efficiency-measurement.html"><a href="primer-efficiency-measurement.html#data-simulation"><i class="fa fa-check"></i><b>2.1</b> Data Simulation</a></li>
+<li class="chapter" data-level="2.2" data-path="primer-efficiency-measurement.html"><a href="primer-efficiency-measurement.html#data-analysis"><i class="fa fa-check"></i><b>2.2</b> Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html"><i class="fa fa-check"></i><b>3</b> Making/Simulating the Simple Dataset</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#samples-of-different-age"><i class="fa fa-check"></i><b>3.1</b> Samples of different age</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#for-age-15-days"><i class="fa fa-check"></i><b>3.1.1</b> For age 15 days</a></li>
+<li class="chapter" data-level="3.1.2" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#for-age-1-month"><i class="fa fa-check"></i><b>3.1.2</b> For age 1 month</a></li>
+<li class="chapter" data-level="3.1.3" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#for-age-3-months"><i class="fa fa-check"></i><b>3.1.3</b> For age 3 months</a></li>
+<li class="chapter" data-level="3.1.4" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#making-the-whole-data-set-combining-all-three-datasets-by-rbind-function"><i class="fa fa-check"></i><b>3.1.4</b> Making the whole data set combining all three datasets: by <code>rbind()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#data-preparation"><i class="fa fa-check"></i><b>3.2</b> Data preparation</a></li>
+<li class="chapter" data-level="3.3" data-path="makingsimulating-the-simple-dataset.html"><a href="makingsimulating-the-simple-dataset.html#statistical-analysis"><i class="fa fa-check"></i><b>3.3</b> Statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter-4.html"><a href="chapter-4.html"><i class="fa fa-check"></i><b>4</b> Chapter 4</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="chapter-4.html"><a href="chapter-4.html#for-age-15-days-1"><i class="fa fa-check"></i><b>4.0.1</b> For age 15 days</a></li>
+<li class="chapter" data-level="4.0.2" data-path="chapter-4.html"><a href="chapter-4.html#for-age-1-month-1"><i class="fa fa-check"></i><b>4.0.2</b> For age 1 month</a></li>
+<li class="chapter" data-level="4.0.3" data-path="chapter-4.html"><a href="chapter-4.html#for-age-3-months-1"><i class="fa fa-check"></i><b>4.0.3</b> For age 3 months</a></li>
+<li class="chapter" data-level="4.0.4" data-path="chapter-4.html"><a href="chapter-4.html#making-the-whole-dataset-using-all-three-datasets"><i class="fa fa-check"></i><b>4.0.4</b> Making the whole dataset using all three datasets</a></li>
+<li class="chapter" data-level="4.1" data-path="chapter-4.html"><a href="chapter-4.html#statistical-analysis-1"><i class="fa fa-check"></i><b>4.1</b> Statistical analysis</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="chapter-4.html"><a href="chapter-4.html#ko-vs-tag"><i class="fa fa-check"></i><b>4.1.1</b> KO vs TAG</a></li>
+<li class="chapter" data-level="4.1.2" data-path="chapter-4.html"><a href="chapter-4.html#tag-vs-wt"><i class="fa fa-check"></i><b>4.1.2</b> TAG vs WT</a></li>
+<li class="chapter" data-level="4.1.3" data-path="chapter-4.html"><a href="chapter-4.html#ko-vs-wt"><i class="fa fa-check"></i><b>4.1.3</b> KO vs WT</a></li>
+<li class="chapter" data-level="4.1.4" data-path="chapter-4.html"><a href="chapter-4.html#days-vs-1month"><i class="fa fa-check"></i><b>4.1.4</b> 15days vs 1month</a></li>
+<li class="chapter" data-level="4.1.5" data-path="chapter-4.html"><a href="chapter-4.html#days-vs-3month"><i class="fa fa-check"></i><b>4.1.5</b> 15days vs 3month</a></li>
+<li class="chapter" data-level="4.1.6" data-path="chapter-4.html"><a href="chapter-4.html#month-vs-3month"><i class="fa fa-check"></i><b>4.1.6</b> 1month vs 3month</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">RT-qPCR Data Simulation and Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="makingsimulating-the-simple-dataset" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Making/Simulating the Simple Dataset<a href="makingsimulating-the-simple-dataset.html#makingsimulating-the-simple-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Only for exon1 (<code>B1</code>) and one housekeeping gene (Hk)</em>
+So, we are using primer pair <code>geneB1_2</code> with primer pair <code>Hk</code> for the RT-qPCR.</p>
+<p>Let’s call the libraries required and make a simplistic data set to understand how the simulated Ct values are created.</p>
+<blockquote>
+<p><em>What is Ct value?</em><br />
+Ans: the PCR cycle in which the amplification signal (because of fluorophore) of a gene/transcript reach a detectable amount. It depends on initial (or starting) amount (or concentration) of a particular gene/transcript. So, the more the starting concentration, earlier it get detected. So, highly abundant gene/transcript will have smaller Ct value compared to other transcripts. For example, let’s take two known transcripts: transcript A, and transcript B and their starting concentrations were 100µL and 80µL, respectively. Transcript A will have smaller Ct value compared to transcript B.</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="makingsimulating-the-simple-dataset.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-2"><a href="makingsimulating-the-simple-dataset.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-3"><a href="makingsimulating-the-simple-dataset.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="makingsimulating-the-simple-dataset.html#cb5-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb5-2"><a href="makingsimulating-the-simple-dataset.html#cb5-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">12</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb5-3"><a href="makingsimulating-the-simple-dataset.html#cb5-3" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##         X1       X2       X3
+## 1 12.00187 12.03898 12.11018
+## 2 11.98157 11.87919 12.07558
+## 3 11.86287 11.96363 11.97618
+## 4 11.94008 11.83733 12.09874
+## 5 12.02945 11.97435 12.07414</code></pre>
+<p>The code above is an example code making the data set with Ct values for 3 replicates (in 3 columns) of the same samples for an exon. We are having total 5 samples (in 5 rows) here. <code>data.frame()</code> function makes the array of values into a data frame. I hope you understand how the code is working. Now, let’s do a real simulation.</p>
+<div id="samples-of-different-age" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Samples of different age<a href="makingsimulating-the-simple-dataset.html#samples-of-different-age" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will have samples of three age groups, namely 15 days, 1 month and 3 months old. In each age group, there will be three genotypes/lines, namely knock-out (KO), tagged (TAG), and wild-type (WT). So, let’s add 5 samples per age group.</p>
+<div id="for-age-15-days" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> For age 15 days<a href="makingsimulating-the-simple-dataset.html#for-age-15-days" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="makingsimulating-the-simple-dataset.html#cb7-1" tabindex="-1"></a>nKO <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co">#No. of KO sample</span></span>
+<span id="cb7-2"><a href="makingsimulating-the-simple-dataset.html#cb7-2" tabindex="-1"></a>nTAG <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># No. of TAG sample</span></span>
+<span id="cb7-3"><a href="makingsimulating-the-simple-dataset.html#cb7-3" tabindex="-1"></a>nWT <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># No. of WT sample</span></span>
+<span id="cb7-4"><a href="makingsimulating-the-simple-dataset.html#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="makingsimulating-the-simple-dataset.html#cb7-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb7-6"><a href="makingsimulating-the-simple-dataset.html#cb7-6" tabindex="-1"></a>geneB1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-7"><a href="makingsimulating-the-simple-dataset.html#cb7-7" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">22</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-8"><a href="makingsimulating-the-simple-dataset.html#cb7-8" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">22</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb7-9"><a href="makingsimulating-the-simple-dataset.html#cb7-9" tabindex="-1"></a>geneB1</span></code></pre></div>
+<pre><code>##           [,1]     [,2]     [,3]
+##  [1,] 24.94090 24.90658 24.91716
+##  [2,] 25.00266 25.13236 24.96516
+##  [3,] 24.84834 25.06249 24.84617
+##  [4,] 24.86373 24.99543 24.97444
+##  [5,] 25.11785 24.89959 24.88501
+##  [6,] 22.00099 21.94540 22.00057
+##  [7,] 21.98216 21.99873 21.98499
+##  [8,] 22.07102 21.96459 21.93874
+##  [9,] 21.95263 22.02820 21.98232
+## [10,] 21.94754 22.00585 21.92131
+## [11,] 21.91166 22.03877 21.86908
+## [12,] 21.92495 21.98512 22.00163
+## [13,] 22.05429 22.12364 22.07134
+## [14,] 21.87380 21.95109 21.93018
+## [15,] 21.93040 21.97218 22.07120</code></pre>
+<p>Have a look at <code>geneB1</code> data set. The data set has 3 Ct values in 3 columns for the same sample.</p>
+<p>Now, let’s make another data set for the housekeeping gene.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="makingsimulating-the-simple-dataset.html#cb9-1" tabindex="-1"></a>Hk <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-2"><a href="makingsimulating-the-simple-dataset.html#cb9-2" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-3"><a href="makingsimulating-the-simple-dataset.html#cb9-3" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) <span class="co">#making the dataset with Ct values</span></span>
+<span id="cb9-4"><a href="makingsimulating-the-simple-dataset.html#cb9-4" tabindex="-1"></a>Hk</span></code></pre></div>
+<pre><code>##           [,1]     [,2]     [,3]
+##  [1,] 24.96561 25.07899 25.05426
+##  [2,] 24.78132 24.97700 24.98434
+##  [3,] 25.08801 24.91815 25.04388
+##  [4,] 25.07239 25.04997 25.14879
+##  [5,] 25.02199 25.01592 25.00602
+##  [6,] 24.91510 25.16935 25.04535
+##  [7,] 25.23397 24.92090 24.98766
+##  [8,] 24.98788 24.89247 24.92369
+##  [9,] 24.80498 24.93921 25.02283
+## [10,] 25.05387 25.07544 25.11195
+## [11,] 25.01566 24.99352 24.93968
+## [12,] 24.93112 25.03155 24.87021
+## [13,] 25.04529 24.93943 25.05065
+## [14,] 24.89325 24.90924 24.91467
+## [15,] 25.04016 25.22616 24.84940</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="makingsimulating-the-simple-dataset.html#cb11-1" tabindex="-1"></a>day15 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(geneB1, Hk)</span>
+<span id="cb11-2"><a href="makingsimulating-the-simple-dataset.html#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="makingsimulating-the-simple-dataset.html#cb11-3" tabindex="-1"></a><span class="fu">colnames</span>(day15) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;geneB1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>))) <span class="co">#naming the columns. 3 runs</span></span>
+<span id="cb11-4"><a href="makingsimulating-the-simple-dataset.html#cb11-4" tabindex="-1"></a>day15<span class="sc">$</span>sampleID <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;KO&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>, nKO)),</span>
+<span id="cb11-5"><a href="makingsimulating-the-simple-dataset.html#cb11-5" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;TAG&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>, nTAG)),</span>
+<span id="cb11-6"><a href="makingsimulating-the-simple-dataset.html#cb11-6" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;WT&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>, nWT))) <span class="co">#naming sample/ID</span></span>
+<span id="cb11-7"><a href="makingsimulating-the-simple-dataset.html#cb11-7" tabindex="-1"></a>day15 <span class="ot">&lt;-</span> day15[, <span class="fu">c</span>(<span class="fu">ncol</span>(day15), <span class="dv">1</span><span class="sc">:</span><span class="fu">c</span>(<span class="fu">ncol</span>(day15)<span class="sc">-</span><span class="dv">1</span>))] <span class="co">#reordering</span></span>
+<span id="cb11-8"><a href="makingsimulating-the-simple-dataset.html#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="makingsimulating-the-simple-dataset.html#cb11-9" tabindex="-1"></a>day15<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;15days&quot;</span>, <span class="at">times =</span> <span class="fu">nrow</span>(day15)) <span class="co">#adding age to all. nrow means how many sample</span></span>
+<span id="cb11-10"><a href="makingsimulating-the-simple-dataset.html#cb11-10" tabindex="-1"></a>day15<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;KO&quot;</span>, <span class="at">times =</span> nKO), <span class="fu">rep</span>(<span class="st">&quot;TAG&quot;</span>, <span class="at">times =</span> nTAG), <span class="fu">rep</span>(<span class="st">&quot;WT&quot;</span>, <span class="at">times =</span> nWT))</span>
+<span id="cb11-11"><a href="makingsimulating-the-simple-dataset.html#cb11-11" tabindex="-1"></a>day15</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3  Hk_run1  Hk_run2  Hk_run3
+## 1       KO1    24.94090    24.90658    24.91716 24.96561 25.07899 25.05426
+## 2       KO2    25.00266    25.13236    24.96516 24.78132 24.97700 24.98434
+## 3       KO3    24.84834    25.06249    24.84617 25.08801 24.91815 25.04388
+## 4       KO4    24.86373    24.99543    24.97444 25.07239 25.04997 25.14879
+## 5       KO5    25.11785    24.89959    24.88501 25.02199 25.01592 25.00602
+## 6      TAG1    22.00099    21.94540    22.00057 24.91510 25.16935 25.04535
+## 7      TAG2    21.98216    21.99873    21.98499 25.23397 24.92090 24.98766
+## 8      TAG3    22.07102    21.96459    21.93874 24.98788 24.89247 24.92369
+## 9      TAG4    21.95263    22.02820    21.98232 24.80498 24.93921 25.02283
+## 10     TAG5    21.94754    22.00585    21.92131 25.05387 25.07544 25.11195
+## 11      WT1    21.91166    22.03877    21.86908 25.01566 24.99352 24.93968
+## 12      WT2    21.92495    21.98512    22.00163 24.93112 25.03155 24.87021
+## 13      WT3    22.05429    22.12364    22.07134 25.04529 24.93943 25.05065
+## 14      WT4    21.87380    21.95109    21.93018 24.89325 24.90924 24.91467
+## 15      WT5    21.93040    21.97218    22.07120 25.04016 25.22616 24.84940
+##       age line
+## 1  15days   KO
+## 2  15days   KO
+## 3  15days   KO
+## 4  15days   KO
+## 5  15days   KO
+## 6  15days  TAG
+## 7  15days  TAG
+## 8  15days  TAG
+## 9  15days  TAG
+## 10 15days  TAG
+## 11 15days   WT
+## 12 15days   WT
+## 13 15days   WT
+## 14 15days   WT
+## 15 15days   WT</code></pre>
+</div>
+<div id="for-age-1-month" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> For age 1 month<a href="makingsimulating-the-simple-dataset.html#for-age-1-month" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="makingsimulating-the-simple-dataset.html#cb13-1" tabindex="-1"></a>geneB1_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-2"><a href="makingsimulating-the-simple-dataset.html#cb13-2" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">17</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-3"><a href="makingsimulating-the-simple-dataset.html#cb13-3" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">17</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb13-4"><a href="makingsimulating-the-simple-dataset.html#cb13-4" tabindex="-1"></a>geneB1_1</span></code></pre></div>
+<pre><code>##           [,1]     [,2]     [,3]
+##  [1,] 20.12023 19.96474 19.95583
+##  [2,] 19.89721 20.13265 20.02436
+##  [3,] 20.09383 19.88598 20.05968
+##  [4,] 19.94568 20.14131 19.98800
+##  [5,] 20.05131 19.93978 19.79303
+##  [6,] 17.04099 17.05897 16.96339
+##  [7,] 17.03426 17.11344 16.97077
+##  [8,] 16.92954 17.03134 17.02134
+##  [9,] 17.08888 16.83908 16.99780
+## [10,] 17.07867 16.99446 17.00736
+## [11,] 17.17238 17.09879 16.99030
+## [12,] 16.95520 17.09022 16.91634
+## [13,] 17.08480 17.04098 17.02306
+## [14,] 17.04978 17.08953 16.92423
+## [15,] 16.98582 16.93883 16.96379</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="makingsimulating-the-simple-dataset.html#cb15-1" tabindex="-1"></a>Hk1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-2"><a href="makingsimulating-the-simple-dataset.html#cb15-2" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-3"><a href="makingsimulating-the-simple-dataset.html#cb15-3" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb15-4"><a href="makingsimulating-the-simple-dataset.html#cb15-4" tabindex="-1"></a>Hk1</span></code></pre></div>
+<pre><code>##           [,1]     [,2]     [,3]
+##  [1,] 24.99218 24.84439 25.02586
+##  [2,] 24.96507 25.05442 25.03890
+##  [3,] 24.77417 24.84615 25.20155
+##  [4,] 24.97135 24.97075 24.96763
+##  [5,] 25.02806 24.98888 25.03787
+##  [6,] 24.84041 25.08417 25.00060
+##  [7,] 25.06711 25.16976 24.94340
+##  [8,] 25.04257 25.15864 25.05853
+##  [9,] 25.06896 24.92336 25.01066
+## [10,] 24.90093 24.97181 24.86917
+## [11,] 24.99023 25.05158 25.10625
+## [12,] 24.85813 25.03324 24.90093
+## [13,] 24.97471 25.09431 25.11496
+## [14,] 25.00311 25.03116 25.08819
+## [15,] 24.99650 24.89106 25.11620</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="makingsimulating-the-simple-dataset.html#cb17-1" tabindex="-1"></a>month1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(geneB1_1, Hk1)</span>
+<span id="cb17-2"><a href="makingsimulating-the-simple-dataset.html#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="makingsimulating-the-simple-dataset.html#cb17-3" tabindex="-1"></a><span class="fu">colnames</span>(month1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;geneB1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>))) </span>
+<span id="cb17-4"><a href="makingsimulating-the-simple-dataset.html#cb17-4" tabindex="-1"></a>month1<span class="sc">$</span>sampleID <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;KO&quot;</span>, <span class="fu">seq</span>(nKO<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span><span class="sc">*</span>nKO)),</span>
+<span id="cb17-5"><a href="makingsimulating-the-simple-dataset.html#cb17-5" tabindex="-1"></a>                       <span class="fu">paste0</span>(<span class="st">&quot;TAG&quot;</span>, <span class="fu">seq</span>(nTAG<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span><span class="sc">*</span>nTAG)),</span>
+<span id="cb17-6"><a href="makingsimulating-the-simple-dataset.html#cb17-6" tabindex="-1"></a>                       <span class="fu">paste0</span>(<span class="st">&quot;WT&quot;</span>, <span class="fu">seq</span>(nWT<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span><span class="sc">*</span>nWT)))</span>
+<span id="cb17-7"><a href="makingsimulating-the-simple-dataset.html#cb17-7" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="makingsimulating-the-simple-dataset.html#cb17-8" tabindex="-1"></a>month1 <span class="ot">&lt;-</span> month1[, <span class="fu">c</span>(<span class="fu">ncol</span>(month1), <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(month1)<span class="sc">-</span><span class="dv">1</span>)]</span>
+<span id="cb17-9"><a href="makingsimulating-the-simple-dataset.html#cb17-9" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="makingsimulating-the-simple-dataset.html#cb17-10" tabindex="-1"></a>month1<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;1month&quot;</span>, <span class="at">times =</span> <span class="fu">nrow</span>(month1))</span>
+<span id="cb17-11"><a href="makingsimulating-the-simple-dataset.html#cb17-11" tabindex="-1"></a>month1<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;KO&quot;</span>, <span class="at">times =</span> nKO), <span class="fu">rep</span>(<span class="st">&quot;TAG&quot;</span>, <span class="at">times =</span> nTAG), <span class="fu">rep</span>(<span class="st">&quot;WT&quot;</span>, <span class="at">times =</span> nWT))</span>
+<span id="cb17-12"><a href="makingsimulating-the-simple-dataset.html#cb17-12" tabindex="-1"></a>month1</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3  Hk_run1  Hk_run2  Hk_run3
+## 1       KO6    20.12023    19.96474    19.95583 24.99218 24.84439 25.02586
+## 2       KO7    19.89721    20.13265    20.02436 24.96507 25.05442 25.03890
+## 3       KO8    20.09383    19.88598    20.05968 24.77417 24.84615 25.20155
+## 4       KO9    19.94568    20.14131    19.98800 24.97135 24.97075 24.96763
+## 5      KO10    20.05131    19.93978    19.79303 25.02806 24.98888 25.03787
+## 6      TAG6    17.04099    17.05897    16.96339 24.84041 25.08417 25.00060
+## 7      TAG7    17.03426    17.11344    16.97077 25.06711 25.16976 24.94340
+## 8      TAG8    16.92954    17.03134    17.02134 25.04257 25.15864 25.05853
+## 9      TAG9    17.08888    16.83908    16.99780 25.06896 24.92336 25.01066
+## 10    TAG10    17.07867    16.99446    17.00736 24.90093 24.97181 24.86917
+## 11      WT6    17.17238    17.09879    16.99030 24.99023 25.05158 25.10625
+## 12      WT7    16.95520    17.09022    16.91634 24.85813 25.03324 24.90093
+## 13      WT8    17.08480    17.04098    17.02306 24.97471 25.09431 25.11496
+## 14      WT9    17.04978    17.08953    16.92423 25.00311 25.03116 25.08819
+## 15     WT10    16.98582    16.93883    16.96379 24.99650 24.89106 25.11620
+##       age line
+## 1  1month   KO
+## 2  1month   KO
+## 3  1month   KO
+## 4  1month   KO
+## 5  1month   KO
+## 6  1month  TAG
+## 7  1month  TAG
+## 8  1month  TAG
+## 9  1month  TAG
+## 10 1month  TAG
+## 11 1month   WT
+## 12 1month   WT
+## 13 1month   WT
+## 14 1month   WT
+## 15 1month   WT</code></pre>
+</div>
+<div id="for-age-3-months" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> For age 3 months<a href="makingsimulating-the-simple-dataset.html#for-age-3-months" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="makingsimulating-the-simple-dataset.html#cb19-1" tabindex="-1"></a>geneB1_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">14</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-2"><a href="makingsimulating-the-simple-dataset.html#cb19-2" tabindex="-1"></a>                           <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">10</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-3"><a href="makingsimulating-the-simple-dataset.html#cb19-3" tabindex="-1"></a>                           <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">10</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb19-4"><a href="makingsimulating-the-simple-dataset.html#cb19-4" tabindex="-1"></a>geneB1_2</span></code></pre></div>
+<pre><code>##            [,1]      [,2]      [,3]
+##  [1,] 13.990248 13.973418 13.996977
+##  [2,] 13.990677 13.961370 13.950218
+##  [3,] 14.066960 13.984920 14.087149
+##  [4,] 13.927526 13.948576 14.007427
+##  [5,] 14.227612 14.034325 14.041510
+##  [6,] 10.193997 10.046080 10.000612
+##  [7,] 10.119996 10.115640  9.974697
+##  [8,]  9.913608  9.912089  9.962928
+##  [9,] 10.012200 10.061673  9.927000
+## [10,] 10.068825 10.051979  9.910855
+## [11,] 10.051243  9.966365 10.009551
+## [12,] 10.047408  9.946011 10.025618
+## [13,]  9.940849 10.065725 10.025647
+## [14,]  9.965121  9.928970  9.970545
+## [15,] 10.099612  9.989002  9.937030</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="makingsimulating-the-simple-dataset.html#cb21-1" tabindex="-1"></a>Hk2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-2"><a href="makingsimulating-the-simple-dataset.html#cb21-2" tabindex="-1"></a>                <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-3"><a href="makingsimulating-the-simple-dataset.html#cb21-3" tabindex="-1"></a>                <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="dv">25</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-4"><a href="makingsimulating-the-simple-dataset.html#cb21-4" tabindex="-1"></a>Hk2</span></code></pre></div>
+<pre><code>##           [,1]     [,2]     [,3]
+##  [1,] 24.99747 25.09693 24.98493
+##  [2,] 25.00248 25.00429 24.98668
+##  [3,] 25.05610 24.79599 25.13754
+##  [4,] 24.83611 25.02860 24.89823
+##  [5,] 24.93741 24.81172 25.08094
+##  [6,] 25.09569 24.86937 24.97613
+##  [7,] 25.06381 24.99752 24.99742
+##  [8,] 25.17920 25.04904 25.09002
+##  [9,] 25.11718 24.83137 25.14293
+## [10,] 25.14401 24.91704 25.00594
+## [11,] 24.94511 25.03577 25.06313
+## [12,] 25.08182 24.77762 24.83033
+## [13,] 24.95545 24.98846 25.02273
+## [14,] 24.96395 24.87760 24.96898
+## [15,] 24.98405 24.88048 25.12245</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="makingsimulating-the-simple-dataset.html#cb23-1" tabindex="-1"></a>month3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(geneB1_2, Hk2)</span>
+<span id="cb23-2"><a href="makingsimulating-the-simple-dataset.html#cb23-2" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="makingsimulating-the-simple-dataset.html#cb23-3" tabindex="-1"></a><span class="fu">colnames</span>(month3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;geneB1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>))) </span>
+<span id="cb23-4"><a href="makingsimulating-the-simple-dataset.html#cb23-4" tabindex="-1"></a>month3<span class="sc">$</span>sampleID <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;KO&quot;</span>, <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>nKO<span class="sc">+</span><span class="dv">1</span>, <span class="dv">3</span><span class="sc">*</span>nKO)),</span>
+<span id="cb23-5"><a href="makingsimulating-the-simple-dataset.html#cb23-5" tabindex="-1"></a>                       <span class="fu">paste0</span>(<span class="st">&quot;TAG&quot;</span>, <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>nTAG<span class="sc">+</span><span class="dv">1</span>, <span class="dv">3</span><span class="sc">*</span>nTAG)),</span>
+<span id="cb23-6"><a href="makingsimulating-the-simple-dataset.html#cb23-6" tabindex="-1"></a>                       <span class="fu">paste0</span>(<span class="st">&quot;WT&quot;</span>, <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>nWT<span class="sc">+</span><span class="dv">1</span>, <span class="dv">3</span><span class="sc">*</span>nWT)))</span>
+<span id="cb23-7"><a href="makingsimulating-the-simple-dataset.html#cb23-7" tabindex="-1"></a>month3 <span class="ot">&lt;-</span> month3[, <span class="fu">c</span>(<span class="fu">ncol</span>(month3), <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(month3)<span class="sc">-</span><span class="dv">1</span>)]</span>
+<span id="cb23-8"><a href="makingsimulating-the-simple-dataset.html#cb23-8" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="makingsimulating-the-simple-dataset.html#cb23-9" tabindex="-1"></a>month3<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;3months&quot;</span>, <span class="at">times =</span> <span class="fu">nrow</span>(month3)) <span class="co">#adding age to all. nrow means how many sample</span></span>
+<span id="cb23-10"><a href="makingsimulating-the-simple-dataset.html#cb23-10" tabindex="-1"></a>month3<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;KO&quot;</span>, <span class="at">times =</span> nKO), <span class="fu">rep</span>(<span class="st">&quot;TAG&quot;</span>, <span class="at">times =</span> nTAG), <span class="fu">rep</span>(<span class="st">&quot;WT&quot;</span>, <span class="at">times =</span> nWT))</span>
+<span id="cb23-11"><a href="makingsimulating-the-simple-dataset.html#cb23-11" tabindex="-1"></a>month3</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3  Hk_run1  Hk_run2  Hk_run3
+## 1      KO11   13.990248   13.973418   13.996977 24.99747 25.09693 24.98493
+## 2      KO12   13.990677   13.961370   13.950218 25.00248 25.00429 24.98668
+## 3      KO13   14.066960   13.984920   14.087149 25.05610 24.79599 25.13754
+## 4      KO14   13.927526   13.948576   14.007427 24.83611 25.02860 24.89823
+## 5      KO15   14.227612   14.034325   14.041510 24.93741 24.81172 25.08094
+## 6     TAG11   10.193997   10.046080   10.000612 25.09569 24.86937 24.97613
+## 7     TAG12   10.119996   10.115640    9.974697 25.06381 24.99752 24.99742
+## 8     TAG13    9.913608    9.912089    9.962928 25.17920 25.04904 25.09002
+## 9     TAG14   10.012200   10.061673    9.927000 25.11718 24.83137 25.14293
+## 10    TAG15   10.068825   10.051979    9.910855 25.14401 24.91704 25.00594
+## 11     WT11   10.051243    9.966365   10.009551 24.94511 25.03577 25.06313
+## 12     WT12   10.047408    9.946011   10.025618 25.08182 24.77762 24.83033
+## 13     WT13    9.940849   10.065725   10.025647 24.95545 24.98846 25.02273
+## 14     WT14    9.965121    9.928970    9.970545 24.96395 24.87760 24.96898
+## 15     WT15   10.099612    9.989002    9.937030 24.98405 24.88048 25.12245
+##        age line
+## 1  3months   KO
+## 2  3months   KO
+## 3  3months   KO
+## 4  3months   KO
+## 5  3months   KO
+## 6  3months  TAG
+## 7  3months  TAG
+## 8  3months  TAG
+## 9  3months  TAG
+## 10 3months  TAG
+## 11 3months   WT
+## 12 3months   WT
+## 13 3months   WT
+## 14 3months   WT
+## 15 3months   WT</code></pre>
+</div>
+<div id="making-the-whole-data-set-combining-all-three-datasets-by-rbind-function" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Making the whole data set combining all three datasets: by <code>rbind()</code> function<a href="makingsimulating-the-simple-dataset.html#making-the-whole-data-set-combining-all-three-datasets-by-rbind-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="makingsimulating-the-simple-dataset.html#cb25-1" tabindex="-1"></a>pcr <span class="ot">&lt;-</span> <span class="fu">rbind</span>(day15, month1, month3)</span>
+<span id="cb25-2"><a href="makingsimulating-the-simple-dataset.html#cb25-2" tabindex="-1"></a>pcr</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3  Hk_run1  Hk_run2  Hk_run3
+## 1       KO1   24.940897   24.906585   24.917157 24.96561 25.07899 25.05426
+## 2       KO2   25.002659   25.132361   24.965165 24.78132 24.97700 24.98434
+## 3       KO3   24.848345   25.062492   24.846171 25.08801 24.91815 25.04388
+## 4       KO4   24.863735   24.995428   24.974443 25.07239 25.04997 25.14879
+## 5       KO5   25.117849   24.899588   24.885005 25.02199 25.01592 25.00602
+## 6      TAG1   22.000986   21.945399   22.000573 24.91510 25.16935 25.04535
+## 7      TAG2   21.982162   21.998731   21.984992 25.23397 24.92090 24.98766
+## 8      TAG3   22.071022   21.964592   21.938744 24.98788 24.89247 24.92369
+## 9      TAG4   21.952628   22.028205   21.982315 24.80498 24.93921 25.02283
+## 10     TAG5   21.947543   22.005854   21.921313 25.05387 25.07544 25.11195
+## 11      WT1   21.911657   22.038774   21.869079 25.01566 24.99352 24.93968
+## 12      WT2   21.924948   21.985116   22.001631 24.93112 25.03155 24.87021
+## 13      WT3   22.054290   22.123644   22.071339 25.04529 24.93943 25.05065
+## 14      WT4   21.873800   21.951090   21.930180 24.89325 24.90924 24.91467
+## 15      WT5   21.930405   21.972179   22.071204 25.04016 25.22616 24.84940
+## 16      KO6   20.120233   19.964741   19.955833 24.99218 24.84439 25.02586
+## 17      KO7   19.897213   20.132653   20.024364 24.96507 25.05442 25.03890
+## 18      KO8   20.093827   19.885985   20.059678 24.77417 24.84615 25.20155
+## 19      KO9   19.945685   20.141311   19.987996 24.97135 24.97075 24.96763
+## 20     KO10   20.051310   19.939782   19.793026 25.02806 24.98888 25.03787
+## 21     TAG6   17.040994   17.058974   16.963385 24.84041 25.08417 25.00060
+## 22     TAG7   17.034257   17.113443   16.970769 25.06711 25.16976 24.94340
+## 23     TAG8   16.929538   17.031337   17.021341 25.04257 25.15864 25.05853
+## 24     TAG9   17.088876   16.839077   16.997804 25.06896 24.92336 25.01066
+## 25    TAG10   17.078674   16.994459   17.007359 24.90093 24.97181 24.86917
+## 26      WT6   17.172377   17.098787   16.990298 24.99023 25.05158 25.10625
+## 27      WT7   16.955201   17.090217   16.916336 24.85813 25.03324 24.90093
+## 28      WT8   17.084797   17.040983   17.023059 24.97471 25.09431 25.11496
+## 29      WT9   17.049781   17.089529   16.924230 25.00311 25.03116 25.08819
+## 30     WT10   16.985817   16.938827   16.963788 24.99650 24.89106 25.11620
+## 31     KO11   13.990248   13.973418   13.996977 24.99747 25.09693 24.98493
+## 32     KO12   13.990677   13.961370   13.950218 25.00248 25.00429 24.98668
+## 33     KO13   14.066960   13.984920   14.087149 25.05610 24.79599 25.13754
+## 34     KO14   13.927526   13.948576   14.007427 24.83611 25.02860 24.89823
+## 35     KO15   14.227612   14.034325   14.041510 24.93741 24.81172 25.08094
+## 36    TAG11   10.193997   10.046080   10.000612 25.09569 24.86937 24.97613
+## 37    TAG12   10.119996   10.115640    9.974697 25.06381 24.99752 24.99742
+## 38    TAG13    9.913608    9.912089    9.962928 25.17920 25.04904 25.09002
+## 39    TAG14   10.012200   10.061673    9.927000 25.11718 24.83137 25.14293
+## 40    TAG15   10.068825   10.051979    9.910855 25.14401 24.91704 25.00594
+## 41     WT11   10.051243    9.966365   10.009551 24.94511 25.03577 25.06313
+## 42     WT12   10.047408    9.946011   10.025618 25.08182 24.77762 24.83033
+## 43     WT13    9.940849   10.065725   10.025647 24.95545 24.98846 25.02273
+## 44     WT14    9.965121    9.928970    9.970545 24.96395 24.87760 24.96898
+## 45     WT15   10.099612    9.989002    9.937030 24.98405 24.88048 25.12245
+##        age line
+## 1   15days   KO
+## 2   15days   KO
+## 3   15days   KO
+## 4   15days   KO
+## 5   15days   KO
+## 6   15days  TAG
+## 7   15days  TAG
+## 8   15days  TAG
+## 9   15days  TAG
+## 10  15days  TAG
+## 11  15days   WT
+## 12  15days   WT
+## 13  15days   WT
+## 14  15days   WT
+## 15  15days   WT
+## 16  1month   KO
+## 17  1month   KO
+## 18  1month   KO
+## 19  1month   KO
+## 20  1month   KO
+## 21  1month  TAG
+## 22  1month  TAG
+## 23  1month  TAG
+## 24  1month  TAG
+## 25  1month  TAG
+## 26  1month   WT
+## 27  1month   WT
+## 28  1month   WT
+## 29  1month   WT
+## 30  1month   WT
+## 31 3months   KO
+## 32 3months   KO
+## 33 3months   KO
+## 34 3months   KO
+## 35 3months   KO
+## 36 3months  TAG
+## 37 3months  TAG
+## 38 3months  TAG
+## 39 3months  TAG
+## 40 3months  TAG
+## 41 3months   WT
+## 42 3months   WT
+## 43 3months   WT
+## 44 3months   WT
+## 45 3months   WT</code></pre>
+<p>Our data simulation is done.</p>
+</div>
+</div>
+<div id="data-preparation" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Data preparation<a href="makingsimulating-the-simple-dataset.html#data-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now, let’s select the numeric columns with Ct values only and find out the mean value for <code>geneB1</code> and <code>HK</code> from the three runs (or replicates) per sample.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="makingsimulating-the-simple-dataset.html#cb27-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> pcr <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span>
+<span id="cb27-2"><a href="makingsimulating-the-simple-dataset.html#cb27-2" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="makingsimulating-the-simple-dataset.html#cb27-3" tabindex="-1"></a>pcr<span class="sc">$</span>Ct_geneB1 <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;geneB1_&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span>
+<span id="cb27-4"><a href="makingsimulating-the-simple-dataset.html#cb27-4" tabindex="-1"></a>pcr<span class="sc">$</span>Ct_Hk <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;Hk_&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span>
+<span id="cb27-5"><a href="makingsimulating-the-simple-dataset.html#cb27-5" tabindex="-1"></a>pcr</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3  Hk_run1  Hk_run2  Hk_run3
+## 1       KO1   24.940897   24.906585   24.917157 24.96561 25.07899 25.05426
+## 2       KO2   25.002659   25.132361   24.965165 24.78132 24.97700 24.98434
+## 3       KO3   24.848345   25.062492   24.846171 25.08801 24.91815 25.04388
+## 4       KO4   24.863735   24.995428   24.974443 25.07239 25.04997 25.14879
+## 5       KO5   25.117849   24.899588   24.885005 25.02199 25.01592 25.00602
+## 6      TAG1   22.000986   21.945399   22.000573 24.91510 25.16935 25.04535
+## 7      TAG2   21.982162   21.998731   21.984992 25.23397 24.92090 24.98766
+## 8      TAG3   22.071022   21.964592   21.938744 24.98788 24.89247 24.92369
+## 9      TAG4   21.952628   22.028205   21.982315 24.80498 24.93921 25.02283
+## 10     TAG5   21.947543   22.005854   21.921313 25.05387 25.07544 25.11195
+## 11      WT1   21.911657   22.038774   21.869079 25.01566 24.99352 24.93968
+## 12      WT2   21.924948   21.985116   22.001631 24.93112 25.03155 24.87021
+## 13      WT3   22.054290   22.123644   22.071339 25.04529 24.93943 25.05065
+## 14      WT4   21.873800   21.951090   21.930180 24.89325 24.90924 24.91467
+## 15      WT5   21.930405   21.972179   22.071204 25.04016 25.22616 24.84940
+## 16      KO6   20.120233   19.964741   19.955833 24.99218 24.84439 25.02586
+## 17      KO7   19.897213   20.132653   20.024364 24.96507 25.05442 25.03890
+## 18      KO8   20.093827   19.885985   20.059678 24.77417 24.84615 25.20155
+## 19      KO9   19.945685   20.141311   19.987996 24.97135 24.97075 24.96763
+## 20     KO10   20.051310   19.939782   19.793026 25.02806 24.98888 25.03787
+## 21     TAG6   17.040994   17.058974   16.963385 24.84041 25.08417 25.00060
+## 22     TAG7   17.034257   17.113443   16.970769 25.06711 25.16976 24.94340
+## 23     TAG8   16.929538   17.031337   17.021341 25.04257 25.15864 25.05853
+## 24     TAG9   17.088876   16.839077   16.997804 25.06896 24.92336 25.01066
+## 25    TAG10   17.078674   16.994459   17.007359 24.90093 24.97181 24.86917
+## 26      WT6   17.172377   17.098787   16.990298 24.99023 25.05158 25.10625
+## 27      WT7   16.955201   17.090217   16.916336 24.85813 25.03324 24.90093
+## 28      WT8   17.084797   17.040983   17.023059 24.97471 25.09431 25.11496
+## 29      WT9   17.049781   17.089529   16.924230 25.00311 25.03116 25.08819
+## 30     WT10   16.985817   16.938827   16.963788 24.99650 24.89106 25.11620
+## 31     KO11   13.990248   13.973418   13.996977 24.99747 25.09693 24.98493
+## 32     KO12   13.990677   13.961370   13.950218 25.00248 25.00429 24.98668
+## 33     KO13   14.066960   13.984920   14.087149 25.05610 24.79599 25.13754
+## 34     KO14   13.927526   13.948576   14.007427 24.83611 25.02860 24.89823
+## 35     KO15   14.227612   14.034325   14.041510 24.93741 24.81172 25.08094
+## 36    TAG11   10.193997   10.046080   10.000612 25.09569 24.86937 24.97613
+## 37    TAG12   10.119996   10.115640    9.974697 25.06381 24.99752 24.99742
+## 38    TAG13    9.913608    9.912089    9.962928 25.17920 25.04904 25.09002
+## 39    TAG14   10.012200   10.061673    9.927000 25.11718 24.83137 25.14293
+## 40    TAG15   10.068825   10.051979    9.910855 25.14401 24.91704 25.00594
+## 41     WT11   10.051243    9.966365   10.009551 24.94511 25.03577 25.06313
+## 42     WT12   10.047408    9.946011   10.025618 25.08182 24.77762 24.83033
+## 43     WT13    9.940849   10.065725   10.025647 24.95545 24.98846 25.02273
+## 44     WT14    9.965121    9.928970    9.970545 24.96395 24.87760 24.96898
+## 45     WT15   10.099612    9.989002    9.937030 24.98405 24.88048 25.12245
+##        age line Ct_geneB1    Ct_Hk
+## 1   15days   KO 24.921546 25.03295
+## 2   15days   KO 25.033395 24.91422
+## 3   15days   KO 24.919002 25.01668
+## 4   15days   KO 24.944535 25.09038
+## 5   15days   KO 24.967481 25.01464
+## 6   15days  TAG 21.982319 25.04327
+## 7   15days  TAG 21.988629 25.04751
+## 8   15days  TAG 21.991452 24.93468
+## 9   15days  TAG 21.987716 24.92234
+## 10  15days  TAG 21.958236 25.08042
+## 11  15days   WT 21.939837 24.98295
+## 12  15days   WT 21.970565 24.94430
+## 13  15days   WT 22.083091 25.01179
+## 14  15days   WT 21.918357 24.90572
+## 15  15days   WT 21.991263 25.03857
+## 16  1month   KO 20.013602 24.95414
+## 17  1month   KO 20.018077 25.01946
+## 18  1month   KO 20.013163 24.94062
+## 19  1month   KO 20.024997 24.96991
+## 20  1month   KO 19.928039 25.01827
+## 21  1month  TAG 17.021118 24.97506
+## 22  1month  TAG 17.039490 25.06009
+## 23  1month  TAG 16.994072 25.08658
+## 24  1month  TAG 16.975252 25.00099
+## 25  1month  TAG 17.026830 24.91397
+## 26  1month   WT 17.087154 25.04936
+## 27  1month   WT 16.987251 24.93077
+## 28  1month   WT 17.049613 25.06133
+## 29  1month   WT 17.021180 25.04082
+## 30  1month   WT 16.962811 25.00125
+## 31 3months   KO 13.986881 25.02644
+## 32 3months   KO 13.967421 24.99782
+## 33 3months   KO 14.046343 24.99654
+## 34 3months   KO 13.961176 24.92098
+## 35 3months   KO 14.101149 24.94335
+## 36 3months  TAG 10.080229 24.98040
+## 37 3months  TAG 10.070111 25.01959
+## 38 3months  TAG  9.929542 25.10609
+## 39 3months  TAG 10.000291 25.03049
+## 40 3months  TAG 10.010553 25.02233
+## 41 3months   WT 10.009053 25.01467
+## 42 3months   WT 10.006346 24.89659
+## 43 3months   WT 10.010740 24.98888
+## 44 3months   WT  9.954879 24.93684
+## 45 3months   WT 10.008548 24.99566</code></pre>
+<p>Let’s organize the data set. Also, we don’t need the raw Ct values from the three runs any more.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="makingsimulating-the-simple-dataset.html#cb29-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> pcr[, <span class="fu">c</span>(<span class="st">&quot;sampleID&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;line&quot;</span>, <span class="st">&quot;Ct_geneB1&quot;</span>, <span class="st">&quot;Ct_Hk&quot;</span>)]</span>
+<span id="cb29-2"><a href="makingsimulating-the-simple-dataset.html#cb29-2" tabindex="-1"></a>data</span></code></pre></div>
+<pre><code>##    sampleID     age line Ct_geneB1    Ct_Hk
+## 1       KO1  15days   KO 24.921546 25.03295
+## 2       KO2  15days   KO 25.033395 24.91422
+## 3       KO3  15days   KO 24.919002 25.01668
+## 4       KO4  15days   KO 24.944535 25.09038
+## 5       KO5  15days   KO 24.967481 25.01464
+## 6      TAG1  15days  TAG 21.982319 25.04327
+## 7      TAG2  15days  TAG 21.988629 25.04751
+## 8      TAG3  15days  TAG 21.991452 24.93468
+## 9      TAG4  15days  TAG 21.987716 24.92234
+## 10     TAG5  15days  TAG 21.958236 25.08042
+## 11      WT1  15days   WT 21.939837 24.98295
+## 12      WT2  15days   WT 21.970565 24.94430
+## 13      WT3  15days   WT 22.083091 25.01179
+## 14      WT4  15days   WT 21.918357 24.90572
+## 15      WT5  15days   WT 21.991263 25.03857
+## 16      KO6  1month   KO 20.013602 24.95414
+## 17      KO7  1month   KO 20.018077 25.01946
+## 18      KO8  1month   KO 20.013163 24.94062
+## 19      KO9  1month   KO 20.024997 24.96991
+## 20     KO10  1month   KO 19.928039 25.01827
+## 21     TAG6  1month  TAG 17.021118 24.97506
+## 22     TAG7  1month  TAG 17.039490 25.06009
+## 23     TAG8  1month  TAG 16.994072 25.08658
+## 24     TAG9  1month  TAG 16.975252 25.00099
+## 25    TAG10  1month  TAG 17.026830 24.91397
+## 26      WT6  1month   WT 17.087154 25.04936
+## 27      WT7  1month   WT 16.987251 24.93077
+## 28      WT8  1month   WT 17.049613 25.06133
+## 29      WT9  1month   WT 17.021180 25.04082
+## 30     WT10  1month   WT 16.962811 25.00125
+## 31     KO11 3months   KO 13.986881 25.02644
+## 32     KO12 3months   KO 13.967421 24.99782
+## 33     KO13 3months   KO 14.046343 24.99654
+## 34     KO14 3months   KO 13.961176 24.92098
+## 35     KO15 3months   KO 14.101149 24.94335
+## 36    TAG11 3months  TAG 10.080229 24.98040
+## 37    TAG12 3months  TAG 10.070111 25.01959
+## 38    TAG13 3months  TAG  9.929542 25.10609
+## 39    TAG14 3months  TAG 10.000291 25.03049
+## 40    TAG15 3months  TAG 10.010553 25.02233
+## 41     WT11 3months   WT 10.009053 25.01467
+## 42     WT12 3months   WT 10.006346 24.89659
+## 43     WT13 3months   WT 10.010740 24.98888
+## 44     WT14 3months   WT  9.954879 24.93684
+## 45     WT15 3months   WT 10.008548 24.99566</code></pre>
+<p>Let’s apply the formula of ΔCt: <strong>delta_Ct = Ct (gene of interest) – Ct (housekeeping gene)</strong></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="makingsimulating-the-simple-dataset.html#cb31-1" tabindex="-1"></a>data<span class="sc">$</span>delta_Ct <span class="ot">&lt;-</span> data<span class="sc">$</span>Ct_geneB1 <span class="sc">-</span> data<span class="sc">$</span>Ct_Hk </span>
+<span id="cb31-2"><a href="makingsimulating-the-simple-dataset.html#cb31-2" tabindex="-1"></a>data</span></code></pre></div>
+<pre><code>##    sampleID     age line Ct_geneB1    Ct_Hk     delta_Ct
+## 1       KO1  15days   KO 24.921546 25.03295  -0.11140794
+## 2       KO2  15days   KO 25.033395 24.91422   0.11917562
+## 3       KO3  15days   KO 24.919002 25.01668  -0.09767592
+## 4       KO4  15days   KO 24.944535 25.09038  -0.14584676
+## 5       KO5  15days   KO 24.967481 25.01464  -0.04715955
+## 6      TAG1  15days  TAG 21.982319 25.04327  -3.06094678
+## 7      TAG2  15days  TAG 21.988629 25.04751  -3.05888111
+## 8      TAG3  15days  TAG 21.991452 24.93468  -2.94322889
+## 9      TAG4  15days  TAG 21.987716 24.92234  -2.93462371
+## 10     TAG5  15days  TAG 21.958236 25.08042  -3.12218280
+## 11      WT1  15days   WT 21.939837 24.98295  -3.04311571
+## 12      WT2  15days   WT 21.970565 24.94430  -2.97373064
+## 13      WT3  15days   WT 22.083091 25.01179  -2.92869940
+## 14      WT4  15days   WT 21.918357 24.90572  -2.98736122
+## 15      WT5  15days   WT 21.991263 25.03857  -3.04730859
+## 16      KO6  1month   KO 20.013602 24.95414  -4.94054030
+## 17      KO7  1month   KO 20.018077 25.01946  -5.00138798
+## 18      KO8  1month   KO 20.013163 24.94062  -4.92746102
+## 19      KO9  1month   KO 20.024997 24.96991  -4.94491412
+## 20     KO10  1month   KO 19.928039 25.01827  -5.09022981
+## 21     TAG6  1month  TAG 17.021118 24.97506  -7.95394331
+## 22     TAG7  1month  TAG 17.039490 25.06009  -8.02060148
+## 23     TAG8  1month  TAG 16.994072 25.08658  -8.09250906
+## 24     TAG9  1month  TAG 16.975252 25.00099  -8.02573996
+## 25    TAG10  1month  TAG 17.026830 24.91397  -7.88713645
+## 26      WT6  1month   WT 17.087154 25.04936  -7.96220205
+## 27      WT7  1month   WT 16.987251 24.93077  -7.94351666
+## 28      WT8  1month   WT 17.049613 25.06133  -8.01171251
+## 29      WT9  1month   WT 17.021180 25.04082  -8.01964385
+## 30     WT10  1month   WT 16.962811 25.00125  -8.03844168
+## 31     KO11 3months   KO 13.986881 25.02644 -11.03956221
+## 32     KO12 3months   KO 13.967421 24.99782 -11.03039419
+## 33     KO13 3months   KO 14.046343 24.99654 -10.95019911
+## 34     KO14 3months   KO 13.961176 24.92098 -10.95980324
+## 35     KO15 3months   KO 14.101149 24.94335 -10.84220450
+## 36    TAG11 3months  TAG 10.080229 24.98040 -14.90016995
+## 37    TAG12 3months  TAG 10.070111 25.01959 -14.94947471
+## 38    TAG13 3months  TAG  9.929542 25.10609 -15.17654394
+## 39    TAG14 3months  TAG 10.000291 25.03049 -15.03020237
+## 40    TAG15 3months  TAG 10.010553 25.02233 -15.01177859
+## 41     WT11 3months   WT 10.009053 25.01467 -15.00561901
+## 42     WT12 3months   WT 10.006346 24.89659 -14.89024656
+## 43     WT13 3months   WT 10.010740 24.98888 -14.97814222
+## 44     WT14 3months   WT  9.954879 24.93684 -14.98196314
+## 45     WT15 3months   WT 10.008548 24.99566 -14.98711323</code></pre>
+<p>Let’s calculate the calibrator’s mean ΔCt value. Geometric mean is better if calibrators’ ΔCt values are variable. Geometric mean is resistant to outlier. Our Ct values are not so variable. So, we can do arithmetic mean.</p>
+<blockquote>
+<p>calibrator will be the samples relative to which we want to know the expression level. We want to know the fold-change (fold gene expression level) compared to 15-days-old wild-type samples (calibraators) here. We have to keep in mind this thing for our downstream analysis.</p>
+</blockquote>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="makingsimulating-the-simple-dataset.html#cb33-1" tabindex="-1"></a>calibrator <span class="ot">&lt;-</span> data[data<span class="sc">$</span>line <span class="sc">==</span> <span class="st">&quot;WT&quot;</span> <span class="sc">&amp;</span> data<span class="sc">$</span>age <span class="sc">==</span> <span class="st">&quot;15days&quot;</span>,]</span>
+<span id="cb33-2"><a href="makingsimulating-the-simple-dataset.html#cb33-2" tabindex="-1"></a>calibrator</span></code></pre></div>
+<pre><code>##    sampleID    age line Ct_geneB1    Ct_Hk  delta_Ct
+## 11      WT1 15days   WT  21.93984 24.98295 -3.043116
+## 12      WT2 15days   WT  21.97056 24.94430 -2.973731
+## 13      WT3 15days   WT  22.08309 25.01179 -2.928699
+## 14      WT4 15days   WT  21.91836 24.90572 -2.987361
+## 15      WT5 15days   WT  21.99126 25.03857 -3.047309</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="makingsimulating-the-simple-dataset.html#cb35-1" tabindex="-1"></a>calibrator_deltaCt <span class="ot">&lt;-</span> <span class="fu">mean</span>(calibrator<span class="sc">$</span>delta_Ct)</span></code></pre></div>
+<p>Now, we have to subtract the calibrator ΔCt value from each sample to find out ΔΔCt value</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="makingsimulating-the-simple-dataset.html#cb36-1" tabindex="-1"></a>data<span class="sc">$</span>delta_deltaCt <span class="ot">&lt;-</span> data<span class="sc">$</span>delta_Ct <span class="sc">-</span> calibrator_deltaCt</span>
+<span id="cb36-2"><a href="makingsimulating-the-simple-dataset.html#cb36-2" tabindex="-1"></a>data</span></code></pre></div>
+<pre><code>##    sampleID     age line Ct_geneB1    Ct_Hk     delta_Ct delta_deltaCt
+## 1       KO1  15days   KO 24.921546 25.03295  -0.11140794   2.884635168
+## 2       KO2  15days   KO 25.033395 24.91422   0.11917562   3.115218732
+## 3       KO3  15days   KO 24.919002 25.01668  -0.09767592   2.898367187
+## 4       KO4  15days   KO 24.944535 25.09038  -0.14584676   2.850196350
+## 5       KO5  15days   KO 24.967481 25.01464  -0.04715955   2.948883559
+## 6      TAG1  15days  TAG 21.982319 25.04327  -3.06094678  -0.064903672
+## 7      TAG2  15days  TAG 21.988629 25.04751  -3.05888111  -0.062838003
+## 8      TAG3  15days  TAG 21.991452 24.93468  -2.94322889   0.052814223
+## 9      TAG4  15days  TAG 21.987716 24.92234  -2.93462371   0.061419402
+## 10     TAG5  15days  TAG 21.958236 25.08042  -3.12218280  -0.126139687
+## 11      WT1  15days   WT 21.939837 24.98295  -3.04311571  -0.047072603
+## 12      WT2  15days   WT 21.970565 24.94430  -2.97373064   0.022312470
+## 13      WT3  15days   WT 22.083091 25.01179  -2.92869940   0.067343713
+## 14      WT4  15days   WT 21.918357 24.90572  -2.98736122   0.008681895
+## 15      WT5  15days   WT 21.991263 25.03857  -3.04730859  -0.051265476
+## 16      KO6  1month   KO 20.013602 24.95414  -4.94054030  -1.944497188
+## 17      KO7  1month   KO 20.018077 25.01946  -5.00138798  -2.005344866
+## 18      KO8  1month   KO 20.013163 24.94062  -4.92746102  -1.931417904
+## 19      KO9  1month   KO 20.024997 24.96991  -4.94491412  -1.948871013
+## 20     KO10  1month   KO 19.928039 25.01827  -5.09022981  -2.094186694
+## 21     TAG6  1month  TAG 17.021118 24.97506  -7.95394331  -4.957900197
+## 22     TAG7  1month  TAG 17.039490 25.06009  -8.02060148  -5.024558367
+## 23     TAG8  1month  TAG 16.994072 25.08658  -8.09250906  -5.096465950
+## 24     TAG9  1month  TAG 16.975252 25.00099  -8.02573996  -5.029696845
+## 25    TAG10  1month  TAG 17.026830 24.91397  -7.88713645  -4.891093335
+## 26      WT6  1month   WT 17.087154 25.04936  -7.96220205  -4.966158936
+## 27      WT7  1month   WT 16.987251 24.93077  -7.94351666  -4.947473553
+## 28      WT8  1month   WT 17.049613 25.06133  -8.01171251  -5.015669396
+## 29      WT9  1month   WT 17.021180 25.04082  -8.01964385  -5.023600740
+## 30     WT10  1month   WT 16.962811 25.00125  -8.03844168  -5.042398570
+## 31     KO11 3months   KO 13.986881 25.02644 -11.03956221  -8.043519095
+## 32     KO12 3months   KO 13.967421 24.99782 -11.03039419  -8.034351081
+## 33     KO13 3months   KO 14.046343 24.99654 -10.95019911  -7.954156002
+## 34     KO14 3months   KO 13.961176 24.92098 -10.95980324  -7.963760132
+## 35     KO15 3months   KO 14.101149 24.94335 -10.84220450  -7.846161386
+## 36    TAG11 3months  TAG 10.080229 24.98040 -14.90016995 -11.904126839
+## 37    TAG12 3months  TAG 10.070111 25.01959 -14.94947471 -11.953431595
+## 38    TAG13 3months  TAG  9.929542 25.10609 -15.17654394 -12.180500832
+## 39    TAG14 3months  TAG 10.000291 25.03049 -15.03020237 -12.034159260
+## 40    TAG15 3months  TAG 10.010553 25.02233 -15.01177859 -12.015735481
+## 41     WT11 3months   WT 10.009053 25.01467 -15.00561901 -12.009575893
+## 42     WT12 3months   WT 10.006346 24.89659 -14.89024656 -11.894203444
+## 43     WT13 3months   WT 10.010740 24.98888 -14.97814222 -11.982099108
+## 44     WT14 3months   WT  9.954879 24.93684 -14.98196314 -11.985920024
+## 45     WT15 3months   WT 10.008548 24.99566 -14.98711323 -11.991070115</code></pre>
+<p>Let’s find out fold change. The formula for this is: <span class="math inline">\(2^{-ΔΔCt}\)</span></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="makingsimulating-the-simple-dataset.html#cb38-1" tabindex="-1"></a>data<span class="sc">$</span>fold_gene_expression <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^-</span>(data<span class="sc">$</span>delta_deltaCt)</span>
+<span id="cb38-2"><a href="makingsimulating-the-simple-dataset.html#cb38-2" tabindex="-1"></a>data</span></code></pre></div>
+<pre><code>##    sampleID     age line Ct_geneB1    Ct_Hk     delta_Ct delta_deltaCt
+## 1       KO1  15days   KO 24.921546 25.03295  -0.11140794   2.884635168
+## 2       KO2  15days   KO 25.033395 24.91422   0.11917562   3.115218732
+## 3       KO3  15days   KO 24.919002 25.01668  -0.09767592   2.898367187
+## 4       KO4  15days   KO 24.944535 25.09038  -0.14584676   2.850196350
+## 5       KO5  15days   KO 24.967481 25.01464  -0.04715955   2.948883559
+## 6      TAG1  15days  TAG 21.982319 25.04327  -3.06094678  -0.064903672
+## 7      TAG2  15days  TAG 21.988629 25.04751  -3.05888111  -0.062838003
+## 8      TAG3  15days  TAG 21.991452 24.93468  -2.94322889   0.052814223
+## 9      TAG4  15days  TAG 21.987716 24.92234  -2.93462371   0.061419402
+## 10     TAG5  15days  TAG 21.958236 25.08042  -3.12218280  -0.126139687
+## 11      WT1  15days   WT 21.939837 24.98295  -3.04311571  -0.047072603
+## 12      WT2  15days   WT 21.970565 24.94430  -2.97373064   0.022312470
+## 13      WT3  15days   WT 22.083091 25.01179  -2.92869940   0.067343713
+## 14      WT4  15days   WT 21.918357 24.90572  -2.98736122   0.008681895
+## 15      WT5  15days   WT 21.991263 25.03857  -3.04730859  -0.051265476
+## 16      KO6  1month   KO 20.013602 24.95414  -4.94054030  -1.944497188
+## 17      KO7  1month   KO 20.018077 25.01946  -5.00138798  -2.005344866
+## 18      KO8  1month   KO 20.013163 24.94062  -4.92746102  -1.931417904
+## 19      KO9  1month   KO 20.024997 24.96991  -4.94491412  -1.948871013
+## 20     KO10  1month   KO 19.928039 25.01827  -5.09022981  -2.094186694
+## 21     TAG6  1month  TAG 17.021118 24.97506  -7.95394331  -4.957900197
+## 22     TAG7  1month  TAG 17.039490 25.06009  -8.02060148  -5.024558367
+## 23     TAG8  1month  TAG 16.994072 25.08658  -8.09250906  -5.096465950
+## 24     TAG9  1month  TAG 16.975252 25.00099  -8.02573996  -5.029696845
+## 25    TAG10  1month  TAG 17.026830 24.91397  -7.88713645  -4.891093335
+## 26      WT6  1month   WT 17.087154 25.04936  -7.96220205  -4.966158936
+## 27      WT7  1month   WT 16.987251 24.93077  -7.94351666  -4.947473553
+## 28      WT8  1month   WT 17.049613 25.06133  -8.01171251  -5.015669396
+## 29      WT9  1month   WT 17.021180 25.04082  -8.01964385  -5.023600740
+## 30     WT10  1month   WT 16.962811 25.00125  -8.03844168  -5.042398570
+## 31     KO11 3months   KO 13.986881 25.02644 -11.03956221  -8.043519095
+## 32     KO12 3months   KO 13.967421 24.99782 -11.03039419  -8.034351081
+## 33     KO13 3months   KO 14.046343 24.99654 -10.95019911  -7.954156002
+## 34     KO14 3months   KO 13.961176 24.92098 -10.95980324  -7.963760132
+## 35     KO15 3months   KO 14.101149 24.94335 -10.84220450  -7.846161386
+## 36    TAG11 3months  TAG 10.080229 24.98040 -14.90016995 -11.904126839
+## 37    TAG12 3months  TAG 10.070111 25.01959 -14.94947471 -11.953431595
+## 38    TAG13 3months  TAG  9.929542 25.10609 -15.17654394 -12.180500832
+## 39    TAG14 3months  TAG 10.000291 25.03049 -15.03020237 -12.034159260
+## 40    TAG15 3months  TAG 10.010553 25.02233 -15.01177859 -12.015735481
+## 41     WT11 3months   WT 10.009053 25.01467 -15.00561901 -12.009575893
+## 42     WT12 3months   WT 10.006346 24.89659 -14.89024656 -11.894203444
+## 43     WT13 3months   WT 10.010740 24.98888 -14.97814222 -11.982099108
+## 44     WT14 3months   WT  9.954879 24.93684 -14.98196314 -11.985920024
+## 45     WT15 3months   WT 10.008548 24.99566 -14.98711323 -11.991070115
+##    fold_gene_expression
+## 1             0.1354061
+## 2             0.1154053
+## 3             0.1341234
+## 4             0.1386773
+## 5             0.1295083
+## 6             1.0460151
+## 7             1.0445185
+## 8             0.9640539
+## 9             0.9583208
+## 10            1.0913695
+## 11            1.0331664
+## 12            0.9846532
+## 13            0.9543936
+## 14            0.9940002
+## 15            1.0361734
+## 16            3.8490361
+## 17            4.0148466
+## 18            3.8142989
+## 19            3.8607229
+## 20            4.2698539
+## 21           31.0796897
+## 22           32.5493847
+## 23           34.2128397
+## 24           32.6655233
+## 25           29.6732971
+## 26           31.2581163
+## 27           30.8558804
+## 28           32.3494526
+## 29           32.5277864
+## 30           32.9543856
+## 31          263.8399272
+## 32          262.1685977
+## 33          247.9930710
+## 34          249.6494870
+## 35          230.1070517
+## 36         3832.6507915
+## 37         3965.8972776
+## 38         4641.9035535
+## 39         4194.1398730
+## 40         4140.9196123
+## 41         4123.2776422
+## 42         3806.3788475
+## 43         4045.4910291
+## 44         4056.2195405
+## 45         4070.7251911</code></pre>
+<blockquote>
+<p>So here, we can see that 15-days-old WT samples have fold change of ~1. Because their Ct values were our calibrator/reference Ct values. Compared to them, 15-days-old TAG samples also have fold change of ~1, which is very reasonable, because we had similar values for the TAG as well. 15-days-old KO samples have less expression (~0.13 fold only).
+But in 1-month-old group, KO samples have fold change of ~4 and TAG/WT samples have fold-change of ~32. So, much higher than the reference group.
+Also, in 3-month-old group, KO samples have fold change of ~250 and WT/TAG samples have fold change of &gt;4020.
+So, same pattern (i.e. less in KO and high in WT/TAG) is observed for every <code>line</code>. And <code>age</code> has an effect in the expression of the gene.</p>
+</blockquote>
+<div class="info">
+<p><strong>Interpreting the fold change</strong>
+Have a close look at your fold change column for each line and age group.</p>
+</div>
+<p>To do any statistical analysis, we have to check how the fold change values are distributed. If they are not normally distributed, it is better to log transform them.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="makingsimulating-the-simple-dataset.html#cb40-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb40-2"><a href="makingsimulating-the-simple-dataset.html#cb40-2" tabindex="-1"></a><span class="fu">hist</span>(data<span class="sc">$</span>fold_gene_expression, <span class="at">xlab=</span><span class="st">&quot;fold change&quot;</span>, <span class="at">main=</span><span class="st">&quot;Histogram of fold change&quot;</span>, <span class="at">cex.axis =</span> <span class="fl">0.7</span>, <span class="at">las =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fold-change"></span>
+<img src="_main_files/figure-html/fold-change-1.png" alt="Histogram of fold change." width="576" />
+<p class="caption">
+Figure 3.1: Histogram of fold change.
+</p>
+</div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="makingsimulating-the-simple-dataset.html#cb41-1" tabindex="-1"></a>data<span class="sc">$</span>log_fold_change <span class="ot">&lt;-</span> <span class="fu">log2</span>(data<span class="sc">$</span>fold_gene_expression)</span>
+<span id="cb41-2"><a href="makingsimulating-the-simple-dataset.html#cb41-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb41-3"><a href="makingsimulating-the-simple-dataset.html#cb41-3" tabindex="-1"></a><span class="fu">hist</span>(data<span class="sc">$</span>log_fold_change, <span class="at">xlab=</span><span class="st">&quot;log fold change&quot;</span>, <span class="at">main=</span><span class="st">&quot;Histogram of log fold change&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:log-fold-change"></span>
+<img src="_main_files/figure-html/log-fold-change-1.png" alt="Histogram of log fold change." width="576" />
+<p class="caption">
+Figure 3.2: Histogram of log fold change.
+</p>
+</div>
+<p>We can put the same plots together and compare the fold change before and after log transformation.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="makingsimulating-the-simple-dataset.html#cb42-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb42-2"><a href="makingsimulating-the-simple-dataset.html#cb42-2" tabindex="-1"></a><span class="fu">hist</span>(data<span class="sc">$</span>fold_gene_expression, <span class="at">xlab=</span><span class="st">&quot;fold change&quot;</span>, <span class="at">main=</span><span class="st">&quot;Histogram of fold change&quot;</span>, <span class="at">cex.axis =</span> <span class="fl">0.7</span>, <span class="at">las =</span> <span class="dv">2</span>)</span>
+<span id="cb42-3"><a href="makingsimulating-the-simple-dataset.html#cb42-3" tabindex="-1"></a><span class="fu">hist</span>(data<span class="sc">$</span>log_fold_change, <span class="at">xlab=</span><span class="st">&quot;log fold change&quot;</span>, <span class="at">main=</span><span class="st">&quot;Histogram of log fold change&quot;</span>)</span></code></pre></div>
+<div class="figure">
+<img src="_main_files/figure-html/fold_log-fold-together-1.png" alt="Histogram of fold change and log fold change together." width="576" />
+<p class="caption">
+(#fig:fold_log-fold-together)Histogram of fold change and log fold change together.
+</p>
+</div>
+<p>Our data preparation for one gene of interest and one housekeeping gene is done.<br />
+Hurray……!</p>
+<p>Let’s save the data set. The code below will save the data set in your working directory. You can change the name as you wish by replacing <code>pcr1.csv</code> to the name you want.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="makingsimulating-the-simple-dataset.html#cb43-1" tabindex="-1"></a><span class="fu">write.csv</span>(data, <span class="st">&quot;pcr1.csv&quot;</span>)</span></code></pre></div>
+<blockquote>
+<p>You can work on this data set directly without running the above code if you wnat to do so. In that case, download the data set and read it by naming <code>data</code> (by running <code>data = read.table("pcr1.csv", header = TRUE, sep=",")</code>. So, all the downstream analysis will be the same.</p>
+</blockquote>
+</div>
+<div id="statistical-analysis" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Statistical analysis<a href="makingsimulating-the-simple-dataset.html#statistical-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s have a look at the experiment design.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="makingsimulating-the-simple-dataset.html#cb44-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>age, data<span class="sc">$</span>line)</span></code></pre></div>
+<pre><code>##          
+##           KO TAG WT
+##   15days   5   5  5
+##   1month   5   5  5
+##   3months  5   5  5</code></pre>
+<p>So, it was a balanced design.</p>
+<p>Let’s have a look at the log fold change for each age and line combination.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="makingsimulating-the-simple-dataset.html#cb46-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">2</span>))</span>
+<span id="cb46-2"><a href="makingsimulating-the-simple-dataset.html#cb46-2" tabindex="-1"></a><span class="fu">boxplot</span>(log_fold_change <span class="sc">~</span> line<span class="sc">*</span>age, <span class="at">data=</span>data, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Log fold change&quot;</span>, <span class="at">main=</span><span class="st">&quot;Boxplot of log fold change&quot;</span>, <span class="at">cex.axis =</span> <span class="fl">0.7</span>, <span class="at">las =</span> <span class="dv">2</span>)</span>
+<span id="cb46-3"><a href="makingsimulating-the-simple-dataset.html#cb46-3" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Age-Line combinations&quot;</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:boxplot"></span>
+<img src="_main_files/figure-html/boxplot-1.png" alt="Boxplot of log fold change for all age-line combinations." width="768" />
+<p class="caption">
+Figure 3.3: Boxplot of log fold change for all age-line combinations.
+</p>
+</div>
+<p>The plot shows that <code>WT</code> and <code>TAG</code> in a particular age group have similar expression of transcript <code>B1</code>.</p>
+<p>Let’s make a column combining age and line together.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="makingsimulating-the-simple-dataset.html#cb47-1" tabindex="-1"></a>data<span class="sc">$</span>age_line <span class="ot">&lt;-</span> <span class="fu">paste</span>(data<span class="sc">$</span>age, data<span class="sc">$</span>line, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<p>Let’s apply linear model for fold change against <code>age_line</code> column.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="makingsimulating-the-simple-dataset.html#cb48-1" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_fold_change <span class="sc">~</span> age_line, <span class="at">data=</span>data)</span>
+<span id="cb48-2"><a href="makingsimulating-the-simple-dataset.html#cb48-2" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log_fold_change ~ age_line, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.17576 -0.04204  0.01335  0.04109  0.16291 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         -2.93946    0.03387  -86.79   &lt;2e-16 ***
+## age_line15days_TAG   2.96739    0.04790   61.95   &lt;2e-16 ***
+## age_line15days_WT    2.93946    0.04790   61.37   &lt;2e-16 ***
+## age_line1month_KO    4.92432    0.04790  102.81   &lt;2e-16 ***
+## age_line1month_TAG   7.93940    0.04790  165.75   &lt;2e-16 ***
+## age_line1month_WT    7.93852    0.04790  165.73   &lt;2e-16 ***
+## age_line3months_KO  10.90785    0.04790  227.72   &lt;2e-16 ***
+## age_line3months_TAG 14.95705    0.04790  312.26   &lt;2e-16 ***
+## age_line3months_WT  14.91203    0.04790  311.32   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07574 on 36 degrees of freedom
+## Multiple R-squared:  0.9998, Adjusted R-squared:  0.9998 
+## F-statistic: 2.471e+04 on 8 and 36 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="info">
+<p><strong>Interpreting the output:</strong></p>
+<p>R takes the first group as reference by default. So, the comparison is against <code>15days_KO</code>, that’s why it is not shown in the comparison. It is actually shown in terms of intercept. The value of intercept is an estimate of <code>15days_KO</code> (You can have a look at the average of <code>15days_KO</code>), which is significant here in this analysis. Here, every group is significantly different than the <code>15days_KO</code> group. Have a closer look at your fold change or log fold change columns. Also notice the adjusted R-squared value and overall p-value in the output. Almost 100% variability in the data is captured by our model. It is because we simulated the data this way, there wasn’t that much variability.</p>
+</div>
+<p><strong>Tips:</strong></p>
+<p><em>t value = Estimate/std. Error</em>. The <code>t value</code> measures the size of the difference relative to the variation in the sample data (look at the equation). The greater the magnitude of <code>t value</code>, the greater the evidence against the null hypothesis meaning there is greater evidence that there is a significant difference. <code>t value</code> closer to 0 means more likely there isn’t a significant difference.</p>
+<p><strong>N.B.</strong> you can check the estimate, standard error and t value manually for the reference (<code>15days_KO</code>) group.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="makingsimulating-the-simple-dataset.html#cb50-1" tabindex="-1"></a>estimate <span class="ot">&lt;-</span>  <span class="fu">mean</span>(data<span class="sc">$</span>log_fold_change[data<span class="sc">$</span>age_line <span class="sc">==</span> <span class="st">&quot;15days_KO&quot;</span>])</span>
+<span id="cb50-2"><a href="makingsimulating-the-simple-dataset.html#cb50-2" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sqrt</span>(<span class="fu">var</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x))</span>
+<span id="cb50-3"><a href="makingsimulating-the-simple-dataset.html#cb50-3" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">se</span>(data<span class="sc">$</span>log_fold_change[data<span class="sc">$</span>age_line <span class="sc">==</span> <span class="st">&quot;15days_KO&quot;</span>]) <span class="co">#`SE` might be a bit different than the value shown in the output table</span></span>
+<span id="cb50-4"><a href="makingsimulating-the-simple-dataset.html#cb50-4" tabindex="-1"></a>t_value <span class="ot">&lt;-</span> estimate<span class="sc">/</span>SE</span></code></pre></div>
+<p>But we set <code>15days_WT</code> as our calibrator/reference group while calculating the ΔCt value. So, let’s set <code>15days_WT</code> group as our reference. We should relevel the <code>age_line</code> column as <code>factor</code> for modeling.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="makingsimulating-the-simple-dataset.html#cb51-1" tabindex="-1"></a>data<span class="sc">$</span>age_line <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(data<span class="sc">$</span>age_line), <span class="at">ref =</span> <span class="st">&quot;15days_WT&quot;</span>)</span>
+<span id="cb51-2"><a href="makingsimulating-the-simple-dataset.html#cb51-2" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_fold_change <span class="sc">~</span> age_line, <span class="at">data=</span>data)</span>
+<span id="cb51-3"><a href="makingsimulating-the-simple-dataset.html#cb51-3" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log_fold_change ~ age_line, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.17576 -0.04204  0.01335  0.04109  0.16291 
+## 
+## Coefficients:
+##                       Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         -3.427e-15  3.387e-02   0.000    1.000    
+## age_line15days_KO   -2.939e+00  4.790e-02 -61.367   &lt;2e-16 ***
+## age_line15days_TAG   2.793e-02  4.790e-02   0.583    0.563    
+## age_line1month_KO    1.985e+00  4.790e-02  41.438   &lt;2e-16 ***
+## age_line1month_TAG   5.000e+00  4.790e-02 104.384   &lt;2e-16 ***
+## age_line1month_WT    4.999e+00  4.790e-02 104.365   &lt;2e-16 ***
+## age_line3months_KO   7.968e+00  4.790e-02 166.356   &lt;2e-16 ***
+## age_line3months_TAG  1.202e+01  4.790e-02 250.891   &lt;2e-16 ***
+## age_line3months_WT   1.197e+01  4.790e-02 249.951   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07574 on 36 degrees of freedom
+## Multiple R-squared:  0.9998, Adjusted R-squared:  0.9998 
+## F-statistic: 2.471e+04 on 8 and 36 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="info">
+<p><strong>Interpreting the output</strong></p>
+<p>This time, the comparison is relative to <code>15days_WT</code>, (and not shown in the comparison). Here every group is significantly different than the <code>15days_WT</code> group except <code>15days_TAG</code>. And you might have recall why this is the case–we simulated this way, all the WT and TAG samples have basically similar Ct values (or fold change or log fold change). See the boxplot as well. Have a closer look at the values for WT and TAG in the output columns to verify the claim. Also notice the adjusted R-squared value and overall p-value again.</p>
+</div>
+<p>We can check pair-wise comparisons. It will show all possible combination of pair-wise comparisons.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="makingsimulating-the-simple-dataset.html#cb53-1" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb53-2"><a href="makingsimulating-the-simple-dataset.html#cb53-2" tabindex="-1"></a>em<span class="ot">=</span><span class="fu">emmeans</span>(lm2,<span class="sc">~</span>age_line)</span>
+<span id="cb53-3"><a href="makingsimulating-the-simple-dataset.html#cb53-3" tabindex="-1"></a>emp<span class="ot">=</span><span class="fu">emmeans</span>(lm2,pairwise<span class="sc">~</span>age_line) </span>
+<span id="cb53-4"><a href="makingsimulating-the-simple-dataset.html#cb53-4" tabindex="-1"></a>em</span></code></pre></div>
+<pre><code>##  age_line     emmean     SE df lower.CL upper.CL
+##  15days_WT    0.0000 0.0339 36  -0.0687   0.0687
+##  15days_KO   -2.9395 0.0339 36  -3.0082  -2.8708
+##  15days_TAG   0.0279 0.0339 36  -0.0408   0.0966
+##  1month_KO    1.9849 0.0339 36   1.9162   2.0536
+##  1month_TAG   4.9999 0.0339 36   4.9313   5.0686
+##  1month_WT    4.9991 0.0339 36   4.9304   5.0678
+##  3months_KO   7.9684 0.0339 36   7.8997   8.0371
+##  3months_TAG 12.0176 0.0339 36  11.9489  12.0863
+##  3months_WT  11.9726 0.0339 36  11.9039  12.0413
+## 
+## Confidence level used: 0.95</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="makingsimulating-the-simple-dataset.html#cb55-1" tabindex="-1"></a>emp</span></code></pre></div>
+<pre><code>## $emmeans
+##  age_line     emmean     SE df lower.CL upper.CL
+##  15days_WT    0.0000 0.0339 36  -0.0687   0.0687
+##  15days_KO   -2.9395 0.0339 36  -3.0082  -2.8708
+##  15days_TAG   0.0279 0.0339 36  -0.0408   0.0966
+##  1month_KO    1.9849 0.0339 36   1.9162   2.0536
+##  1month_TAG   4.9999 0.0339 36   4.9313   5.0686
+##  1month_WT    4.9991 0.0339 36   4.9304   5.0678
+##  3months_KO   7.9684 0.0339 36   7.8997   8.0371
+##  3months_TAG 12.0176 0.0339 36  11.9489  12.0863
+##  3months_WT  11.9726 0.0339 36  11.9039  12.0413
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast                  estimate     SE df  t.ratio p.value
+##  15days_WT - 15days_KO     2.94e+00 0.0479 36   61.367  &lt;.0001
+##  15days_WT - 15days_TAG   -2.79e-02 0.0479 36   -0.583  0.9996
+##  15days_WT - 1month_KO    -1.98e+00 0.0479 36  -41.438  &lt;.0001
+##  15days_WT - 1month_TAG   -5.00e+00 0.0479 36 -104.384  &lt;.0001
+##  15days_WT - 1month_WT    -5.00e+00 0.0479 36 -104.365  &lt;.0001
+##  15days_WT - 3months_KO   -7.97e+00 0.0479 36 -166.356  &lt;.0001
+##  15days_WT - 3months_TAG  -1.20e+01 0.0479 36 -250.891  &lt;.0001
+##  15days_WT - 3months_WT   -1.20e+01 0.0479 36 -249.951  &lt;.0001
+##  15days_KO - 15days_TAG   -2.97e+00 0.0479 36  -61.950  &lt;.0001
+##  15days_KO - 1month_KO    -4.92e+00 0.0479 36 -102.805  &lt;.0001
+##  15days_KO - 1month_TAG   -7.94e+00 0.0479 36 -165.751  &lt;.0001
+##  15days_KO - 1month_WT    -7.94e+00 0.0479 36 -165.732  &lt;.0001
+##  15days_KO - 3months_KO   -1.09e+01 0.0479 36 -227.723  &lt;.0001
+##  15days_KO - 3months_TAG  -1.50e+01 0.0479 36 -312.258  &lt;.0001
+##  15days_KO - 3months_WT   -1.49e+01 0.0479 36 -311.318  &lt;.0001
+##  15days_TAG - 1month_KO   -1.96e+00 0.0479 36  -40.855  &lt;.0001
+##  15days_TAG - 1month_TAG  -4.97e+00 0.0479 36 -103.801  &lt;.0001
+##  15days_TAG - 1month_WT   -4.97e+00 0.0479 36 -103.782  &lt;.0001
+##  15days_TAG - 3months_KO  -7.94e+00 0.0479 36 -165.773  &lt;.0001
+##  15days_TAG - 3months_TAG -1.20e+01 0.0479 36 -250.308  &lt;.0001
+##  15days_TAG - 3months_WT  -1.19e+01 0.0479 36 -249.368  &lt;.0001
+##  1month_KO - 1month_TAG   -3.02e+00 0.0479 36  -62.946  &lt;.0001
+##  1month_KO - 1month_WT    -3.01e+00 0.0479 36  -62.927  &lt;.0001
+##  1month_KO - 3months_KO   -5.98e+00 0.0479 36 -124.918  &lt;.0001
+##  1month_KO - 3months_TAG  -1.00e+01 0.0479 36 -209.453  &lt;.0001
+##  1month_KO - 3months_WT   -9.99e+00 0.0479 36 -208.513  &lt;.0001
+##  1month_TAG - 1month_WT    8.83e-04 0.0479 36    0.018  1.0000
+##  1month_TAG - 3months_KO  -2.97e+00 0.0479 36  -61.972  &lt;.0001
+##  1month_TAG - 3months_TAG -7.02e+00 0.0479 36 -146.507  &lt;.0001
+##  1month_TAG - 3months_WT  -6.97e+00 0.0479 36 -145.568  &lt;.0001
+##  1month_WT - 3months_KO   -2.97e+00 0.0479 36  -61.991  &lt;.0001
+##  1month_WT - 3months_TAG  -7.02e+00 0.0479 36 -146.526  &lt;.0001
+##  1month_WT - 3months_WT   -6.97e+00 0.0479 36 -145.586  &lt;.0001
+##  3months_KO - 3months_TAG -4.05e+00 0.0479 36  -84.535  &lt;.0001
+##  3months_KO - 3months_WT  -4.00e+00 0.0479 36  -83.595  &lt;.0001
+##  3months_TAG - 3months_WT  4.50e-02 0.0479 36    0.940  0.9888
+## 
+## P value adjustment: tukey method for comparing a family of 9 estimates</code></pre>
+<p>Let’s have a look from the plotting.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="makingsimulating-the-simple-dataset.html#cb57-1" tabindex="-1"></a><span class="fu">plot</span>(em, <span class="at">comparisons =</span> <span class="cn">TRUE</span>, <span class="at">ylab =</span> <span class="st">&quot;age-line combination&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:comparison-plot"></span>
+<img src="_main_files/figure-html/comparison-plot-1.png" alt="Comparing all age-line combination" width="576" />
+<p class="caption">
+Figure 3.4: Comparing all age-line combination
+</p>
+</div>
+<p>Have a look at every combination of WT and TAG with age? How are they? Aren’t they same as we expected?</p>
+<p>What if we model for <code>age</code> and <code>line</code> separately?</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="makingsimulating-the-simple-dataset.html#cb58-1" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_fold_change <span class="sc">~</span> age <span class="sc">+</span> line, <span class="at">data=</span>data)</span>
+<span id="cb58-2"><a href="makingsimulating-the-simple-dataset.html#cb58-2" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log_fold_change ~ age + line, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.58563 -0.14537 -0.05045  0.23178  0.40482 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -3.19157    0.08549  -37.33   &lt;2e-16 ***
+## age1month    4.96513    0.09365   53.02   &lt;2e-16 ***
+## age3months  11.62336    0.09365  124.11   &lt;2e-16 ***
+## lineTAG      3.34389    0.09365   35.71   &lt;2e-16 ***
+## lineWT       3.31928    0.09365   35.44   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2565 on 40 degrees of freedom
+## Multiple R-squared:  0.9977, Adjusted R-squared:  0.9974 
+## F-statistic:  4300 on 4 and 40 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>It shows everything very well. But we didn’t wanted the comparison/interpretation in this way. It takes all the lines to show things for a age group and all the age groups for a particular line.</p>
+<p>What if we model for interaction of <code>age</code> and <code>line</code>?</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="makingsimulating-the-simple-dataset.html#cb60-1" tabindex="-1"></a>lm4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_fold_change <span class="sc">~</span> age<span class="sc">*</span>line, <span class="at">data=</span>data)</span>
+<span id="cb60-2"><a href="makingsimulating-the-simple-dataset.html#cb60-2" tabindex="-1"></a><span class="fu">summary</span>(lm4)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log_fold_change ~ age * line, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.17576 -0.04204  0.01335  0.04109  0.16291 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        -2.93946    0.03387 -86.786   &lt;2e-16 ***
+## age1month           4.92432    0.04790 102.805   &lt;2e-16 ***
+## age3months         10.90785    0.04790 227.723   &lt;2e-16 ***
+## lineTAG             2.96739    0.04790  61.950   &lt;2e-16 ***
+## lineWT              2.93946    0.04790  61.367   &lt;2e-16 ***
+## age1month:lineTAG   0.04769    0.06774   0.704    0.486    
+## age3months:lineTAG  1.08181    0.06774  15.970   &lt;2e-16 ***
+## age1month:lineWT    0.07474    0.06774   1.103    0.277    
+## age3months:lineWT   1.06472    0.06774  15.718   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07574 on 36 degrees of freedom
+## Multiple R-squared:  0.9998, Adjusted R-squared:  0.9998 
+## F-statistic: 2.471e+04 on 8 and 36 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>14days old and KO are not shown again. Because R took them as reference, by default. Our <code>lm2</code> is better to compare everything.</p>
+<blockquote>
+<p>The above code is equivalent to <code>lm(log_fold_change ~ age + line + age*line, data=data)</code>. We used the short convention here.</p>
+</blockquote>
+<div class="info">
+<p>The intercept here is the mean of 15-days-old KO mice samples. Check it by <code>mean(data$log_fold_change[data$age == "15days" &amp; data$line == "KO"])</code>. All other results are relative to this group (not shown in the output). You can try <code>lm(log_fold_change ~ -1 + age*line, data=data)</code> command as well to see what happens.</p>
+</div>
+<p>How is our model? Let’s check.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="makingsimulating-the-simple-dataset.html#cb62-1" tabindex="-1"></a><span class="fu">anova</span>(lm2)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: log_fold_change
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## age_line   8 1133.86 141.732   24710 &lt; 2.2e-16 ***
+## Residuals 36    0.21   0.006                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The F value is too high. The “F value” of the ANOVA table represents the value of F-statistic <span class="math inline">\(\frac{SSR/1}{SSE/(n-1)}\)</span>, where SSR = variation explained by the regression (fitted or model) line and SSE = variation around the conditional mean. The null hypothesis here is no linear dependence of <code>log-fold-change</code> on <code>age_line</code>. The ANOVA table shows that the null hypothesis is not true, so <code>log_fold_change</code> depends on <code>age_line</code> (have a look at the p value). So, our model is very good.</p>
+<p>We could use <code>lme4</code> or <code>limma</code> packages for the modeling as well. But <code>lm()</code> function from base R is good enough to do this simple modeling. We will see their use later. Next part of this endeavor will be simulation and analysis of RT-qPCR data with multiple genes of interest/transcripts and multiple reference/housekeeping genes. Stay tuned!</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="primer-efficiency-measurement.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-sample_data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

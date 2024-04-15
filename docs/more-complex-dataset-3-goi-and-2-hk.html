@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 More Complex Dataset: 3 GOI and 2 Hk | RT-qPCR Data Simulation and Analysis</title>
+  <meta name="description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 More Complex Dataset: 3 GOI and 2 Hk | RT-qPCR Data Simulation and Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 More Complex Dataset: 3 GOI and 2 Hk | RT-qPCR Data Simulation and Analysis" />
+  
+  <meta name="twitter:description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Md Rasheduzzaman" />
+
+
+<meta name="date" content="2022-08-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="simulating-the-simple-dataset.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-use-the-book"><i class="fa fa-check"></i><b>1.1</b> How to use the book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-the-experiment-design"><i class="fa fa-check"></i><b>1.2</b> About the experiment design</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgement"><i class="fa fa-check"></i><b>1.3</b> Acknowledgement</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Primer Efficiency Measurement</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#data-simulation"><i class="fa fa-check"></i><b>2.1</b> Data Simulation</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#data-analysis"><i class="fa fa-check"></i><b>2.2</b> Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html"><i class="fa fa-check"></i><b>3</b> Simulating the Simple Dataset</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#samples-of-different-age"><i class="fa fa-check"></i><b>3.1</b> Samples of different age</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#for-age-15-days"><i class="fa fa-check"></i><b>3.1.1</b> For age 15 days</a></li>
+<li class="chapter" data-level="3.1.2" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#for-age-1-month"><i class="fa fa-check"></i><b>3.1.2</b> For age 1 month</a></li>
+<li class="chapter" data-level="3.1.3" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#for-age-3-months"><i class="fa fa-check"></i><b>3.1.3</b> For age 3 months</a></li>
+<li class="chapter" data-level="3.1.4" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#making-the-whole-data-set-combining-all-three-datasets-by-rbind-function"><i class="fa fa-check"></i><b>3.1.4</b> Making the whole data set combining all three datasets: by <code>rbind()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#data-preparation"><i class="fa fa-check"></i><b>3.2</b> Data preparation</a></li>
+<li class="chapter" data-level="3.3" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#statistical-analysis"><i class="fa fa-check"></i><b>3.3</b> Statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html"><i class="fa fa-check"></i><b>4</b> More Complex Dataset: 3 GOI and 2 Hk</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-15-days-1"><i class="fa fa-check"></i><b>4.1</b> For age 15 days</a></li>
+<li class="chapter" data-level="4.2" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-1-month-1"><i class="fa fa-check"></i><b>4.2</b> For age 1 month</a></li>
+<li class="chapter" data-level="4.3" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-3-months-1"><i class="fa fa-check"></i><b>4.3</b> For age 3 months</a></li>
+<li class="chapter" data-level="4.4" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#making-the-whole-dataset-using-all-three-datasets"><i class="fa fa-check"></i><b>4.4</b> Making the whole dataset using all three datasets</a></li>
+<li class="chapter" data-level="4.5" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#statistical-analysis-1"><i class="fa fa-check"></i><b>4.5</b> Statistical Analysis</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#ko-vs-tag"><i class="fa fa-check"></i><b>4.5.1</b> KO vs TAG</a></li>
+<li class="chapter" data-level="4.5.2" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#tag-vs-wt"><i class="fa fa-check"></i><b>4.5.2</b> TAG vs WT</a></li>
+<li class="chapter" data-level="4.5.3" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#ko-vs-wt"><i class="fa fa-check"></i><b>4.5.3</b> KO vs WT</a></li>
+<li class="chapter" data-level="4.5.4" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#days-vs-1month"><i class="fa fa-check"></i><b>4.5.4</b> 15days vs 1month</a></li>
+<li class="chapter" data-level="4.5.5" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#days-vs-3month"><i class="fa fa-check"></i><b>4.5.5</b> 15days vs 3month</a></li>
+<li class="chapter" data-level="4.5.6" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#month-vs-3month"><i class="fa fa-check"></i><b>4.5.6</b> 1month vs 3month</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">RT-qPCR Data Simulation and Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="more-complex-dataset-3-goi-and-2-hk" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> More Complex Dataset: 3 GOI and 2 Hk<a href="more-complex-dataset-3-goi-and-2-hk.html#more-complex-dataset-3-goi-and-2-hk" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<ul>
+<li><p>For multiple gene of interest (GOI) and multiple housekeeping (Hk) genes. Before this part, see chapter <a href="chapter2.html#chapter2">2</a> for better understanding.*</p></li>
+<li><p>Let’s add two more gene of interest (GOI) or transcripts and one more housekeeping gene</p></li>
+</ul>
+<div id="for-age-15-days-1" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> For age 15 days<a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-15-days-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s add 3 Ct values for all three gene of interest for each sample.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.4     ✔ tidyr     1.3.0
+## ✔ lubridate 1.9.3     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-1" tabindex="-1"></a>nKO <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co">#No. of KO sample</span></span>
+<span id="cb3-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-2" tabindex="-1"></a>nTAG <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># No. of TAG sample</span></span>
+<span id="cb3-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-3" tabindex="-1"></a>nWT <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># No. of WT sample</span></span>
+<span id="cb3-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb3-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-6" tabindex="-1"></a>geneB1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-7" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">19</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-8" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">19</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb3-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-9" tabindex="-1"></a>geneB8 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">15</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-10"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-10" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="fl">13.5</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-11"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-11" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="fl">13.5</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-12"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-12" tabindex="-1"></a>geneB15 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="fl">5.5</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-13"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-13" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">5</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-14"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-14" tabindex="-1"></a>               <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">5</span>, .<span class="dv">08</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-15"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-15" tabindex="-1"></a>GOI1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(geneB1, geneB8, geneB15)</span>
+<span id="cb3-16"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb3-16" tabindex="-1"></a>GOI1</span></code></pre></div>
+<pre><code>##          X1       X2       X3     X1.1     X2.1     X3.1     X1.2     X2.2
+## 1  19.94090 19.90658 19.91716 14.96561 15.07899 15.05426 5.620233 5.464741
+## 2  20.00266 20.13236 19.96516 14.78132 14.97700 14.98434 5.397213 5.632653
+## 3  19.84834 20.06249 19.84617 15.08801 14.91815 15.04388 5.593827 5.385985
+## 4  19.86373 19.99543 19.97444 15.07239 15.04997 15.14879 5.445685 5.641311
+## 5  20.11785 19.89959 19.88501 15.02199 15.01592 15.00602 5.551310 5.439782
+## 6  19.00099 18.94540 19.00057 13.43208 13.63548 13.53628 5.046850 5.067399
+## 7  18.98216 18.99873 18.98499 13.68718 13.43672 13.49013 5.039151 5.129649
+## 8  19.07102 18.96459 18.93874 13.49030 13.41398 13.43895 4.919472 5.035813
+## 9  18.95263 19.02820 18.98232 13.34398 13.45137 13.51826 5.101572 4.816088
+## 10 18.94754 19.00585 18.92131 13.54310 13.56035 13.58956 5.089913 4.993667
+## 11 18.91166 19.03877 18.86908 13.51253 13.49482 13.45174 5.197002 5.112899
+## 12 18.92495 18.98512 19.00163 13.44490 13.52524 13.39617 4.948801 5.103105
+## 13 19.05429 19.12364 19.07134 13.53624 13.45155 13.54052 5.096911 5.046838
+## 14 18.87380 18.95109 18.93018 13.41460 13.42739 13.43173 5.056893 5.102318
+## 15 18.93040 18.97218 19.07120 13.53213 13.68093 13.37952 4.983791 4.930088
+##        X3.2
+## 1  5.455833
+## 2  5.524364
+## 3  5.559678
+## 4  5.487996
+## 5  5.293026
+## 6  4.958155
+## 7  4.966594
+## 8  5.024390
+## 9  4.997490
+## 10 5.008410
+## 11 4.988912
+## 12 4.904384
+## 13 5.026353
+## 14 4.913405
+## 15 4.958614</code></pre>
+<p>Let’s add 3 Ct values for two housekepping genes for each sample</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-1" tabindex="-1"></a>Hk1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-2" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-3" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-5" tabindex="-1"></a>Hk2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-6" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-7" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-8" tabindex="-1"></a>Hk_1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Hk1, Hk2)</span>
+<span id="cb5-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb5-9" tabindex="-1"></a>Hk_1</span></code></pre></div>
+<pre><code>##          X1       X2       X3     X1.1     X2.1     X3.1
+## 1  19.99218 19.84439 20.02586 21.99025 21.97342 21.99698
+## 2  19.96507 20.05442 20.03890 21.99068 21.96137 21.95022
+## 3  19.77417 19.84615 20.20155 22.06696 21.98492 22.08715
+## 4  19.97135 19.97075 19.96763 21.92753 21.94858 22.00743
+## 5  20.02806 19.98888 20.03787 22.22761 22.03432 22.04151
+## 6  19.84041 20.08417 20.00060 22.27714 22.06583 22.00087
+## 7  20.06711 20.16976 19.94340 22.17142 22.16520 21.96385
+## 8  20.04257 20.15864 20.05853 21.87658 21.87441 21.94704
+## 9  20.06896 19.92336 20.01066 22.01743 22.08810 21.89571
+## 10 19.90093 19.97181 19.86917 22.09832 22.07426 21.87265
+## 11 19.99023 20.05158 20.10625 22.07320 21.95195 22.01364
+## 12 19.85813 20.03324 19.90093 22.06773 21.92287 22.03660
+## 13 19.97471 20.09431 20.11496 21.91550 22.09389 22.03664
+## 14 20.00311 20.03116 20.08819 21.95017 21.89853 21.95792
+## 15 19.99650 19.89106 20.11620 22.14230 21.98429 21.91004</code></pre>
+<p>Now, let’s add these two data sets.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb7-1" tabindex="-1"></a>day15 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(GOI1, Hk_1)</span></code></pre></div>
+<p>Now, we need to add the column names.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-1" tabindex="-1"></a><span class="fu">colnames</span>(day15) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;geneB1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;geneB8_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;geneB15_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk2_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)))</span>
+<span id="cb8-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-2" tabindex="-1"></a>day15<span class="sc">$</span>sampleID <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;KO&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>, nKO)),</span>
+<span id="cb8-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-3" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;TAG&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>, nTAG)),</span>
+<span id="cb8-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-4" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;WT&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>, nWT))) <span class="co">#naming sample/ID</span></span>
+<span id="cb8-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-5" tabindex="-1"></a>day15 <span class="ot">&lt;-</span> day15[, <span class="fu">c</span>(<span class="fu">ncol</span>(day15), <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(day15) <span class="sc">-</span> <span class="dv">1</span>)] <span class="co">#reordering: last column at the beginning and others are in the same sequence</span></span>
+<span id="cb8-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-6" tabindex="-1"></a>day15<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;15days&quot;</span>, <span class="at">times =</span> <span class="fu">nrow</span>(day15)) <span class="co">#adding age to all. nrow means how many sample</span></span>
+<span id="cb8-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-7" tabindex="-1"></a>day15<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;KO&quot;</span>, <span class="at">times =</span> nKO), <span class="fu">rep</span>(<span class="st">&quot;TAG&quot;</span>, <span class="at">times =</span> nTAG), <span class="fu">rep</span>(<span class="st">&quot;WT&quot;</span>, <span class="at">times =</span> nWT))</span>
+<span id="cb8-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb8-8" tabindex="-1"></a>day15</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3 geneB8_run1 geneB8_run2
+## 1       KO1    19.94090    19.90658    19.91716    14.96561    15.07899
+## 2       KO2    20.00266    20.13236    19.96516    14.78132    14.97700
+## 3       KO3    19.84834    20.06249    19.84617    15.08801    14.91815
+## 4       KO4    19.86373    19.99543    19.97444    15.07239    15.04997
+## 5       KO5    20.11785    19.89959    19.88501    15.02199    15.01592
+## 6      TAG1    19.00099    18.94540    19.00057    13.43208    13.63548
+## 7      TAG2    18.98216    18.99873    18.98499    13.68718    13.43672
+## 8      TAG3    19.07102    18.96459    18.93874    13.49030    13.41398
+## 9      TAG4    18.95263    19.02820    18.98232    13.34398    13.45137
+## 10     TAG5    18.94754    19.00585    18.92131    13.54310    13.56035
+## 11      WT1    18.91166    19.03877    18.86908    13.51253    13.49482
+## 12      WT2    18.92495    18.98512    19.00163    13.44490    13.52524
+## 13      WT3    19.05429    19.12364    19.07134    13.53624    13.45155
+## 14      WT4    18.87380    18.95109    18.93018    13.41460    13.42739
+## 15      WT5    18.93040    18.97218    19.07120    13.53213    13.68093
+##    geneB8_run3 geneB15_run1 geneB15_run2 geneB15_run3 Hk1_run1 Hk1_run2
+## 1     15.05426     5.620233     5.464741     5.455833 19.99218 19.84439
+## 2     14.98434     5.397213     5.632653     5.524364 19.96507 20.05442
+## 3     15.04388     5.593827     5.385985     5.559678 19.77417 19.84615
+## 4     15.14879     5.445685     5.641311     5.487996 19.97135 19.97075
+## 5     15.00602     5.551310     5.439782     5.293026 20.02806 19.98888
+## 6     13.53628     5.046850     5.067399     4.958155 19.84041 20.08417
+## 7     13.49013     5.039151     5.129649     4.966594 20.06711 20.16976
+## 8     13.43895     4.919472     5.035813     5.024390 20.04257 20.15864
+## 9     13.51826     5.101572     4.816088     4.997490 20.06896 19.92336
+## 10    13.58956     5.089913     4.993667     5.008410 19.90093 19.97181
+## 11    13.45174     5.197002     5.112899     4.988912 19.99023 20.05158
+## 12    13.39617     4.948801     5.103105     4.904384 19.85813 20.03324
+## 13    13.54052     5.096911     5.046838     5.026353 19.97471 20.09431
+## 14    13.43173     5.056893     5.102318     4.913405 20.00311 20.03116
+## 15    13.37952     4.983791     4.930088     4.958614 19.99650 19.89106
+##    Hk1_run3 Hk2_run1 Hk2_run2 Hk2_run3    age line
+## 1  20.02586 21.99025 21.97342 21.99698 15days   KO
+## 2  20.03890 21.99068 21.96137 21.95022 15days   KO
+## 3  20.20155 22.06696 21.98492 22.08715 15days   KO
+## 4  19.96763 21.92753 21.94858 22.00743 15days   KO
+## 5  20.03787 22.22761 22.03432 22.04151 15days   KO
+## 6  20.00060 22.27714 22.06583 22.00087 15days  TAG
+## 7  19.94340 22.17142 22.16520 21.96385 15days  TAG
+## 8  20.05853 21.87658 21.87441 21.94704 15days  TAG
+## 9  20.01066 22.01743 22.08810 21.89571 15days  TAG
+## 10 19.86917 22.09832 22.07426 21.87265 15days  TAG
+## 11 20.10625 22.07320 21.95195 22.01364 15days   WT
+## 12 19.90093 22.06773 21.92287 22.03660 15days   WT
+## 13 20.11496 21.91550 22.09389 22.03664 15days   WT
+## 14 20.08819 21.95017 21.89853 21.95792 15days   WT
+## 15 20.11620 22.14230 21.98429 21.91004 15days   WT</code></pre>
+</div>
+<div id="for-age-1-month-1" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> For age 1 month<a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-1-month-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s add 3 Ct values for all three gene of interest for each sample</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-1" tabindex="-1"></a>geneB1_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">15</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-2" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">13</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-3" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">13</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-4" tabindex="-1"></a>geneB8_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">11</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-5" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="fl">9.5</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-6" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="fl">9.5</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-7" tabindex="-1"></a>geneB15_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">4</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-8" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="fl">3.5</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-9" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="fl">3.5</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-10"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-10" tabindex="-1"></a>GOI2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(geneB1_1, geneB8_1, geneB15_1)</span>
+<span id="cb10-11"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb10-11" tabindex="-1"></a>GOI2</span></code></pre></div>
+<pre><code>##          X1       X2       X3      X1.1      X2.1      X3.1     X1.2     X2.2
+## 1  14.99747 15.09693 14.98493 10.934180 10.984328 10.960658 3.968130 4.035878
+## 2  15.00248 15.00429 14.98668 10.967392 10.896370 10.897843 4.009278 3.907800
+## 3  15.05610 14.79599 15.13754 11.265076 10.858469 10.983549 4.062752 3.900105
+## 4  14.83611 15.02860 14.89823 11.083880 11.090811 11.003108 3.971276 3.972255
+## 5  14.93741 14.81172 15.08094 10.919704 10.940077 11.000085 4.027692 4.015375
+## 6  13.06698 12.90856 12.98329  9.594042  9.427112  9.609933 3.435193 3.546839
+## 7  13.04467 12.99827 12.99819  9.384266  9.505624  9.513437 3.455377 3.369311
+## 8  13.12544 13.03433 13.06301  9.614275  9.510843  9.468201 3.333084 3.393381
+## 9  13.08203 12.88196 13.10005  9.533726  9.544878  9.442678 3.514495 3.655245
+## 10 13.10081 12.94193 13.00416  9.385184  9.508920  9.521080 3.506159 3.344702
+## 11 12.96158 13.02504 13.04419  9.391496  9.555035  9.389145 3.462587 3.512392
+## 12 13.05727 12.84434 12.88123  9.449236  9.512661  9.508458 3.398681 3.484506
+## 13 12.96882 12.99192 13.01591  9.444158  9.452444  9.448928 3.452423 3.563106
+## 14 12.97476 12.91432 12.97829  9.644585  9.602465  9.463823 3.494495 3.496548
+## 15 12.98883 12.91634 13.08572  9.643448  9.531129  9.579465 3.489047 3.469343
+##        X3.2
+## 1  3.889349
+## 2  3.987077
+## 3  4.129274
+## 4  4.015549
+## 5  4.013899
+## 6  3.392288
+## 7  3.544312
+## 8  3.528779
+## 9  3.459124
+## 10 3.565980
+## 11 3.533019
+## 12 3.550038
+## 13 3.514090
+## 14 3.471077
+## 15 3.524028</code></pre>
+<p>Let’s add 3 Ct values for two housekeeping genes for each sample.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-1" tabindex="-1"></a>Hk1_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-2" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-3" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-5" tabindex="-1"></a>Hk2_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-6" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-7" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-8" tabindex="-1"></a>Hk_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Hk1_1, Hk2_1)</span>
+<span id="cb12-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb12-9" tabindex="-1"></a>Hk_2</span></code></pre></div>
+<pre><code>##          X1       X2       X3     X1.1     X2.1     X3.1
+## 1  19.91212 19.97160 20.05439 22.02179 21.87720 21.92912
+## 2  20.11881 20.00106 20.13626 22.06294 22.07636 21.95021
+## 3  20.14923 20.05422 19.90697 21.90417 22.15848 21.90490
+## 4  20.07552 19.95337 19.78228 21.83446 22.11954 22.03117
+## 5  19.85995 19.82433 20.12835 22.20686 22.00741 22.06073
+## 6  19.96440 19.90894 20.08559 21.84412 21.87631 21.98037
+## 7  20.09743 19.98006 20.14961 22.07487 21.96788 22.06388
+## 8  19.84984 20.12222 20.11529 22.02437 21.90476 22.09534
+## 9  19.96290 20.05654 19.99516 22.07015 21.99258 21.85633
+## 10 19.97786 20.01762 20.10678 22.06291 22.03364 22.06849
+## 11 20.15435 20.05015 20.13430 22.04410 21.92874 22.10393
+## 12 20.06608 20.01861 19.89601 21.84966 22.11404 22.02202
+## 13 19.96586 19.83583 20.11829 21.95184 22.06644 22.13038
+## 14 20.20116 19.98993 19.71979 21.95892 22.00524 21.90915
+## 15 20.04412 19.96723 20.10406 22.03909 22.12727 21.99495</code></pre>
+<p>Let’s add these two dataset to make the full data set.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb14-1" tabindex="-1"></a>month1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(GOI2, Hk_2)</span></code></pre></div>
+<p>Now, we need to add the column names.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-1" tabindex="-1"></a><span class="fu">colnames</span>(month1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;geneB1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;geneB8_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;geneB15_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk2_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)))</span>
+<span id="cb15-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-2" tabindex="-1"></a>month1<span class="sc">$</span>sampleID <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;KO&quot;</span>, <span class="fu">seq</span>(nKO<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span><span class="sc">*</span>nKO)),</span>
+<span id="cb15-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-3" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;TAG&quot;</span>, <span class="fu">seq</span>(nTAG<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span><span class="sc">*</span>nTAG)),</span>
+<span id="cb15-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-4" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;WT&quot;</span>, <span class="fu">seq</span>(nWT<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span><span class="sc">*</span>nWT)))</span>
+<span id="cb15-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-5" tabindex="-1"></a>month1 <span class="ot">&lt;-</span> month1[, <span class="fu">c</span>(<span class="fu">ncol</span>(month1), <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(month1) <span class="sc">-</span> <span class="dv">1</span>)] </span>
+<span id="cb15-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-6" tabindex="-1"></a>month1<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;1month&quot;</span>, <span class="at">times =</span> <span class="fu">nrow</span>(month1)) </span>
+<span id="cb15-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-7" tabindex="-1"></a>month1<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;KO&quot;</span>, <span class="at">times =</span> nKO), <span class="fu">rep</span>(<span class="st">&quot;TAG&quot;</span>, <span class="at">times =</span> nTAG), <span class="fu">rep</span>(<span class="st">&quot;WT&quot;</span>, <span class="at">times =</span> nWT))</span>
+<span id="cb15-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb15-8" tabindex="-1"></a>month1</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3 geneB8_run1 geneB8_run2
+## 1       KO6    14.99747    15.09693    14.98493   10.934180   10.984328
+## 2       KO7    15.00248    15.00429    14.98668   10.967392   10.896370
+## 3       KO8    15.05610    14.79599    15.13754   11.265076   10.858469
+## 4       KO9    14.83611    15.02860    14.89823   11.083880   11.090811
+## 5      KO10    14.93741    14.81172    15.08094   10.919704   10.940077
+## 6      TAG6    13.06698    12.90856    12.98329    9.594042    9.427112
+## 7      TAG7    13.04467    12.99827    12.99819    9.384266    9.505624
+## 8      TAG8    13.12544    13.03433    13.06301    9.614275    9.510843
+## 9      TAG9    13.08203    12.88196    13.10005    9.533726    9.544878
+## 10    TAG10    13.10081    12.94193    13.00416    9.385184    9.508920
+## 11      WT6    12.96158    13.02504    13.04419    9.391496    9.555035
+## 12      WT7    13.05727    12.84434    12.88123    9.449236    9.512661
+## 13      WT8    12.96882    12.99192    13.01591    9.444158    9.452444
+## 14      WT9    12.97476    12.91432    12.97829    9.644585    9.602465
+## 15     WT10    12.98883    12.91634    13.08572    9.643448    9.531129
+##    geneB8_run3 geneB15_run1 geneB15_run2 geneB15_run3 Hk1_run1 Hk1_run2
+## 1    10.960658     3.968130     4.035878     3.889349 19.91212 19.97160
+## 2    10.897843     4.009278     3.907800     3.987077 20.11881 20.00106
+## 3    10.983549     4.062752     3.900105     4.129274 20.14923 20.05422
+## 4    11.003108     3.971276     3.972255     4.015549 20.07552 19.95337
+## 5    11.000085     4.027692     4.015375     4.013899 19.85995 19.82433
+## 6     9.609933     3.435193     3.546839     3.392288 19.96440 19.90894
+## 7     9.513437     3.455377     3.369311     3.544312 20.09743 19.98006
+## 8     9.468201     3.333084     3.393381     3.528779 19.84984 20.12222
+## 9     9.442678     3.514495     3.655245     3.459124 19.96290 20.05654
+## 10    9.521080     3.506159     3.344702     3.565980 19.97786 20.01762
+## 11    9.389145     3.462587     3.512392     3.533019 20.15435 20.05015
+## 12    9.508458     3.398681     3.484506     3.550038 20.06608 20.01861
+## 13    9.448928     3.452423     3.563106     3.514090 19.96586 19.83583
+## 14    9.463823     3.494495     3.496548     3.471077 20.20116 19.98993
+## 15    9.579465     3.489047     3.469343     3.524028 20.04412 19.96723
+##    Hk1_run3 Hk2_run1 Hk2_run2 Hk2_run3    age line
+## 1  20.05439 22.02179 21.87720 21.92912 1month   KO
+## 2  20.13626 22.06294 22.07636 21.95021 1month   KO
+## 3  19.90697 21.90417 22.15848 21.90490 1month   KO
+## 4  19.78228 21.83446 22.11954 22.03117 1month   KO
+## 5  20.12835 22.20686 22.00741 22.06073 1month   KO
+## 6  20.08559 21.84412 21.87631 21.98037 1month  TAG
+## 7  20.14961 22.07487 21.96788 22.06388 1month  TAG
+## 8  20.11529 22.02437 21.90476 22.09534 1month  TAG
+## 9  19.99516 22.07015 21.99258 21.85633 1month  TAG
+## 10 20.10678 22.06291 22.03364 22.06849 1month  TAG
+## 11 20.13430 22.04410 21.92874 22.10393 1month   WT
+## 12 19.89601 21.84966 22.11404 22.02202 1month   WT
+## 13 20.11829 21.95184 22.06644 22.13038 1month   WT
+## 14 19.71979 21.95892 22.00524 21.90915 1month   WT
+## 15 20.10406 22.03909 22.12727 21.99495 1month   WT</code></pre>
+</div>
+<div id="for-age-3-months-1" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> For age 3 months<a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-3-months-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s add 3 Ct values for all three gene of interest for each sample.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-1" tabindex="-1"></a>geneB1_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">12</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-2" tabindex="-1"></a>                           <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">10</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-3" tabindex="-1"></a>                           <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">10</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb17-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-4" tabindex="-1"></a>geneB8_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">8</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-5" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">7</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-6" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">7</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb17-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-7" tabindex="-1"></a>geneB15_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">4</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-8" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">3</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-9" tabindex="-1"></a>                          <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">3</span>, .<span class="dv">07</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb17-10"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-10" tabindex="-1"></a>GOI3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(geneB1_2, geneB8_2, geneB15_2)</span>
+<span id="cb17-11"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb17-11" tabindex="-1"></a>GOI3</span></code></pre></div>
+<pre><code>##           X1        X2        X3     X1.1     X2.1     X3.1     X1.2     X2.2
+## 1  11.863283 11.999694 12.093952 7.999847 8.094514 8.061218 3.927807 3.972777
+## 2  12.177020 11.995173 11.998408 8.128396 7.865676 7.924328 4.102979 3.967677
+## 3  11.887369 11.942249 11.986178 8.091580 8.041221 8.026039 3.953350 4.053421
+## 4  12.177858 11.845221 12.024991 8.233290 8.093277 7.990469 4.026101 4.144904
+## 5  12.133823 11.824614 11.960783 8.213621 7.907466 7.842620 3.994659 4.171968
+## 6   9.958294  9.973281  9.954696 7.061558 7.027769 6.865237 3.012478 2.924221
+## 7   9.895675  9.875977 10.058131 7.057281 7.095865 6.959985 2.936499 3.041350
+## 8   9.914046 10.032233 10.119815 6.994715 7.026942 7.211809 3.194930 2.957893
+## 9   9.983859 10.014847 10.025387 6.981085 6.926117 6.904956 3.130110 3.031080
+## 10  9.945852 10.013667 10.011142 7.032948 7.034139 7.054108 2.924373 2.964901
+## 11 10.009124 10.079148 10.027025 7.143553 6.996541 7.008177 2.984096 2.979769
+## 12 10.112312 10.123857  9.990111 7.028205 6.972454 6.971151 2.953057 3.115041
+## 13  9.913249  9.983168  9.992343 7.173218 6.984187 7.065363 2.941456 2.953763
+## 14 10.001430  9.994570  9.870692 6.946167 6.994717 6.944952 2.904735 2.892866
+## 15 10.123727  9.916688  9.874787 6.988198 7.026275 7.032328 3.080398 2.888468
+##        X3.2
+## 1  3.937993
+## 2  3.966865
+## 3  4.122472
+## 4  3.748601
+## 5  3.875822
+## 6  2.983672
+## 7  3.056098
+## 8  3.115097
+## 9  2.996605
+## 10 2.936071
+## 11 2.963137
+## 12 2.926784
+## 13 2.892353
+## 14 3.032610
+## 15 3.029610</code></pre>
+<p>Let’s add 3 Ct values for two housekeeping genes for each sample</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-1" tabindex="-1"></a>Hk1_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-2" tabindex="-1"></a>                <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-3" tabindex="-1"></a>                <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">20</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb19-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-4" tabindex="-1"></a>Hk2_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nKO, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-5" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nTAG, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-6" tabindex="-1"></a>       <span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(nWT, <span class="dv">22</span>, .<span class="dv">1</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb19-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-7" tabindex="-1"></a>Hk_3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Hk1_2, Hk2_2)</span>
+<span id="cb19-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb19-8" tabindex="-1"></a>Hk_3</span></code></pre></div>
+<pre><code>##          X1       X2       X3     X1.1     X2.1     X3.1
+## 1  19.97264 20.15599 19.98149 22.06460 21.90367 21.90242
+## 2  20.02960 20.19114 20.12722 21.94610 21.82593 22.00765
+## 3  20.06347 20.00303 19.92308 22.09226 22.22264 22.06528
+## 4  19.99352 20.13460 20.04605 22.17130 22.16813 21.97725
+## 5  20.10394 20.07710 19.93845 21.92101 21.90634 22.15996
+## 6  20.03304 20.02264 19.96974 22.08437 22.12723 21.85031
+## 7  19.91822 20.09672 20.05354 22.07381 21.85311 21.99451
+## 8  20.03497 20.06186 19.99774 22.07076 22.10110 22.08588
+## 9  19.90877 20.00661 20.01175 21.92174 21.99615 22.12462
+## 10 19.77674 20.10241 19.92518 22.02861 22.00963 22.10050
+## 11 20.02326 20.13514 19.98868 21.70119 21.91934 21.95628
+## 12 20.09677 20.10907 19.98160 22.11187 21.95100 22.00307
+## 13 20.05158 19.96417 20.05355 22.03459 21.98429 22.07934
+## 14 19.89245 19.99111 20.16335 22.07814 22.02052 22.08545
+## 15 19.81985 19.88167 19.98857 22.04702 22.10502 22.22736</code></pre>
+<p>Let’s make the full dataset for month3.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb21-1" tabindex="-1"></a>month3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(GOI3, Hk_3)</span></code></pre></div>
+<p>Naming the columns.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-1" tabindex="-1"></a><span class="fu">colnames</span>(month3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;geneB1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;geneB8_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;geneB15_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk1_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="fu">paste0</span>(<span class="st">&quot;Hk2_run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)))</span>
+<span id="cb22-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-2" tabindex="-1"></a>month3<span class="sc">$</span>sampleID <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;KO&quot;</span>, <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>nKO<span class="sc">+</span><span class="dv">1</span>, <span class="dv">3</span><span class="sc">*</span>nKO)),</span>
+<span id="cb22-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-3" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;TAG&quot;</span>, <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>nTAG<span class="sc">+</span><span class="dv">1</span>, <span class="dv">3</span><span class="sc">*</span>nTAG)),</span>
+<span id="cb22-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-4" tabindex="-1"></a>                      <span class="fu">paste0</span>(<span class="st">&quot;WT&quot;</span>, <span class="fu">seq</span>(<span class="dv">2</span><span class="sc">*</span>nWT<span class="sc">+</span><span class="dv">1</span>, <span class="dv">3</span><span class="sc">*</span>nWT))) </span>
+<span id="cb22-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-5" tabindex="-1"></a>month3 <span class="ot">&lt;-</span> month3[, <span class="fu">c</span>(<span class="fu">ncol</span>(month3), <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(month3) <span class="sc">-</span> <span class="dv">1</span>)] </span>
+<span id="cb22-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-6" tabindex="-1"></a>month3<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;3months&quot;</span>, <span class="at">times =</span> <span class="fu">nrow</span>(month3))</span>
+<span id="cb22-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-7" tabindex="-1"></a>month3<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;KO&quot;</span>, <span class="at">times =</span> nKO), <span class="fu">rep</span>(<span class="st">&quot;TAG&quot;</span>, <span class="at">times =</span> nTAG), <span class="fu">rep</span>(<span class="st">&quot;WT&quot;</span>, <span class="at">times =</span> nWT))</span>
+<span id="cb22-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb22-8" tabindex="-1"></a>month3</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3 geneB8_run1 geneB8_run2
+## 1      KO11   11.863283   11.999694   12.093952    7.999847    8.094514
+## 2      KO12   12.177020   11.995173   11.998408    8.128396    7.865676
+## 3      KO13   11.887369   11.942249   11.986178    8.091580    8.041221
+## 4      KO14   12.177858   11.845221   12.024991    8.233290    8.093277
+## 5      KO15   12.133823   11.824614   11.960783    8.213621    7.907466
+## 6     TAG11    9.958294    9.973281    9.954696    7.061558    7.027769
+## 7     TAG12    9.895675    9.875977   10.058131    7.057281    7.095865
+## 8     TAG13    9.914046   10.032233   10.119815    6.994715    7.026942
+## 9     TAG14    9.983859   10.014847   10.025387    6.981085    6.926117
+## 10    TAG15    9.945852   10.013667   10.011142    7.032948    7.034139
+## 11     WT11   10.009124   10.079148   10.027025    7.143553    6.996541
+## 12     WT12   10.112312   10.123857    9.990111    7.028205    6.972454
+## 13     WT13    9.913249    9.983168    9.992343    7.173218    6.984187
+## 14     WT14   10.001430    9.994570    9.870692    6.946167    6.994717
+## 15     WT15   10.123727    9.916688    9.874787    6.988198    7.026275
+##    geneB8_run3 geneB15_run1 geneB15_run2 geneB15_run3 Hk1_run1 Hk1_run2
+## 1     8.061218     3.927807     3.972777     3.937993 19.97264 20.15599
+## 2     7.924328     4.102979     3.967677     3.966865 20.02960 20.19114
+## 3     8.026039     3.953350     4.053421     4.122472 20.06347 20.00303
+## 4     7.990469     4.026101     4.144904     3.748601 19.99352 20.13460
+## 5     7.842620     3.994659     4.171968     3.875822 20.10394 20.07710
+## 6     6.865237     3.012478     2.924221     2.983672 20.03304 20.02264
+## 7     6.959985     2.936499     3.041350     3.056098 19.91822 20.09672
+## 8     7.211809     3.194930     2.957893     3.115097 20.03497 20.06186
+## 9     6.904956     3.130110     3.031080     2.996605 19.90877 20.00661
+## 10    7.054108     2.924373     2.964901     2.936071 19.77674 20.10241
+## 11    7.008177     2.984096     2.979769     2.963137 20.02326 20.13514
+## 12    6.971151     2.953057     3.115041     2.926784 20.09677 20.10907
+## 13    7.065363     2.941456     2.953763     2.892353 20.05158 19.96417
+## 14    6.944952     2.904735     2.892866     3.032610 19.89245 19.99111
+## 15    7.032328     3.080398     2.888468     3.029610 19.81985 19.88167
+##    Hk1_run3 Hk2_run1 Hk2_run2 Hk2_run3     age line
+## 1  19.98149 22.06460 21.90367 21.90242 3months   KO
+## 2  20.12722 21.94610 21.82593 22.00765 3months   KO
+## 3  19.92308 22.09226 22.22264 22.06528 3months   KO
+## 4  20.04605 22.17130 22.16813 21.97725 3months   KO
+## 5  19.93845 21.92101 21.90634 22.15996 3months   KO
+## 6  19.96974 22.08437 22.12723 21.85031 3months  TAG
+## 7  20.05354 22.07381 21.85311 21.99451 3months  TAG
+## 8  19.99774 22.07076 22.10110 22.08588 3months  TAG
+## 9  20.01175 21.92174 21.99615 22.12462 3months  TAG
+## 10 19.92518 22.02861 22.00963 22.10050 3months  TAG
+## 11 19.98868 21.70119 21.91934 21.95628 3months   WT
+## 12 19.98160 22.11187 21.95100 22.00307 3months   WT
+## 13 20.05355 22.03459 21.98429 22.07934 3months   WT
+## 14 20.16335 22.07814 22.02052 22.08545 3months   WT
+## 15 19.98857 22.04702 22.10502 22.22736 3months   WT</code></pre>
+</div>
+<div id="making-the-whole-dataset-using-all-three-datasets" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Making the whole dataset using all three datasets<a href="more-complex-dataset-3-goi-and-2-hk.html#making-the-whole-dataset-using-all-three-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We need <code>rbind()</code> function for this.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb24-1" tabindex="-1"></a>pcr1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(day15, month1, month3)</span>
+<span id="cb24-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb24-2" tabindex="-1"></a>pcr1</span></code></pre></div>
+<pre><code>##    sampleID geneB1_run1 geneB1_run2 geneB1_run3 geneB8_run1 geneB8_run2
+## 1       KO1   19.940897   19.906585   19.917157   14.965613   15.078987
+## 2       KO2   20.002659   20.132361   19.965165   14.781322   14.977001
+## 3       KO3   19.848345   20.062492   19.846171   15.088006   14.918150
+## 4       KO4   19.863735   19.995428   19.974443   15.072386   15.049973
+## 5       KO5   20.117849   19.899588   19.885005   15.021985   15.015919
+## 6      TAG1   19.000986   18.945399   19.000573   13.432079   13.635481
+## 7      TAG2   18.982162   18.998731   18.984992   13.687175   13.436723
+## 8      TAG3   19.071022   18.964592   18.938744   13.490304   13.413979
+## 9      TAG4   18.952628   19.028205   18.982315   13.343983   13.451370
+## 10     TAG5   18.947543   19.005854   18.921313   13.543097   13.560352
+## 11      WT1   18.911657   19.038774   18.869079   13.512526   13.494818
+## 12      WT2   18.924948   18.985116   19.001631   13.444898   13.525240
+## 13      WT3   19.054290   19.123644   19.071339   13.536236   13.451545
+## 14      WT4   18.873800   18.951090   18.930180   13.414596   13.427393
+## 15      WT5   18.930405   18.972179   19.071204   13.532125   13.680929
+## 16      KO6   14.997468   15.096933   14.984929   10.934180   10.984328
+## 17      KO7   15.002481   15.004290   14.986676   10.967392   10.896370
+## 18      KO8   15.056100   14.795987   15.137540   11.265076   10.858469
+## 19      KO9   14.836110   15.028595   14.898233   11.083880   11.090811
+## 20     KO10   14.937406   14.811717   15.080938   10.919704   10.940077
+## 21     TAG6   13.066984   12.908560   12.983294    9.594042    9.427112
+## 22     TAG7   13.044669   12.998267   12.998194    9.384266    9.505624
+## 23     TAG8   13.125438   13.034330   13.063012    9.614275    9.510843
+## 24     TAG9   13.082025   12.881961   13.100050    9.533726    9.544878
+## 25    TAG10   13.100808   12.941927   13.004161    9.385184    9.508920
+## 26      WT6   12.961578   13.025039   13.044194    9.391496    9.555035
+## 27      WT7   13.057273   12.844337   12.881234    9.449236    9.512661
+## 28      WT8   12.968818   12.991924   13.015911    9.444158    9.452444
+## 29      WT9   12.974765   12.914317   12.978285    9.644585    9.602465
+## 30     WT10   12.988832   12.916339   13.085718    9.643448    9.531129
+## 31     KO11   11.863283   11.999694   12.093952    7.999847    8.094514
+## 32     KO12   12.177020   11.995173   11.998408    8.128396    7.865676
+## 33     KO13   11.887369   11.942249   11.986178    8.091580    8.041221
+## 34     KO14   12.177858   11.845221   12.024991    8.233290    8.093277
+## 35     KO15   12.133823   11.824614   11.960783    8.213621    7.907466
+## 36    TAG11    9.958294    9.973281    9.954696    7.061558    7.027769
+## 37    TAG12    9.895675    9.875977   10.058131    7.057281    7.095865
+## 38    TAG13    9.914046   10.032233   10.119815    6.994715    7.026942
+## 39    TAG14    9.983859   10.014847   10.025387    6.981085    6.926117
+## 40    TAG15    9.945852   10.013667   10.011142    7.032948    7.034139
+## 41     WT11   10.009124   10.079148   10.027025    7.143553    6.996541
+## 42     WT12   10.112312   10.123857    9.990111    7.028205    6.972454
+## 43     WT13    9.913249    9.983168    9.992343    7.173218    6.984187
+## 44     WT14   10.001430    9.994570    9.870692    6.946167    6.994717
+## 45     WT15   10.123727    9.916688    9.874787    6.988198    7.026275
+##    geneB8_run3 geneB15_run1 geneB15_run2 geneB15_run3 Hk1_run1 Hk1_run2
+## 1    15.054263     5.620233     5.464741     5.455833 19.99218 19.84439
+## 2    14.984335     5.397213     5.632653     5.524364 19.96507 20.05442
+## 3    15.043879     5.593827     5.385985     5.559678 19.77417 19.84615
+## 4    15.148787     5.445685     5.641311     5.487996 19.97135 19.97075
+## 5    15.006017     5.551310     5.439782     5.293026 20.02806 19.98888
+## 6    13.536278     5.046850     5.067399     4.958155 19.84041 20.08417
+## 7    13.490125     5.039151     5.129649     4.966594 20.06711 20.16976
+## 8    13.438952     4.919472     5.035813     5.024390 20.04257 20.15864
+## 9    13.518262     5.101572     4.816088     4.997490 20.06896 19.92336
+## 10   13.589557     5.089913     4.993667     5.008410 19.90093 19.97181
+## 11   13.451742     5.197002     5.112899     4.988912 19.99023 20.05158
+## 12   13.396171     4.948801     5.103105     4.904384 19.85813 20.03324
+## 13   13.540516     5.096911     5.046838     5.026353 19.97471 20.09431
+## 14   13.431733     5.056893     5.102318     4.913405 20.00311 20.03116
+## 15   13.379517     4.983791     4.930088     4.958614 19.99650 19.89106
+## 16   10.960658     3.968130     4.035878     3.889349 19.91212 19.97160
+## 17   10.897843     4.009278     3.907800     3.987077 20.11881 20.00106
+## 18   10.983549     4.062752     3.900105     4.129274 20.14923 20.05422
+## 19   11.003108     3.971276     3.972255     4.015549 20.07552 19.95337
+## 20   11.000085     4.027692     4.015375     4.013899 19.85995 19.82433
+## 21    9.609933     3.435193     3.546839     3.392288 19.96440 19.90894
+## 22    9.513437     3.455377     3.369311     3.544312 20.09743 19.98006
+## 23    9.468201     3.333084     3.393381     3.528779 19.84984 20.12222
+## 24    9.442678     3.514495     3.655245     3.459124 19.96290 20.05654
+## 25    9.521080     3.506159     3.344702     3.565980 19.97786 20.01762
+## 26    9.389145     3.462587     3.512392     3.533019 20.15435 20.05015
+## 27    9.508458     3.398681     3.484506     3.550038 20.06608 20.01861
+## 28    9.448928     3.452423     3.563106     3.514090 19.96586 19.83583
+## 29    9.463823     3.494495     3.496548     3.471077 20.20116 19.98993
+## 30    9.579465     3.489047     3.469343     3.524028 20.04412 19.96723
+## 31    8.061218     3.927807     3.972777     3.937993 19.97264 20.15599
+## 32    7.924328     4.102979     3.967677     3.966865 20.02960 20.19114
+## 33    8.026039     3.953350     4.053421     4.122472 20.06347 20.00303
+## 34    7.990469     4.026101     4.144904     3.748601 19.99352 20.13460
+## 35    7.842620     3.994659     4.171968     3.875822 20.10394 20.07710
+## 36    6.865237     3.012478     2.924221     2.983672 20.03304 20.02264
+## 37    6.959985     2.936499     3.041350     3.056098 19.91822 20.09672
+## 38    7.211809     3.194930     2.957893     3.115097 20.03497 20.06186
+## 39    6.904956     3.130110     3.031080     2.996605 19.90877 20.00661
+## 40    7.054108     2.924373     2.964901     2.936071 19.77674 20.10241
+## 41    7.008177     2.984096     2.979769     2.963137 20.02326 20.13514
+## 42    6.971151     2.953057     3.115041     2.926784 20.09677 20.10907
+## 43    7.065363     2.941456     2.953763     2.892353 20.05158 19.96417
+## 44    6.944952     2.904735     2.892866     3.032610 19.89245 19.99111
+## 45    7.032328     3.080398     2.888468     3.029610 19.81985 19.88167
+##    Hk1_run3 Hk2_run1 Hk2_run2 Hk2_run3     age line
+## 1  20.02586 21.99025 21.97342 21.99698  15days   KO
+## 2  20.03890 21.99068 21.96137 21.95022  15days   KO
+## 3  20.20155 22.06696 21.98492 22.08715  15days   KO
+## 4  19.96763 21.92753 21.94858 22.00743  15days   KO
+## 5  20.03787 22.22761 22.03432 22.04151  15days   KO
+## 6  20.00060 22.27714 22.06583 22.00087  15days  TAG
+## 7  19.94340 22.17142 22.16520 21.96385  15days  TAG
+## 8  20.05853 21.87658 21.87441 21.94704  15days  TAG
+## 9  20.01066 22.01743 22.08810 21.89571  15days  TAG
+## 10 19.86917 22.09832 22.07426 21.87265  15days  TAG
+## 11 20.10625 22.07320 21.95195 22.01364  15days   WT
+## 12 19.90093 22.06773 21.92287 22.03660  15days   WT
+## 13 20.11496 21.91550 22.09389 22.03664  15days   WT
+## 14 20.08819 21.95017 21.89853 21.95792  15days   WT
+## 15 20.11620 22.14230 21.98429 21.91004  15days   WT
+## 16 20.05439 22.02179 21.87720 21.92912  1month   KO
+## 17 20.13626 22.06294 22.07636 21.95021  1month   KO
+## 18 19.90697 21.90417 22.15848 21.90490  1month   KO
+## 19 19.78228 21.83446 22.11954 22.03117  1month   KO
+## 20 20.12835 22.20686 22.00741 22.06073  1month   KO
+## 21 20.08559 21.84412 21.87631 21.98037  1month  TAG
+## 22 20.14961 22.07487 21.96788 22.06388  1month  TAG
+## 23 20.11529 22.02437 21.90476 22.09534  1month  TAG
+## 24 19.99516 22.07015 21.99258 21.85633  1month  TAG
+## 25 20.10678 22.06291 22.03364 22.06849  1month  TAG
+## 26 20.13430 22.04410 21.92874 22.10393  1month   WT
+## 27 19.89601 21.84966 22.11404 22.02202  1month   WT
+## 28 20.11829 21.95184 22.06644 22.13038  1month   WT
+## 29 19.71979 21.95892 22.00524 21.90915  1month   WT
+## 30 20.10406 22.03909 22.12727 21.99495  1month   WT
+## 31 19.98149 22.06460 21.90367 21.90242 3months   KO
+## 32 20.12722 21.94610 21.82593 22.00765 3months   KO
+## 33 19.92308 22.09226 22.22264 22.06528 3months   KO
+## 34 20.04605 22.17130 22.16813 21.97725 3months   KO
+## 35 19.93845 21.92101 21.90634 22.15996 3months   KO
+## 36 19.96974 22.08437 22.12723 21.85031 3months  TAG
+## 37 20.05354 22.07381 21.85311 21.99451 3months  TAG
+## 38 19.99774 22.07076 22.10110 22.08588 3months  TAG
+## 39 20.01175 21.92174 21.99615 22.12462 3months  TAG
+## 40 19.92518 22.02861 22.00963 22.10050 3months  TAG
+## 41 19.98868 21.70119 21.91934 21.95628 3months   WT
+## 42 19.98160 22.11187 21.95100 22.00307 3months   WT
+## 43 20.05355 22.03459 21.98429 22.07934 3months   WT
+## 44 20.16335 22.07814 22.02052 22.08545 3months   WT
+## 45 19.98857 22.04702 22.10502 22.22736 3months   WT</code></pre>
+<p>Now, let’s select the numeric columns with Ct values only and find out the mean value for <code>geneB1</code>, <code>geneB8</code>, <code>geneB15</code> and <code>Hk</code> from the three runs/replicates per sample</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> pcr1 <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span>
+<span id="cb26-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-3" tabindex="-1"></a>pcr1<span class="sc">$</span>Ct_geneB1 <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr1[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;geneB1_&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span>
+<span id="cb26-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-4" tabindex="-1"></a>pcr1<span class="sc">$</span>Ct_geneB8 <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr1[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;geneB8_&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span>
+<span id="cb26-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-5" tabindex="-1"></a>pcr1<span class="sc">$</span>Ct_geneB15 <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr1[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;geneB15_&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span>
+<span id="cb26-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-6" tabindex="-1"></a>pcr1<span class="sc">$</span>Ct_Hk1 <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr1[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;Hk1&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span>
+<span id="cb26-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb26-7" tabindex="-1"></a>pcr1<span class="sc">$</span>Ct_Hk2 <span class="ot">&lt;-</span> <span class="fu">apply</span>(pcr1[, <span class="fu">c</span>(<span class="fu">grep</span>(<span class="st">&quot;Hk2&quot;</span>, a, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> T))], <span class="dv">1</span>, mean)</span></code></pre></div>
+<p>Let’s organize the dataset. Also, we don’t need the raw Ct values from the three runs any more.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb27-1" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> pcr1[, <span class="fu">c</span>(<span class="st">&quot;sampleID&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;line&quot;</span>, <span class="st">&quot;Ct_geneB1&quot;</span>, <span class="st">&quot;Ct_geneB8&quot;</span>, <span class="st">&quot;Ct_geneB15&quot;</span>, <span class="st">&quot;Ct_Hk1&quot;</span>, <span class="st">&quot;Ct_Hk2&quot;</span>)]</span></code></pre></div>
+<p>We need to know primer efficiency for this analysis. The equation for this is: <em>primer efficiency = (primer efficiency in percentage/100) + 1</em>. Let’s say the efficiencies are like the one in the code chunk (calculated the same way we did in the first chapter).</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb28-1" tabindex="-1"></a>efficiencies <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.98</span>, <span class="dv">2</span>, <span class="fl">2.02</span>, <span class="fl">2.01</span>, <span class="fl">2.01</span>)</span>
+<span id="cb28-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb28-2" tabindex="-1"></a><span class="fu">names</span>(efficiencies) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;B1&quot;</span>, <span class="st">&quot;B8&quot;</span>, <span class="st">&quot;B15&quot;</span>, <span class="st">&quot;Hk1&quot;</span>, <span class="st">&quot;Hk2&quot;</span>)</span></code></pre></div>
+<p>We need to select a calibrator sample and their average Ct value to get the ∆Ct. We will take WT samples in 15-days-old mice group as our calibrator sample. So, all the expression will be relative to these samples.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb29-1" tabindex="-1"></a>calibrator <span class="ot">&lt;-</span> data1[data1<span class="sc">$</span>line <span class="sc">==</span> <span class="st">&quot;WT&quot;</span> <span class="sc">&amp;</span> data1<span class="sc">$</span>age <span class="sc">==</span> <span class="st">&quot;15days&quot;</span>,] <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.numeric)</span>
+<span id="cb29-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb29-2" tabindex="-1"></a>Ct_avg <span class="ot">&lt;-</span> <span class="fu">apply</span>(calibrator, <span class="dv">2</span>, mean)</span></code></pre></div>
+<p>Let’s get the ∆Ct value. ∆Ct = Calibrator Ct - Sample Ct</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb30-1" tabindex="-1"></a>Ct <span class="ot">&lt;-</span> data1 <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.numeric)</span>
+<span id="cb30-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb30-2" tabindex="-1"></a>delta_Ct <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(Ct), <span class="at">ncol=</span><span class="fu">ncol</span>(Ct))</span>
+<span id="cb30-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb30-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(Ct)) {</span>
+<span id="cb30-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb30-4" tabindex="-1"></a>  delta_Ct[ , i] <span class="ot">&lt;-</span> Ct_avg[[i]] <span class="sc">-</span> Ct[ , i] </span>
+<span id="cb30-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb30-5" tabindex="-1"></a>}</span>
+<span id="cb30-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb30-6" tabindex="-1"></a><span class="fu">colnames</span>(delta_Ct) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;delta&quot;</span>, <span class="fu">names</span>(Ct)))</span></code></pre></div>
+<p>Now we can calculate relative quantity values. The equation is <span class="math inline">\(RQ = E^{\Delta Ct}\)</span>. Here, <code>E</code> means efficiency.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb31-1" tabindex="-1"></a>RQ <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(delta_Ct), <span class="at">ncol=</span><span class="fu">ncol</span>(delta_Ct))</span>
+<span id="cb31-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb31-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(efficiencies)) {</span>
+<span id="cb31-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb31-3" tabindex="-1"></a>  RQ[ , i] <span class="ot">&lt;-</span>  efficiencies[i]<span class="sc">^</span>delta_Ct[,i]</span>
+<span id="cb31-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb31-4" tabindex="-1"></a>}</span>
+<span id="cb31-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb31-5" tabindex="-1"></a><span class="fu">colnames</span>(RQ) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;RQ_&quot;</span>, <span class="fu">names</span>(efficiencies)))</span></code></pre></div>
+<p>Now, we need to calculate the geometric mean of the reference/housekeeping genes RQ values.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb32-1" tabindex="-1"></a>geoMean_Hk <span class="ot">&lt;-</span> <span class="fu">apply</span>(RQ[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">exp</span>(<span class="fu">mean</span>(<span class="fu">log</span>(x))))</span></code></pre></div>
+<p>Let’s make a dataset with delta_Ct, RQ, geoMean_Hk.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb33-1" tabindex="-1"></a>final <span class="ot">&lt;-</span> <span class="fu">cbind</span>(delta_Ct, RQ, geoMean_Hk)</span></code></pre></div>
+<p>Now, we have to calculate relative gene expression values. The equation is: <strong>Relative gene expression = RQ_GOI/GeoMean of housekeeping RQ</strong></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-1" tabindex="-1"></a>nGOI <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb34-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-2" tabindex="-1"></a>Rel_expression <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow=</span><span class="fu">nrow</span>(final), <span class="at">ncol=</span>nGOI)</span>
+<span id="cb34-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nGOI) {</span>
+<span id="cb34-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-4" tabindex="-1"></a>  Rel_expression[ , i] <span class="ot">&lt;-</span>  RQ[, i]<span class="sc">/</span>final[, <span class="st">&quot;geoMean_Hk&quot;</span>]</span>
+<span id="cb34-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-5" tabindex="-1"></a>}</span>
+<span id="cb34-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-6" tabindex="-1"></a><span class="fu">colnames</span>(Rel_expression) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;RelExp_&quot;</span>, <span class="fu">names</span>(efficiencies)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]))</span>
+<span id="cb34-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb34-7" tabindex="-1"></a>final <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleID=</span>pcr1<span class="sc">$</span>sampleID, <span class="at">age=</span>pcr1<span class="sc">$</span>age, <span class="at">line=</span>pcr1<span class="sc">$</span>line, final, Rel_expression)</span></code></pre></div>
+<p>So, the relative expression of our target transcripts are calculated in the last three columns of the <code>final</code> dataset.
+Now, we can do statistics on these three columns to know if there is any difference in expression level.</p>
+</div>
+<div id="statistical-analysis-1" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Statistical Analysis<a href="more-complex-dataset-3-goi-and-2-hk.html#statistical-analysis-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s apply statistics</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb35-1" tabindex="-1"></a>stat <span class="ot">&lt;-</span> final <span class="sc">%&gt;%</span> <span class="fu">select</span>(sampleID, age, line, RelExp_B1, RelExp_B8, RelExp_B15)</span>
+<span id="cb35-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb35-2" tabindex="-1"></a>stat<span class="sc">$</span>age_line <span class="ot">&lt;-</span> <span class="fu">paste</span>(stat<span class="sc">$</span>age, stat<span class="sc">$</span>line, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb35-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb35-3" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(RelExp_B1 <span class="sc">~</span> line <span class="sc">+</span> age, <span class="at">data=</span>stat)</span>
+<span id="cb35-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb35-4" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(RelExp_B1 <span class="sc">~</span> age_line, <span class="at">data=</span>stat)</span>
+<span id="cb35-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb35-5" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = RelExp_B1 ~ line + age, data = stat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -149.84  -42.99  -26.88   64.83   92.33 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   -85.89      25.68  -3.344   0.0018 ** 
+## lineTAG       130.33      28.14   4.632 3.79e-05 ***
+## lineWT        129.87      28.14   4.616 3.99e-05 ***
+## age1month      44.15      28.14   1.569   0.1245    
+## age3months    350.13      28.14  12.444 2.47e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 77.05 on 40 degrees of freedom
+## Multiple R-squared:  0.8414, Adjusted R-squared:  0.8256 
+## F-statistic: 53.06 on 4 and 40 DF,  p-value: 1.804e-15</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb37-1" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = RelExp_B1 ~ age_line, data = stat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -31.0117  -0.8518   0.0121   0.8151  22.0965 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           0.5098     3.7326   0.137  0.89213    
+## age_line15days_TAG    0.4967     5.2787   0.094  0.92556    
+## age_line15days_WT     0.4908     5.2787   0.093  0.92644    
+## age_line1month_KO    14.8590     5.2787   2.815  0.00786 ** 
+## age_line1month_TAG   58.2152     5.2787  11.028 4.26e-13 ***
+## age_line1month_WT    60.3510     5.2787  11.433 1.54e-13 ***
+## age_line3months_KO  120.2046     5.2787  22.772  &lt; 2e-16 ***
+## age_line3months_TAG 467.3416     5.2787  88.534  &lt; 2e-16 ***
+## age_line3months_WT  463.8170     5.2787  87.867  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.346 on 36 degrees of freedom
+## Multiple R-squared:  0.9983, Adjusted R-squared:  0.998 
+## F-statistic:  2683 on 8 and 36 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb39-1" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(RelExp_B1<span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> line <span class="sc">*</span> age, <span class="at">data =</span> final)</span>
+<span id="cb39-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb39-2" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = RelExp_B1 ~ 0 + line * age, data = final)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -31.0117  -0.8518   0.0121   0.8151  22.0965 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## lineKO               0.5098     3.7326   0.137  0.89213    
+## lineTAG              1.0064     3.7326   0.270  0.78898    
+## lineWT               1.0006     3.7326   0.268  0.79018    
+## age1month           14.8590     5.2787   2.815  0.00786 ** 
+## age3months         120.2046     5.2787  22.772  &lt; 2e-16 ***
+## lineTAG:age1month   42.8596     7.4651   5.741 1.54e-06 ***
+## lineWT:age1month    45.0013     7.4651   6.028 6.37e-07 ***
+## lineTAG:age3months 346.6403     7.4651  46.435  &lt; 2e-16 ***
+## lineWT:age3months  343.1216     7.4651  45.963  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.346 on 36 degrees of freedom
+## Multiple R-squared:  0.9989, Adjusted R-squared:  0.9986 
+## F-statistic:  3640 on 9 and 36 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-1" tabindex="-1"></a>age <span class="ot">&lt;-</span> stat<span class="sc">$</span>age</span>
+<span id="cb41-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-2" tabindex="-1"></a>line <span class="ot">&lt;-</span> stat<span class="sc">$</span>line</span>
+<span id="cb41-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-3" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-4" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">reshape</span>(stat, <span class="at">direction=</span><span class="st">&#39;long&#39;</span>, </span>
+<span id="cb41-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-5" tabindex="-1"></a>               <span class="at">varying=</span><span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, </span>
+<span id="cb41-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-6" tabindex="-1"></a>               <span class="at">timevar=</span><span class="st">&#39;Transcript&#39;</span>,</span>
+<span id="cb41-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-7" tabindex="-1"></a>               <span class="at">times=</span><span class="fu">c</span>(<span class="st">&#39;B1&#39;</span>, <span class="st">&#39;B8&#39;</span>, <span class="st">&quot;B15&quot;</span>),</span>
+<span id="cb41-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-8" tabindex="-1"></a>               <span class="at">v.names=</span><span class="fu">c</span>(<span class="st">&#39;Rel_expression_ratio&#39;</span>),</span>
+<span id="cb41-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-9" tabindex="-1"></a>               <span class="at">idvar=</span><span class="st">&#39;sampleID&#39;</span>)</span>
+<span id="cb41-10"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-10" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-11" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1[,<span class="fu">c</span>(<span class="st">&quot;sampleID&quot;</span>, <span class="st">&quot;Transcript&quot;</span>, <span class="st">&quot;Rel_expression_ratio&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;line&quot;</span>)]</span>
+<span id="cb41-12"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-12" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">reshape</span>(df1[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">direction =</span> <span class="st">&quot;wide&quot;</span>,<span class="at">timevar=</span><span class="st">&quot;sampleID&quot;</span>,<span class="at">idvar=</span><span class="st">&quot;Transcript&quot;</span>)</span>
+<span id="cb41-13"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-13" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> df2[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb41-14"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb41-14" tabindex="-1"></a><span class="fu">rownames</span>(df3) <span class="ot">&lt;-</span> df2[,<span class="dv">1</span>]</span></code></pre></div>
+<div id="ko-vs-tag" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> KO vs TAG<a href="more-complex-dataset-3-goi-and-2-hk.html#ko-vs-tag" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-1" tabindex="-1"></a><span class="co">#expression in the first one compared to the second one</span></span>
+<span id="cb42-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-2" tabindex="-1"></a><span class="co">#if (!require(&quot;BiocManager&quot;, quietly = TRUE))</span></span>
+<span id="cb42-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-3" tabindex="-1"></a><span class="co">#    install.packages(&quot;BiocManager&quot;)</span></span>
+<span id="cb42-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-4" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb42-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-5" tabindex="-1"></a><span class="co">#BiocManager::install(&quot;limma&quot;)</span></span>
+<span id="cb42-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-6" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-7" tabindex="-1"></a><span class="fu">library</span>(limma)</span>
+<span id="cb42-8"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-8" tabindex="-1"></a><span class="co">#design &lt;- model.matrix(~0+line)</span></span>
+<span id="cb42-9"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-9" tabindex="-1"></a><span class="co">#design &lt;- model.matrix(~0+age)</span></span>
+<span id="cb42-10"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-10" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>line<span class="sc">+</span>age)</span>
+<span id="cb42-11"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-11" tabindex="-1"></a><span class="co">#design &lt;- model.matrix(~0+age+line)</span></span>
+<span id="cb42-12"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-12" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(df3,design)</span>
+<span id="cb42-13"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-13" tabindex="-1"></a><span class="co">#contrast.matrix &lt;- makeContrasts(&quot;age3months-age1month&quot;,levels=design)</span></span>
+<span id="cb42-14"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-14" tabindex="-1"></a>contrast.matrix <span class="ot">&lt;-</span> <span class="fu">makeContrasts</span>(<span class="st">&quot;lineKO-lineTAG&quot;</span>,<span class="at">levels=</span>design)</span>
+<span id="cb42-15"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-15" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">contrasts.fit</span>(fit,contrast.matrix)</span>
+<span id="cb42-16"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-16" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">eBayes</span>(fit)</span>
+<span id="cb42-17"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb42-17" tabindex="-1"></a><span class="fu">names</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;     &quot;rank&quot;             &quot;assign&quot;           &quot;qr&quot;              
+##  [5] &quot;df.residual&quot;      &quot;sigma&quot;            &quot;cov.coefficients&quot; &quot;stdev.unscaled&quot;  
+##  [9] &quot;pivot&quot;            &quot;Amean&quot;            &quot;method&quot;           &quot;design&quot;          
+## [13] &quot;contrasts&quot;        &quot;df.prior&quot;         &quot;s2.prior&quot;         &quot;var.prior&quot;       
+## [17] &quot;proportion&quot;       &quot;s2.post&quot;          &quot;t&quot;                &quot;df.total&quot;        
+## [21] &quot;p.value&quot;          &quot;lods&quot;             &quot;F&quot;                &quot;F.p.value&quot;</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb44-1" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">decideTests</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">p.value=</span><span class="fl">0.05</span>))</span>
+<span id="cb44-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb44-2" tabindex="-1"></a><span class="co">#results = topTable(fit,adjust.method=&quot;BH&quot;,sort.by=&quot;p&quot;) </span></span>
+<span id="cb44-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb44-3" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">topTable</span>(fit) </span></code></pre></div>
+</div>
+<div id="tag-vs-wt" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> TAG vs WT<a href="more-complex-dataset-3-goi-and-2-hk.html#tag-vs-wt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb45-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(df3,design)</span>
+<span id="cb45-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb45-2" tabindex="-1"></a>contrast.matrix <span class="ot">&lt;-</span> <span class="fu">makeContrasts</span>(<span class="st">&quot;lineTAG-lineWT&quot;</span>,<span class="at">levels=</span>design)</span>
+<span id="cb45-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb45-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">contrasts.fit</span>(fit,contrast.matrix)</span>
+<span id="cb45-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb45-4" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">eBayes</span>(fit)</span>
+<span id="cb45-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb45-5" tabindex="-1"></a><span class="fu">names</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;     &quot;rank&quot;             &quot;assign&quot;           &quot;qr&quot;              
+##  [5] &quot;df.residual&quot;      &quot;sigma&quot;            &quot;cov.coefficients&quot; &quot;stdev.unscaled&quot;  
+##  [9] &quot;pivot&quot;            &quot;Amean&quot;            &quot;method&quot;           &quot;design&quot;          
+## [13] &quot;contrasts&quot;        &quot;df.prior&quot;         &quot;s2.prior&quot;         &quot;var.prior&quot;       
+## [17] &quot;proportion&quot;       &quot;s2.post&quot;          &quot;t&quot;                &quot;df.total&quot;        
+## [21] &quot;p.value&quot;          &quot;lods&quot;             &quot;F&quot;                &quot;F.p.value&quot;</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb47-1" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">decideTests</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">p.value=</span><span class="fl">0.05</span>))</span>
+<span id="cb47-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb47-2" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">topTable</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>, <span class="at">sort.by =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+</div>
+<div id="ko-vs-wt" class="section level3 hasAnchor" number="4.5.3">
+<h3><span class="header-section-number">4.5.3</span> KO vs WT<a href="more-complex-dataset-3-goi-and-2-hk.html#ko-vs-wt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb48-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(df3,design)</span>
+<span id="cb48-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb48-2" tabindex="-1"></a>contrast.matrix <span class="ot">&lt;-</span> <span class="fu">makeContrasts</span>(<span class="st">&quot;lineKO-lineWT&quot;</span>,<span class="at">levels=</span>design)</span>
+<span id="cb48-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb48-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">contrasts.fit</span>(fit,contrast.matrix)</span>
+<span id="cb48-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb48-4" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">eBayes</span>(fit)</span>
+<span id="cb48-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb48-5" tabindex="-1"></a><span class="fu">names</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;     &quot;rank&quot;             &quot;assign&quot;           &quot;qr&quot;              
+##  [5] &quot;df.residual&quot;      &quot;sigma&quot;            &quot;cov.coefficients&quot; &quot;stdev.unscaled&quot;  
+##  [9] &quot;pivot&quot;            &quot;Amean&quot;            &quot;method&quot;           &quot;design&quot;          
+## [13] &quot;contrasts&quot;        &quot;df.prior&quot;         &quot;s2.prior&quot;         &quot;var.prior&quot;       
+## [17] &quot;proportion&quot;       &quot;s2.post&quot;          &quot;t&quot;                &quot;df.total&quot;        
+## [21] &quot;p.value&quot;          &quot;lods&quot;             &quot;F&quot;                &quot;F.p.value&quot;</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb50-1" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">decideTests</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">p.value=</span><span class="fl">0.05</span>))</span>
+<span id="cb50-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb50-2" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">topTable</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>, <span class="at">sort.by =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+</div>
+<div id="days-vs-1month" class="section level3 hasAnchor" number="4.5.4">
+<h3><span class="header-section-number">4.5.4</span> 15days vs 1month<a href="more-complex-dataset-3-goi-and-2-hk.html#days-vs-1month" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-1" tabindex="-1"></a><span class="co">#are the genes diff expressed in each age?</span></span>
+<span id="cb51-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-2" tabindex="-1"></a>design2 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span><span class="dv">0</span><span class="sc">+</span>age)</span>
+<span id="cb51-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-3" tabindex="-1"></a>contrast.matrix <span class="ot">&lt;-</span> <span class="fu">makeContrasts</span>(<span class="st">&quot;age15days-age1month&quot;</span>,<span class="at">levels=</span>design2)</span>
+<span id="cb51-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-4" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(df3,design2)</span>
+<span id="cb51-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-5" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">contrasts.fit</span>(fit,contrast.matrix)</span>
+<span id="cb51-6"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-6" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">eBayes</span>(fit)</span>
+<span id="cb51-7"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb51-7" tabindex="-1"></a><span class="fu">names</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;     &quot;rank&quot;             &quot;assign&quot;           &quot;qr&quot;              
+##  [5] &quot;df.residual&quot;      &quot;sigma&quot;            &quot;cov.coefficients&quot; &quot;stdev.unscaled&quot;  
+##  [9] &quot;pivot&quot;            &quot;Amean&quot;            &quot;method&quot;           &quot;design&quot;          
+## [13] &quot;contrasts&quot;        &quot;df.prior&quot;         &quot;s2.prior&quot;         &quot;var.prior&quot;       
+## [17] &quot;proportion&quot;       &quot;s2.post&quot;          &quot;t&quot;                &quot;df.total&quot;        
+## [21] &quot;p.value&quot;          &quot;lods&quot;             &quot;F&quot;                &quot;F.p.value&quot;</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb53-1" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">decideTests</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">p.value=</span><span class="fl">0.05</span>))</span>
+<span id="cb53-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb53-2" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">topTable</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">sort.by=</span><span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+</div>
+<div id="days-vs-3month" class="section level3 hasAnchor" number="4.5.5">
+<h3><span class="header-section-number">4.5.5</span> 15days vs 3month<a href="more-complex-dataset-3-goi-and-2-hk.html#days-vs-3month" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb54-1" tabindex="-1"></a>contrast.matrix <span class="ot">&lt;-</span> <span class="fu">makeContrasts</span>(<span class="st">&quot;age15days-age3months&quot;</span>,<span class="at">levels=</span>design2)</span>
+<span id="cb54-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb54-2" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(df3,design2)</span>
+<span id="cb54-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb54-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">contrasts.fit</span>(fit,contrast.matrix)</span>
+<span id="cb54-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb54-4" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">eBayes</span>(fit)</span>
+<span id="cb54-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb54-5" tabindex="-1"></a><span class="fu">names</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;     &quot;rank&quot;             &quot;assign&quot;           &quot;qr&quot;              
+##  [5] &quot;df.residual&quot;      &quot;sigma&quot;            &quot;cov.coefficients&quot; &quot;stdev.unscaled&quot;  
+##  [9] &quot;pivot&quot;            &quot;Amean&quot;            &quot;method&quot;           &quot;design&quot;          
+## [13] &quot;contrasts&quot;        &quot;df.prior&quot;         &quot;s2.prior&quot;         &quot;var.prior&quot;       
+## [17] &quot;proportion&quot;       &quot;s2.post&quot;          &quot;t&quot;                &quot;df.total&quot;        
+## [21] &quot;p.value&quot;          &quot;lods&quot;             &quot;F&quot;                &quot;F.p.value&quot;</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb56-1" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">decideTests</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">p.value=</span><span class="fl">0.05</span>))</span>
+<span id="cb56-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb56-2" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">topTable</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>, <span class="at">sort.by =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+</div>
+<div id="month-vs-3month" class="section level3 hasAnchor" number="4.5.6">
+<h3><span class="header-section-number">4.5.6</span> 1month vs 3month<a href="more-complex-dataset-3-goi-and-2-hk.html#month-vs-3month" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb57-1" tabindex="-1"></a>contrast.matrix <span class="ot">&lt;-</span> <span class="fu">makeContrasts</span>(<span class="st">&quot;age1month-age3months&quot;</span>,<span class="at">levels=</span>design2)</span>
+<span id="cb57-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb57-2" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lmFit</span>(df3,design2)</span>
+<span id="cb57-3"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb57-3" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">contrasts.fit</span>(fit,contrast.matrix)</span>
+<span id="cb57-4"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb57-4" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">eBayes</span>(fit)</span>
+<span id="cb57-5"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb57-5" tabindex="-1"></a><span class="fu">names</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;     &quot;rank&quot;             &quot;assign&quot;           &quot;qr&quot;              
+##  [5] &quot;df.residual&quot;      &quot;sigma&quot;            &quot;cov.coefficients&quot; &quot;stdev.unscaled&quot;  
+##  [9] &quot;pivot&quot;            &quot;Amean&quot;            &quot;method&quot;           &quot;design&quot;          
+## [13] &quot;contrasts&quot;        &quot;df.prior&quot;         &quot;s2.prior&quot;         &quot;var.prior&quot;       
+## [17] &quot;proportion&quot;       &quot;s2.post&quot;          &quot;t&quot;                &quot;df.total&quot;        
+## [21] &quot;p.value&quot;          &quot;lods&quot;             &quot;F&quot;                &quot;F.p.value&quot;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb59-1" tabindex="-1"></a>DE <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">decideTests</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>,<span class="at">p.value=</span><span class="fl">0.05</span>))</span>
+<span id="cb59-2"><a href="more-complex-dataset-3-goi-and-2-hk.html#cb59-2" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">topTable</span>(fit,<span class="at">adjust.method=</span><span class="st">&quot;BH&quot;</span>, <span class="at">sort.by =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simulating-the-simple-dataset.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-multGOI-2Hk.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

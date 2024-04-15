@@ -1,9 +1,10 @@
-# Chapter 4
-* For multiple gene of interest and multiple housekeeping genes. Before this part, see chapter 1 `\@ref(chapter1)` for better understanding.*
+# More Complex Dataset: 3 GOI and 2 Hk  
+
+* For multiple gene of interest (GOI) and multiple housekeeping (Hk) genes. Before this part, see chapter \@ref(chapter2) for better understanding.*
 
 * Let's add two more gene of interest (GOI) or transcripts and one more housekeeping gene
 
-### For age 15 days
+## For age 15 days
 
 Let's add 3 Ct values for all three gene of interest for each sample.
 
@@ -26,6 +27,7 @@ geneB15 <- rbind(replicate(n = 3, rnorm(nKO, 5.5, .1), simplify = TRUE),
                replicate(n = 3, rnorm(nTAG, 5, .08), simplify = TRUE),
                replicate(n = 3, rnorm(nWT, 5, .08), simplify = TRUE))
 GOI1 <- data.frame(geneB1, geneB8, geneB15)
+GOI1
 ```
 
 Let's add 3 Ct values for two housekepping genes for each sample
@@ -39,6 +41,7 @@ Hk2 <- rbind(replicate(n = 3, rnorm(nKO, 22, .1), simplify = TRUE),
        replicate(n = 3, rnorm(nTAG, 22, .1), simplify = TRUE),
        replicate(n = 3, rnorm(nWT, 22, .1), simplify = TRUE))
 Hk_1 <- data.frame(Hk1, Hk2)
+Hk_1
 ```
 
 Now, let's add these two data sets.
@@ -57,9 +60,10 @@ day15$sampleID <- c(paste0("KO", seq(1, nKO)),
 day15 <- day15[, c(ncol(day15), 1:ncol(day15) - 1)] #reordering: last column at the beginning and others are in the same sequence
 day15$age <- rep("15days", times = nrow(day15)) #adding age to all. nrow means how many sample
 day15$line <- c(rep("KO", times = nKO), rep("TAG", times = nTAG), rep("WT", times = nWT))
+day15
 ```
 
-### For age 1 month
+## For age 1 month
 
 Let's add 3 Ct values for all three gene of interest for each sample
 
@@ -74,6 +78,7 @@ geneB15_1 <- rbind(replicate(n = 3, rnorm(nKO, 4, .1), simplify = TRUE),
                           replicate(n = 3, rnorm(nTAG, 3.5, .07), simplify = TRUE),
                           replicate(n = 3, rnorm(nWT, 3.5, .07), simplify = TRUE))
 GOI2 <- data.frame(geneB1_1, geneB8_1, geneB15_1)
+GOI2
 ```
 
 Let's add 3 Ct values for two housekeeping genes for each sample.
@@ -87,6 +92,7 @@ Hk2_1 <- rbind(replicate(n = 3, rnorm(nKO, 22, .1), simplify = TRUE),
        replicate(n = 3, rnorm(nTAG, 22, .1), simplify = TRUE),
        replicate(n = 3, rnorm(nWT, 22, .1), simplify = TRUE))
 Hk_2 <- data.frame(Hk1_1, Hk2_1)
+Hk_2
 ```
 
 Let's add these two dataset to make the full data set.
@@ -105,9 +111,10 @@ month1$sampleID <- c(paste0("KO", seq(nKO+1, 2*nKO)),
 month1 <- month1[, c(ncol(month1), 1:ncol(month1) - 1)] 
 month1$age <- rep("1month", times = nrow(month1)) 
 month1$line <- c(rep("KO", times = nKO), rep("TAG", times = nTAG), rep("WT", times = nWT))
+month1
 ```
 
-### For age 3 months
+## For age 3 months
 
 Let's add 3 Ct values for all three gene of interest for each sample.
 
@@ -122,6 +129,7 @@ geneB15_2 <- rbind(replicate(n = 3, rnorm(nKO, 4, .1), simplify = TRUE),
                           replicate(n = 3, rnorm(nTAG, 3, .07), simplify = TRUE),
                           replicate(n = 3, rnorm(nWT, 3, .07), simplify = TRUE))
 GOI3 <- data.frame(geneB1_2, geneB8_2, geneB15_2)
+GOI3
 ```
 
 Let's add 3 Ct values for two housekeeping genes for each sample
@@ -134,6 +142,7 @@ Hk2_2 <- rbind(replicate(n = 3, rnorm(nKO, 22, .1), simplify = TRUE),
        replicate(n = 3, rnorm(nTAG, 22, .1), simplify = TRUE),
        replicate(n = 3, rnorm(nWT, 22, .1), simplify = TRUE))
 Hk_3 <- data.frame(Hk1_2, Hk2_2)
+Hk_3
 ```
 
 Let's make the full dataset for month3.
@@ -152,14 +161,16 @@ month3$sampleID <- c(paste0("KO", seq(2*nKO+1, 3*nKO)),
 month3 <- month3[, c(ncol(month3), 1:ncol(month3) - 1)] 
 month3$age <- rep("3months", times = nrow(month3))
 month3$line <- c(rep("KO", times = nKO), rep("TAG", times = nTAG), rep("WT", times = nWT))
+month3
 ```
 
-### Making the whole dataset using all three datasets 
+## Making the whole dataset using all three datasets 
 
 We need `rbind()` function for this.
 
 ```{r}
 pcr1 <- rbind(day15, month1, month3)
+pcr1
 ```
 
 Now, let's select the numeric columns with Ct values only and find out the mean value for `geneB1`, `geneB8`, `geneB15` and `Hk` from the three runs/replicates per sample
@@ -174,7 +185,7 @@ pcr1$Ct_Hk1 <- apply(pcr1[, c(grep("Hk1", a, ignore.case = TRUE, value = T))], 1
 pcr1$Ct_Hk2 <- apply(pcr1[, c(grep("Hk2", a, ignore.case = TRUE, value = T))], 1, mean)
 ```
 
-Let's organize the data set. Also, we don't need the raw Ct values from the three runs any more.
+Let's organize the dataset. Also, we don't need the raw Ct values from the three runs any more.
 
 ```{r}
 data1 <- pcr1[, c("sampleID", "age", "line", "Ct_geneB1", "Ct_geneB8", "Ct_geneB15", "Ct_Hk1", "Ct_Hk2")]
@@ -240,7 +251,7 @@ final <- data.frame(sampleID=pcr1$sampleID, age=pcr1$age, line=pcr1$line, final,
 So, the relative expression of our target transcripts are calculated in the last three columns of the `final` dataset.
 Now, we can do statistics on these three columns to know if there is any difference in expression level.
 
-## Statistical analysis
+## Statistical Analysis
 
 Let's apply statistics
 
@@ -268,23 +279,35 @@ df1 <- df1[,c("sampleID", "Transcript", "Rel_expression_ratio", "age", "line")]
 df2 <- reshape(df1[,c(1,2,3)], direction = "wide",timevar="sampleID",idvar="Transcript")
 df3 <- df2[,-1]
 rownames(df3) <- df2[,1]
+```
+### KO vs TAG  
+```{r}
 
-######################## KO vs TAG #################################
-#expression in the first one compared to the second one. 
+#expression in the first one compared to the second one
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#
+#BiocManager::install("limma")
+
 library(limma)
 #design <- model.matrix(~0+line)
 #design <- model.matrix(~0+age)
-design <- model.matrix(~0+age+line)
+design <- model.matrix(~0+line+age)
+#design <- model.matrix(~0+age+line)
 fit <- lmFit(df3,design)
 #contrast.matrix <- makeContrasts("age3months-age1month",levels=design)
 contrast.matrix <- makeContrasts("lineKO-lineTAG",levels=design)
 fit <- contrasts.fit(fit,contrast.matrix)
-fit=eBayes(fit)
+fit <- eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 #results = topTable(fit,adjust.method="BH",sort.by="p") 
 results = topTable(fit) 
-######################## TAG vs WT #################################
+```
+
+### TAG vs WT 
+```{r}
+
 fit <- lmFit(df3,design)
 contrast.matrix <- makeContrasts("lineTAG-lineWT",levels=design)
 fit <- contrasts.fit(fit,contrast.matrix)
@@ -292,17 +315,20 @@ fit=eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH", sort.by = "p")
+```
 
-####################### KO vs WT ##################################
+### KO vs WT
+```{r}
 fit <- lmFit(df3,design)
-contrast.matrix <- makeContrasts("genotypeKO-genotypeWT",levels=design)
+contrast.matrix <- makeContrasts("lineKO-lineWT",levels=design)
 fit <- contrasts.fit(fit,contrast.matrix)
 fit=eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH", sort.by = "p")
-
-################## 15days vs 1month #############################
+```
+### 15days vs 1month
+```{r}
 #are the genes diff expressed in each age?
 design2 <- model.matrix(~0+age)
 contrast.matrix <- makeContrasts("age15days-age1month",levels=design2)
@@ -312,8 +338,10 @@ fit=eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH",sort.by="p")
+```
 
-################## 15days vs 3month ############################
+### 15days vs 3month
+```{r}
 contrast.matrix <- makeContrasts("age15days-age3months",levels=design2)
 fit <- lmFit(df3,design2)
 fit <- contrasts.fit(fit,contrast.matrix)
@@ -321,8 +349,10 @@ fit=eBayes(fit)
 names(fit)
 DE <- summary(decideTests(fit,adjust.method="BH",p.value=0.05))
 results = topTable(fit,adjust.method="BH", sort.by = "p")
+```
 
-################## 1month vs 3month ############################
+### 1month vs 3month 
+```{r}
 contrast.matrix <- makeContrasts("age1month-age3months",levels=design2)
 fit <- lmFit(df3,design2)
 fit <- contrasts.fit(fit,contrast.matrix)

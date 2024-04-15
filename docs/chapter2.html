@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Primer Efficiency Measurement | RT-qPCR Data Simulation and Analysis</title>
+  <meta name="description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Primer Efficiency Measurement | RT-qPCR Data Simulation and Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Primer Efficiency Measurement | RT-qPCR Data Simulation and Analysis" />
+  
+  <meta name="twitter:description" content="<p>This is an example of how to analyze RT-qPCR data.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Md Rasheduzzaman" />
+
+
+<meta name="date" content="2022-08-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="simulating-the-simple-dataset.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#how-to-use-the-book"><i class="fa fa-check"></i><b>1.1</b> How to use the book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-the-experiment-design"><i class="fa fa-check"></i><b>1.2</b> About the experiment design</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgement"><i class="fa fa-check"></i><b>1.3</b> Acknowledgement</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Primer Efficiency Measurement</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#data-simulation"><i class="fa fa-check"></i><b>2.1</b> Data Simulation</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#data-analysis"><i class="fa fa-check"></i><b>2.2</b> Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html"><i class="fa fa-check"></i><b>3</b> Simulating the Simple Dataset</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#samples-of-different-age"><i class="fa fa-check"></i><b>3.1</b> Samples of different age</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#for-age-15-days"><i class="fa fa-check"></i><b>3.1.1</b> For age 15 days</a></li>
+<li class="chapter" data-level="3.1.2" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#for-age-1-month"><i class="fa fa-check"></i><b>3.1.2</b> For age 1 month</a></li>
+<li class="chapter" data-level="3.1.3" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#for-age-3-months"><i class="fa fa-check"></i><b>3.1.3</b> For age 3 months</a></li>
+<li class="chapter" data-level="3.1.4" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#making-the-whole-data-set-combining-all-three-datasets-by-rbind-function"><i class="fa fa-check"></i><b>3.1.4</b> Making the whole data set combining all three datasets: by <code>rbind()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#data-preparation"><i class="fa fa-check"></i><b>3.2</b> Data preparation</a></li>
+<li class="chapter" data-level="3.3" data-path="simulating-the-simple-dataset.html"><a href="simulating-the-simple-dataset.html#statistical-analysis"><i class="fa fa-check"></i><b>3.3</b> Statistical analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html"><i class="fa fa-check"></i><b>4</b> More Complex Dataset: 3 GOI and 2 Hk</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-15-days-1"><i class="fa fa-check"></i><b>4.0.1</b> For age 15 days</a></li>
+<li class="chapter" data-level="4.0.2" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-1-month-1"><i class="fa fa-check"></i><b>4.0.2</b> For age 1 month</a></li>
+<li class="chapter" data-level="4.0.3" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#for-age-3-months-1"><i class="fa fa-check"></i><b>4.0.3</b> For age 3 months</a></li>
+<li class="chapter" data-level="4.0.4" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#making-the-whole-dataset-using-all-three-datasets"><i class="fa fa-check"></i><b>4.0.4</b> Making the whole dataset using all three datasets</a></li>
+<li class="chapter" data-level="4.1" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#statistical-analysis-1"><i class="fa fa-check"></i><b>4.1</b> Statistical analysis</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#ko-vs-tag"><i class="fa fa-check"></i><b>4.1.1</b> KO vs TAG</a></li>
+<li class="chapter" data-level="4.1.2" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#tag-vs-wt"><i class="fa fa-check"></i><b>4.1.2</b> TAG vs WT</a></li>
+<li class="chapter" data-level="4.1.3" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#ko-vs-wt"><i class="fa fa-check"></i><b>4.1.3</b> KO vs WT</a></li>
+<li class="chapter" data-level="4.1.4" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#days-vs-1month"><i class="fa fa-check"></i><b>4.1.4</b> 15days vs 1month</a></li>
+<li class="chapter" data-level="4.1.5" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#days-vs-3month"><i class="fa fa-check"></i><b>4.1.5</b> 15days vs 3month</a></li>
+<li class="chapter" data-level="4.1.6" data-path="more-complex-dataset-3-goi-and-2-hk.html"><a href="more-complex-dataset-3-goi-and-2-hk.html#month-vs-3month"><i class="fa fa-check"></i><b>4.1.6</b> 1month vs 3month</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">RT-qPCR Data Simulation and Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapter2" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Primer Efficiency Measurement<a href="chapter2.html#chapter2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="data-simulation" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data Simulation<a href="chapter2.html#data-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With 1 target gene &amp; 1 housekeeping gene for simplicity</p>
+<p>We are going to dilute our sample three times by the factor of 1/10. So, for example, if we add 1<span class="math inline">\(\mu L\)</span> sample in 9<span class="math inline">\(\mu L\)</span> water, it will be a 1/10 dilution. We have to follow the same procedure serially (serial dilution) to make 1/100 and 1/1000 dilutions.
+Also, we shouldn’t forget to replicate the same dilution multiple times. Here, in this example, we are simulating 3 runs per dilution for 3 primer pairs against the same gene <code>B1</code> to find out the best primer pairs. We are having one housekeeping gene (Hk) here. Add negative control (NTC) in the PCR plate as an internal control as well.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="chapter2.html#cb1-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">10</span>) <span class="co">#just for reproducibility</span></span>
+<span id="cb1-2"><a href="chapter2.html#cb1-2" tabindex="-1"></a>nDil <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co">#No. of dilution</span></span>
+<span id="cb1-3"><a href="chapter2.html#cb1-3" tabindex="-1"></a>geneB1_1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rnorm</span>(nDil, <span class="fl">15.2</span>, .<span class="dv">03</span>),</span>
+<span id="cb1-4"><a href="chapter2.html#cb1-4" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">18.4</span>, .<span class="dv">03</span>),</span>
+<span id="cb1-5"><a href="chapter2.html#cb1-5" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">21.5</span>, .<span class="dv">03</span>))</span>
+<span id="cb1-6"><a href="chapter2.html#cb1-6" tabindex="-1"></a>geneB1_1</span></code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]
+## [1,] 15.20056 15.19447 15.15886
+## [2,] 18.38202 18.40884 18.41169
+## [3,] 21.46376 21.48909 21.45120</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="chapter2.html#cb3-1" tabindex="-1"></a>geneB1_2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rnorm</span>(nDil, <span class="fl">15.3</span>, .<span class="dv">03</span>),</span>
+<span id="cb3-2"><a href="chapter2.html#cb3-2" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">18.5</span>, .<span class="dv">03</span>),</span>
+<span id="cb3-3"><a href="chapter2.html#cb3-3" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">21.8</span>, .<span class="dv">03</span>))</span>
+<span id="cb3-4"><a href="chapter2.html#cb3-4" tabindex="-1"></a>geneB1_2</span></code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]
+## [1,] 15.29231 15.33305 15.32267
+## [2,] 18.49285 18.52962 18.52224
+## [3,] 21.80268 21.77135 21.79415</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="chapter2.html#cb5-1" tabindex="-1"></a>geneB1_3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rnorm</span>(nDil, <span class="fl">15.9</span>, .<span class="dv">03</span>),</span>
+<span id="cb5-2"><a href="chapter2.html#cb5-2" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">19.1</span>, .<span class="dv">03</span>),</span>
+<span id="cb5-3"><a href="chapter2.html#cb5-3" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">22.3</span>, .<span class="dv">03</span>))</span>
+<span id="cb5-4"><a href="chapter2.html#cb5-4" tabindex="-1"></a>geneB1_3</span></code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]
+## [1,] 15.92777 15.91449 15.88211
+## [2,] 19.03444 19.07975 19.03643
+## [3,] 22.26204 22.28879 22.27937</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="chapter2.html#cb7-1" tabindex="-1"></a>geneHk <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rnorm</span>(nDil, <span class="fl">16.7</span>, .<span class="dv">03</span>),</span>
+<span id="cb7-2"><a href="chapter2.html#cb7-2" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">19.9</span>, .<span class="dv">03</span>),</span>
+<span id="cb7-3"><a href="chapter2.html#cb7-3" tabindex="-1"></a>                <span class="fu">rnorm</span>(nDil, <span class="fl">23.2</span>, .<span class="dv">03</span>))</span>
+<span id="cb7-4"><a href="chapter2.html#cb7-4" tabindex="-1"></a>geneHk</span></code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]
+## [1,] 16.67384 16.69695 16.69239
+## [2,] 19.84439 19.89766 19.92906
+## [3,] 23.20555 23.15860 23.15693</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="chapter2.html#cb9-1" tabindex="-1"></a>geneB1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">rbind</span>(geneB1_1, geneB1_2, geneB1_3, geneHk))</span>
+<span id="cb9-2"><a href="chapter2.html#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="chapter2.html#cb9-3" tabindex="-1"></a><span class="fu">colnames</span>(geneB1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;run&quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)))</span>
+<span id="cb9-4"><a href="chapter2.html#cb9-4" tabindex="-1"></a>geneB1<span class="sc">$</span>mean_Ct <span class="ot">&lt;-</span> <span class="fu">apply</span>(geneB1, <span class="dv">1</span>, mean)</span>
+<span id="cb9-5"><a href="chapter2.html#cb9-5" tabindex="-1"></a>geneB1<span class="sc">$</span>dilution <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;1/10&quot;</span>, <span class="st">&quot;1/100&quot;</span>, <span class="st">&quot;1/1000&quot;</span>), <span class="at">times=</span> <span class="dv">4</span>)</span>
+<span id="cb9-6"><a href="chapter2.html#cb9-6" tabindex="-1"></a>geneB1<span class="sc">$</span>primer <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;B1_1&quot;</span>, <span class="at">times =</span> <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;B1_2&quot;</span>, <span class="at">times =</span> <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;B1_3&quot;</span>, <span class="at">times =</span> <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;Hk&quot;</span>, <span class="at">times =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##        run1     run2     run3  mean_Ct dilution primer
+## 1  15.20056 15.19447 15.15886 15.18463     1/10   B1_1
+## 2  18.38202 18.40884 18.41169 18.40085    1/100   B1_1
+## 3  21.46376 21.48909 21.45120 21.46802   1/1000   B1_1
+## 4  15.29231 15.33305 15.32267 15.31601     1/10   B1_2
+## 5  18.49285 18.52962 18.52224 18.51491    1/100   B1_2
+## 6  21.80268 21.77135 21.79415 21.78939   1/1000   B1_2
+## 7  15.92777 15.91449 15.88211 15.90812     1/10   B1_3
+## 8  19.03444 19.07975 19.03643 19.05021    1/100   B1_3
+## 9  22.26204 22.28879 22.27937 22.27674   1/1000   B1_3
+## 10 16.67384 16.69695 16.69239 16.68772     1/10     Hk
+## 11 19.84439 19.89766 19.92906 19.89037    1/100     Hk
+## 12 23.20555 23.15860 23.15693 23.17369   1/1000     Hk</code></pre>
+<p>Data simulation is done (you will get this kind of data from RT-qPCR machine automatically). Let’s make sense from the data.</p>
+</div>
+<div id="data-analysis" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Data Analysis<a href="chapter2.html#data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The line plot for each primer pairs:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="chapter2.html#cb11-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="chapter2.html#cb13-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-2"><a href="chapter2.html#cb13-2" tabindex="-1"></a>geneB1 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dilution, <span class="at">y =</span> mean_Ct, <span class="at">group=</span>primer, <span class="at">color=</span>primer)) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="chapter2.html#cb13-3" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:primer-line-plot"></span>
+<img src="_main_files/figure-html/primer-line-plot-1.png" alt="Line plot for all the primers." width="576" />
+<p class="caption">
+Figure 2.1: Line plot for all the primers.
+</p>
+</div>
+<p>Now, we need to know the slope for each primer. <code>%&gt;%</code> function from <code>dplyr</code> package and <code>lm()</code> function will help us to find the slopes for every primer. <code>coefficients[2]</code> part of the code will give us the slopes which we will add to our dataset as a column.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="chapter2.html#cb14-1" tabindex="-1"></a>geneB1 <span class="ot">&lt;-</span> geneB1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(primer) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="chapter2.html#cb14-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">slope =</span> <span class="fu">round</span>(<span class="fu">lm</span>(mean_Ct <span class="sc">~</span> dilution)<span class="sc">$</span>coefficients[<span class="dv">2</span>], <span class="dv">3</span>))</span>
+<span id="cb14-3"><a href="chapter2.html#cb14-3" tabindex="-1"></a>geneB1</span></code></pre></div>
+<pre><code>## # A tibble: 12 × 7
+## # Groups:   primer [4]
+##     run1  run2  run3 mean_Ct dilution primer slope
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;
+##  1  15.2  15.2  15.2    15.2 1/10     B1_1    3.22
+##  2  18.4  18.4  18.4    18.4 1/100    B1_1    3.22
+##  3  21.5  21.5  21.5    21.5 1/1000   B1_1    3.22
+##  4  15.3  15.3  15.3    15.3 1/10     B1_2    3.20
+##  5  18.5  18.5  18.5    18.5 1/100    B1_2    3.20
+##  6  21.8  21.8  21.8    21.8 1/1000   B1_2    3.20
+##  7  15.9  15.9  15.9    15.9 1/10     B1_3    3.14
+##  8  19.0  19.1  19.0    19.1 1/100    B1_3    3.14
+##  9  22.3  22.3  22.3    22.3 1/1000   B1_3    3.14
+## 10  16.7  16.7  16.7    16.7 1/10     Hk      3.20
+## 11  19.8  19.9  19.9    19.9 1/100    Hk      3.20
+## 12  23.2  23.2  23.2    23.2 1/1000   Hk      3.20</code></pre>
+<p>Now, let’s calculate the primer efficiency for each primer pairs.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="chapter2.html#cb16-1" tabindex="-1"></a>geneB1<span class="sc">$</span>efficiency <span class="ot">&lt;-</span> <span class="fu">round</span>((<span class="dv">10</span><span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span>geneB1<span class="sc">$</span>slope) <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb16-2"><a href="chapter2.html#cb16-2" tabindex="-1"></a>geneB1</span></code></pre></div>
+<pre><code>## # A tibble: 12 × 8
+## # Groups:   primer [4]
+##     run1  run2  run3 mean_Ct dilution primer slope efficiency
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+##  1  15.2  15.2  15.2    15.2 1/10     B1_1    3.22       105.
+##  2  18.4  18.4  18.4    18.4 1/100    B1_1    3.22       105.
+##  3  21.5  21.5  21.5    21.5 1/1000   B1_1    3.22       105.
+##  4  15.3  15.3  15.3    15.3 1/10     B1_2    3.20       105.
+##  5  18.5  18.5  18.5    18.5 1/100    B1_2    3.20       105.
+##  6  21.8  21.8  21.8    21.8 1/1000   B1_2    3.20       105.
+##  7  15.9  15.9  15.9    15.9 1/10     B1_3    3.14       108.
+##  8  19.0  19.1  19.0    19.1 1/100    B1_3    3.14       108.
+##  9  22.3  22.3  22.3    22.3 1/1000   B1_3    3.14       108.
+## 10  16.7  16.7  16.7    16.7 1/10     Hk      3.20       105.
+## 11  19.8  19.9  19.9    19.9 1/100    Hk      3.20       105.
+## 12  23.2  23.2  23.2    23.2 1/1000   Hk      3.20       105.</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="chapter2.html#cb18-1" tabindex="-1"></a>efficiencies <span class="ot">&lt;-</span> <span class="fu">unique</span>(geneB1<span class="sc">$</span>efficiency)</span>
+<span id="cb18-2"><a href="chapter2.html#cb18-2" tabindex="-1"></a><span class="fu">names</span>(efficiencies) <span class="ot">&lt;-</span> <span class="fu">unique</span>(geneB1<span class="sc">$</span>primer)</span>
+<span id="cb18-3"><a href="chapter2.html#cb18-3" tabindex="-1"></a>efficiencies</span></code></pre></div>
+<pre><code>##   B1_1   B1_2   B1_3     Hk 
+## 104.62 105.40 108.10 105.21</code></pre>
+<p>We have primer efficiency in percentage now. It should be in the range of 90-110%. Here, in this case all the three primer pairs against geneB1 have good efficiency and all are very close to the efficiency of the primer pair for housekeeping gene (Hk). So, we can choose any. For your study, if you are going to design multiple primers for the same gene/transcript, you can check their efficiency and choose the best one in combination with the primer for housekeeping gene.</p>
+<p>We are going to choose <code>geneB1_2</code> primer pair for our analysis which is closest to the primer efficiency for the housekeeping gene.</p>
+<div class="info">
+<ul>
+<li><p>Sometimes, your primer efficiency could be outside of the range of 90-110%. In that case you have to change concentration of forward and/or reverse primer keeping all other parameters constant.</p></li>
+<li><p>If your Ct values are too high, use less diluted sample. e.g. 1/2, 1/4, 1/8, ….., etc.</p></li>
+<li><p>You can put your sample directly without any dilution as well. If the Ct value for undiluted sample is bigger than the diluted one (it should be smaller because there is more starting/initial DNA sample), it will mean that there is something in the undiluted sample that is inhibiting the PCR amplification.</p></li>
+<li><p>What if your primer efficiencies for target and housekeeping gene are different and you can not change it? In this case, use <strong>pfaffl method</strong> for expression ratio calculation which can correct for the primer efficiency difference.</p></li>
+<li><p>To reduce primer dimer formation, you may have to–</p></li>
+</ul>
+<ol style="list-style-type: lower-alpha">
+<li>Adjust the annealing temperature, <span class="math inline">\(T_m\)</span> (usually increasing <span class="math inline">\(T_m\)</span> prevents primer-dimer formation)</li>
+<li>Reduce primer concentrations</li>
+<li>Adjust the forward and reverse primer ratios</li>
+<li>Redesign the primers if nothing works</li>
+</ol>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulating-the-simple-dataset.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-primer_efficiency.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

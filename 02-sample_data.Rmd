@@ -1,6 +1,6 @@
-# Making/Simulating the simple data set {#chapter1}
+# Simulating the Simple Dataset 
 
-*Only for exon1 (`B1`) and one housekeeping gene (Hk)* 
+*Only for exon1 (`B1`) and one housekeeping gene (Hk)*  
 So, we are using primer pair `geneB1_2` with primer pair `Hk` for the RT-qPCR. 
 
 Let's call the libraries required and make a simplistic data set to understand how the simulated Ct values are created.
@@ -11,16 +11,17 @@ Ans: the PCR cycle in which the amplification signal (because of fluorophore) of
 ```{r}
 library(purrr)
 library(tibble)
+library(tidyverse)
 
 set.seed(10)
 df <- data.frame(replicate(n = 3, rnorm(5, 12, .1), simplify = TRUE)) 
 df
 ```
-The code above is an example code making the data set with Ct values for 3 replicates (in 3 columns) of the same samples for an exon. We are having total 5 samples (in 5 rows) here. `data.frame()` function makes the array of values into a data frame. I hope you understand how the code is working. Now, let's do a real simulation. 
+The code above is an example code making the dataset with Ct values for 3 replicates (in 3 columns) of the same samples for an exon. We are having total 5 samples (in 5 rows) here. `data.frame()` function makes the array of values into a data frame. I hope you understand how the code is working. Now, let's do a real simulation. 
 
 ## Samples of different age
 
-We will have samples of three age groups, namely 15 days, 1 month and 3 months old. In each age group, there will be three genotypes/lines, namely knock-out (KO), tagged (TAG), and wild-type (WT). So, let's add 5 samples per age group. 
+We will have samples of three age groups, namely 15 days, 1 month and 3 months old mice. In each age group, there will be three genotypes/lines, namely knock-out (KO), tagged (TAG), and wild-type (WT). So, let's add 5 samples per age group. 
 
 ### For age 15 days
 ```{r geneB1}
@@ -180,7 +181,7 @@ To do any statistical analysis, we have to check how the fold change values are 
 
 ```{r fold-change, fig.width=6, fig.height=6, fig.cap = "Histogram of fold change."}
 par(mfrow = c(1,1))
-hist(data$fold_gene_expression, xlab="fold change", main="Histogram of fold change")
+hist(data$fold_gene_expression, xlab="fold change", main="Histogram of fold change", cex.axis = 0.7, las = 2)
 ```
 ```{r log-fold-change, fig.width=6, fig.height=6, fig.cap = "Histogram of log fold change."}
 data$log_fold_change <- log2(data$fold_gene_expression)
@@ -191,7 +192,7 @@ We can put the same plots together and compare the fold change before and after 
 
 ```{r fold_log-fold-together, fig.width=6, fig.height=3, fig.cap = "Histogram of fold change and log fold change together."}
 par(mfrow = c(1,2))
-hist(data$fold_gene_expression, xlab="fold change", main="Histogram of fold change")
+hist(data$fold_gene_expression, xlab="fold change", main="Histogram of fold change", cex.axis = 0.7, las = 2)
 hist(data$log_fold_change, xlab="log fold change", main="Histogram of log fold change")
 ```
 Our data preparation for one gene of interest and one housekeeping gene is done.   
@@ -213,10 +214,12 @@ table(data$age, data$line)
 So, it was a balanced design. 
 
 Let's have a look at the log fold change for each age and line combination.
-```{r boxplot, fig.width=6, fig.height=6, fig.cap = "Boxplot of log fold change for all age-line combinations."}
-boxplot(log_fold_change ~ line*age, data=data, xlab = "Age-Line combinations", ylab = "Log fold change", main="Boxplot of log fold change")
+```{r boxplot, fig.width=8, fig.height=8, fig.cap = "Boxplot of log fold change for all age-line combinations."}
+par(mar = c(5, 5, 4, 2))
+boxplot(log_fold_change ~ line*age, data=data, xlab = "", ylab = "Log fold change", main="Boxplot of log fold change", cex.axis = 0.7, las = 2)
+mtext("Age-Line combinations", side = 1, line = 4)
 ```
-The plot shows that WT and TAG in a particular age group have similar expression of transcript B1.
+The plot shows that `WT` and `TAG` in a particular age group have similar expression of transcript `B1`.
 
 Let's make a column combining age and line together.
 
@@ -263,7 +266,7 @@ summary(lm2)
 :::{.info}
 **Interpreting the output**  
   
-This time, the comparison is relative to `15days_WT`, (and not shown in the comparison). Here every group is significantly different than the `15days_WT` group except `15days_TAG`. And you might have recall why this is the case--we simulated this way, all the WT and TAG samples have basically similar Ct values (or fold change or log fold change). See the boxplot as well. Have a closer look at the values for WT and TAG in the output columns to verify the claim. Also notice the adjusted R-squared value and overall p-value again.  
+This time, the comparison is relative to `15days_WT`, (and not shown in the comparison). Here every group is significantly different than the `15days_WT` group except `15days_TAG`. And you might have recall why this is the case--we simulated this way, all the WT and TAG samples have basically similar Ct values (or fold change or log fold change) in a specific age group. See the boxplot as well. Have a closer look at the values for WT and TAG in the output columns to verify the claim. Also notice the adjusted R-squared value and overall p-value again.  
 :::
 
 We can check pair-wise comparisons. It will show all possible combination of pair-wise comparisons. 
@@ -288,7 +291,7 @@ What if we model for `age` and `line` separately?
 lm3 <- lm(log_fold_change ~ age + line, data=data)
 summary(lm3)
 ```
-It shows everything very well. But we didn't wanted the comparison/interpretation in this way. It takes all the lines to show things for a age group and all the age groups for a particular line. 
+It shows everything very well. But did we want the comparison/interpretation in this way?! It takes all the lines to show things for a age group and all the age groups for a particular line. 
 
 What if we model for interaction of `age` and `line`?
 
@@ -309,6 +312,6 @@ How is our model? Let's check.
 ```{r}
 anova(lm2)
 ```
-The F value is too high. The "F value” of the ANOVA table represents the value of F-statistic $\frac{SSR/1}{SSE/(n-1)}$, where SSR = variation explained by the regression (fitted or model) line and SSE = variation around the conditional mean. The null hypothesis here is no linear dependence of `log-fold-change` on `age_line`. The ANOVA table shows that  the null hypothesis is not true, so `log_fold_change` depends on `age_line` (have a look at the p value). So, our model is very good.  
+The F value is too high. The "F value” of the ANOVA table represents the value of F-statistic = $\frac{SSR/1}{SSE/(n-1)}$, where SSR = variation explained by the regression (fitted or model) line and SSE = variation around the conditional mean. The null hypothesis here is no linear dependence of `log-fold-change` on `age_line`. The ANOVA table shows that  the null hypothesis is not true, so `log_fold_change` depends on `age_line` (have a look at the p-value). So, our model is very good (and so, there is age-line interaction).  
   
 We could use `lme4` or `limma` packages for the modeling as well. But `lm()` function from base R is good enough to do this simple modeling. We will see their use later. Next part of this endeavor will be simulation and analysis of RT-qPCR data with multiple genes of interest/transcripts and multiple reference/housekeeping genes. Stay tuned!
